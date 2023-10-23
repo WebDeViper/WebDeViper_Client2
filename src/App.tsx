@@ -1,5 +1,15 @@
+import { Route, Routes } from 'react-router-dom';
+import Layout from './layout';
+import MainPage from './pages/MainPage';
+
 function App() {
-  return <div>vite</div>;
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<MainPage />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;
