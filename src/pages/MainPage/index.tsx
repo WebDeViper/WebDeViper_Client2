@@ -1,9 +1,5 @@
-import Button from '../../components/common/Button';
+// import Button from '../../components/common/Button';
 
 export default function MainPage() {
-  return (
-    <div>
-      <Button>안뇽</Button>
-    </div>
-  );
+  return <div>{/* <Button>안뇽</Button> */}gkgkgkgk</div>;
 }
