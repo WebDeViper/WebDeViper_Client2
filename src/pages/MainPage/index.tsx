@@ -1,3 +1,9 @@
+import Button from '../../components/common/Button';
+
 export default function MainPage() {
-  return <div>메인 페이지</div>;
+  return (
+    <div>
+      <Button>안뇽</Button>
+    </div>
+  );
 }
