@@ -2,16 +2,20 @@
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { FcGoogle } from 'react-icons/fc';
 import { SiNaver } from 'react-icons/si';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import { useState } from 'react';
 
-export default function LoginModal({setIsOpen}): React.ReactElement {
-  const [isOpen: boolean, setIsOpen] = useState(false);
-  const openModalHandler = () => {
-    setIsOpen(!isOpen)
-  }
+interface Props {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function LoginModal({ isOpen, setIsOpen }: Props): React.ReactElement {
   const navigate = useNavigate();
+  const handleModalOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   // const KAKAO_REST_API_KEY: string = import.meta.env.VITE_KAKAO_REST_API_KEY;
   // const GOOGLE_REST_API_KEY: string = import.meta.env.VITE_GOOGLE_REST_API_KEY;
   // const REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
@@ -27,7 +31,6 @@ export default function LoginModal({setIsOpen}): React.ReactElement {
   return (
     <div className="m-auto w-2/5 p-7 grid grid-rows-3 grid-cols-3 gap-4 items-center rounded-xl border shadow-md bg-semi_primary">
       <h1 className="text-center font-bold text-2xl col-span-3">로그인</h1>
-      <button onClick={openModalHandler}>X</button>
       <button
         className="col-span-3 flex items-center bg-kakao text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
         onClick={() => loginHandler('/login/kakao')}
@@ -49,15 +52,18 @@ export default function LoginModal({setIsOpen}): React.ReactElement {
         <SiNaver />
         <span className="ms-3">네이버 로그인</span>
       </button>
-      <Button customStyle="row-span-1/4 col-start-3 mt-3 bg-light text-primary border-primary border-2">
-        <Link to="/">메인으로 이동</Link>
+      <Button
+        customStyle="row-span-1/4 col-start-3 mt-3 bg-light text-primary border-primary border-2"
+        handleClick={handleModalOpen}
+      >
+        닫기
       </Button>
     </div>
   );
 }
 
-
-{/* <div className="m-auto w-2/5 p-7 grid grid-rows-3 grid-cols-3 gap-4 items-center rounded-xl border shadow-md bg-semi_primary">
+{
+  /* <div className="m-auto w-2/5 p-7 grid grid-rows-3 grid-cols-3 gap-4 items-center rounded-xl border shadow-md bg-semi_primary">
       <h1 className="text-center font-bold text-2xl col-span-3">로그인</h1>
       <button
         className="col-span-3 flex items-center bg-kakao text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
@@ -83,4 +89,5 @@ export default function LoginModal({setIsOpen}): React.ReactElement {
       <Button customStyle="row-span-1/4 col-start-3 mt-3 bg-light text-primary border-primary border-2">
         <Link to="/">메인으로 이동</Link>
       </Button>
-    </div> */}
+    </div> */
+}
