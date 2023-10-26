@@ -5,7 +5,7 @@ export default function UserMenu() {
   return (
     <div className={`p-5 bg-semi_primary absolute right-0 top-full mt-[13px] ${styles.panel}`}>
       <nav>
-        <ul className="font-bold flex flex-col leading-[22px] gap-[15px]">
+        <ul className="flex flex-col leading-[22px] gap-[15px]">
           <li>
             <Link to="myPage">마이페이지</Link>
           </li>
