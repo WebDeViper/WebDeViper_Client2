@@ -5,5 +5,5 @@ interface Props {
 }
 
 export default function Main({ children }: Props) {
-  return <main>{children}</main>;
+  return <main className="container-lg">{children}</main>;
 }

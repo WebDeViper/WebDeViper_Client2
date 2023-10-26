@@ -8,6 +8,17 @@ export default {
         semi_primary: '#bce3ef',
         secondary: '#bfd9ff',
       },
+      container: {
+        screens: {
+          lg: '1024px',
+          md: '768px',
+          sm: '640px',
+        },
+        padding: {
+          DEFAULT: '1rem',
+          sm: '0',
+        },
+      },
     },
   },
   plugins: [],
