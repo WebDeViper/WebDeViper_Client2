@@ -7,7 +7,7 @@ interface Props {
 
 export default function GroupItem({ subject, imagePath }: Props) {
   return (
-    <div className="rounded-[4px] shadow-lg shadow-cyan-500/50 ">
+    <div className="rounded-[4px] shadow-xl">
       {/* <Link to="/"> */}
       <div className="flex items-center flex-col">
         <div className="rounded-full w-16">

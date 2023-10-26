@@ -1,6 +1,6 @@
-import Slider from 'react-slick';
 import GroupItem from './GroupItem';
-import styles from './style.module.css';
+import './style.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const data = [
   {
@@ -90,24 +90,17 @@ const data = [
 ];
 
 export default function MyGroup() {
-  const settings = {
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: false,
-    // pauseOnHover: true,
-    // autoplaySpeed: 4000,
-  };
   return (
     <section>
       <h2 className="font-bold text-2xl">내가 속한 그룹</h2>
       <div>
-        <Slider {...settings} className={styles.slick_custom}>
+        <Swiper slidesPerView={3} spaceBetween={10} className="swiper_custom pt-4 pb-10">
           {data.map((item, index) => (
-            <GroupItem key={index} imagePath={item.group_image_path} subject={item.name} />
+            <SwiperSlide key={index} className="p-4">
+              <GroupItem imagePath={item.group_image_path} subject={item.name} />
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       </div>
     </section>
   );
