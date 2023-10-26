@@ -1,9 +1,13 @@
-import Button from '../../components/common/Button';
+import MyGroup from './MyGroup';
+import Notice from './Notice';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export default function MainPage() {
   return (
-    <div>
-      <Button>안뇽</Button>
+    <div className="gap-11 flex flex-col">
+      <Notice />
+      <MyGroup />
     </div>
   );
 }
