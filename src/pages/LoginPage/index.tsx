@@ -4,11 +4,11 @@ import { SiNaver } from 'react-icons/si';
 
 export default function LoginPage() {
   // 카카오 설정에서 redirect uri 를 백쪽으로 설정해야함
-  const REST_API_KEY = '556e2ccdb544d3551ffe0ec46ba303c2';
-  const REDIRECT_URI = 'http://localhost:5173/kakao/callback';
-  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_REST_API_KEY: string = import.meta.env.REACT_APP_KAKAO_REST_API_KEY;
+  const KAKAO_REDIRECT_URI: string = 'http://localhost:5173/kakao/callback';
+  const kakaoLink = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const loginHandler = () => {
+  const loginHandler = (link: string) => {
     window.location.href = link;
   };
 
@@ -17,16 +17,22 @@ export default function LoginPage() {
       <h1 className="text-center font-bold text-2xl">로그인</h1>
       <button
         className="basis-1 flex items-center bg-kakao text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
-        onClick={loginHandler}
+        onClick={() => loginHandler(kakaoLink)}
       >
         <RiKakaoTalkFill />
         <span className="ms-3">카카오 로그인</span>
       </button>
-      <button className="basis-1 flex items-center bg-google text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg">
+      <button
+        className="basis-1 flex items-center bg-google text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
+        onClick={() => loginHandler(kakaoLink)}
+      >
         <FcGoogle />
         <span className="ms-3">구글 로그인</span>
       </button>
-      <button className="basis-1 flex items-center bg-naver text-light text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg">
+      <button
+        className="basis-1 flex items-center bg-naver text-light text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
+        onClick={() => loginHandler(kakaoLink)}
+      >
         <SiNaver />
         <span className="ms-3">네이버 로그인</span>
       </button>
