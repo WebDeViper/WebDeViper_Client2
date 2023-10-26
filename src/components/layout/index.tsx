@@ -4,7 +4,7 @@ import Main from './Main';
 
 export default function Layout() {
   return (
-    <div>
+    <div className="flex flex-col h-screen justify-center align-middle">
       <Header />
       <Main>
         <Outlet />

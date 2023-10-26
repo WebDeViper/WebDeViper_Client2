@@ -1,7 +1,6 @@
-// LoginPage / index.tsx
-interface Style {
-  backgroundColor: string;
-}
+import { RiKakaoTalkFill } from 'react-icons/ri';
+import { FcGoogle } from 'react-icons/fc';
+import { SiNaver } from 'react-icons/si';
 
 export default function LoginPage() {
   // 카카오 설정에서 redirect uri 를 백쪽으로 설정해야함
@@ -13,18 +12,24 @@ export default function LoginPage() {
     window.location.href = link;
   };
 
-  const style: Style = {
-    backgroundColor: 'red',
-  };
-
   return (
-    <div>
-      <h1>LoginPage</h1>
-      <button onClick={loginHandler} style={style}>
-        카카오 로그인
+    <div className="m-auto w-2/5 p-7 grid grid-rows-3 grid-cols-1 gap-4 items-center rounded-xl border shadow-md">
+      <h1 className="text-center font-bold text-2xl">로그인</h1>
+      <button
+        className="basis-1 flex items-center bg-kakao text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
+        onClick={loginHandler}
+      >
+        <RiKakaoTalkFill />
+        <span className="ms-3">카카오 로그인</span>
       </button>
-      <button>구글 로그인</button>
-      <button>네이버 로그인</button>
+      <button className="basis-1 flex items-center bg-google text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg">
+        <FcGoogle />
+        <span className="ms-3">구글 로그인</span>
+      </button>
+      <button className="basis-1 flex items-center bg-naver text-light text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg">
+        <SiNaver />
+        <span className="ms-3">네이버 로그인</span>
+      </button>
     </div>
   );
 }
