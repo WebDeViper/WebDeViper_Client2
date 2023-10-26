@@ -1,19 +1,22 @@
 import { Link } from 'react-router-dom';
 import { MdOutlineSms } from 'react-icons/md';
-import Slider from 'react-slick';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css/autoplay';
+
+const data = [
+  {
+    desc: '우하하하',
+  },
+  {
+    desc: '우핳핳핳',
+  },
+  {
+    desc: '호롤롤롤',
+  },
+];
 
 export default function Notice() {
-  const settings = {
-    infinite: true,
-    autoplay: true,
-    speed: 500,
-    slidesToShow: 1,
-    draggable: false,
-    pauseOnHover: true,
-    autoplaySpeed: 4000,
-    vertical: true,
-    verticalSwiping: true,
-  };
   return (
     <section>
       <h2 className="font-bold text-2xl">공지사항</h2>
@@ -25,37 +28,19 @@ export default function Notice() {
             </span>
           </li>
           <li className="ml-[25px] flex-1 truncate">
-            {/* <span>
-                최신 글이당최신 글이당최신 글이당최신 글이당최신 글이당최신 글이당최신 글이당최신 글이당최신 글이당최신
-                글이당최신 글이당최신 글이당최신 글이당최신 글이당최신 글이당 최신 글이당최신 글이당최신 글이당
-              </span> */}
-            <Slider {...settings}>
-              <div>
-                <span>
-                  <Link to="">최신 글이당최신 글이당최신 글이당최신 글이당최신 글 1111</Link>
-                </span>
-              </div>
-              <div>
-                <span>
-                  <Link to="">최신 글이당최신 글이당최신 글이당최신 글이당최신 글 2222</Link>
-                </span>
-              </div>
-              <div>
-                <span>
-                  <Link to="">최신 글이당최신 글이당최신 글이당최신 글이당최신 글 3333</Link>
-                </span>
-              </div>
-              <div>
-                <span>
-                  <Link to="">최신 글이당최신 글이당최신 글이당최신 글이당최신 글444</Link>
-                </span>
-              </div>
-              <div>
-                <span>
-                  <Link to="">최신 글이당최신 글이당최신 글이당최신 글이당최신 글 555</Link>
-                </span>
-              </div>
-            </Slider>
+            <Swiper
+              direction={'vertical'}
+              modules={[Autoplay]}
+              autoplay={{ delay: 4000 }}
+              slidesPerView={1}
+              allowTouchMove={false}
+              loop={true}
+              className="h-6"
+            >
+              {data.map((item, index) => (
+                <SwiperSlide key={index}>{item.desc}</SwiperSlide>
+              ))}
+            </Swiper>
           </li>
           <li className="px-[35px] text-primary font-semibold">
             <Link to="/notice">더보기</Link>
