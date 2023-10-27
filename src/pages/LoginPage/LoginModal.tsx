@@ -12,7 +12,7 @@ interface Props {
 
 export default function LoginModal({ isOpen, setIsOpen }: Props): React.ReactElement {
   const navigate = useNavigate();
-  const handleModalOpen = () => {
+  const handleModalClose = () => {
     setIsOpen(!isOpen);
   };
 
@@ -29,7 +29,7 @@ export default function LoginModal({ isOpen, setIsOpen }: Props): React.ReactEle
   };
 
   return (
-    <div className="m-auto w-2/5 p-7 grid grid-rows-3 grid-cols-3 gap-4 items-center rounded-xl border shadow-md bg-semi_primary">
+    <div className="modalContainer m-auto w-2/5 p-7 grid grid-rows-3 grid-cols-3 gap-4 items-center rounded-xl border shadow-md bg-semi_primary">
       <h1 className="text-center font-bold text-2xl col-span-3">로그인</h1>
       <button
         className="col-span-3 flex items-center bg-kakao text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
@@ -54,7 +54,7 @@ export default function LoginModal({ isOpen, setIsOpen }: Props): React.ReactEle
       </button>
       <Button
         customStyle="row-span-1/4 col-start-3 mt-3 bg-light text-primary border-primary border-2"
-        handleClick={handleModalOpen}
+        handleClick={handleModalClose}
       >
         닫기
       </Button>
