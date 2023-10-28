@@ -4,29 +4,30 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiNaver } from 'react-icons/si';
 import Button from '../../components/common/Button';
 import CustomModal from '../../components/common/CustomModal';
+import { Link } from 'react-router-dom';
 
 interface Props {
   isOpen: boolean;
   close: () => void;
 }
 
-export default function LoginModal({ isOpen, close }: Props): React.ReactElement {
-  const handleLogin = (url: string) => {
-    window.location.href = `${import.meta.env.VITE_APP_API_URL}/user/${url}`;
-  };
+export default function LoginModal({ isOpen, close }: Props) {
+  const KAKAO_REST_API_KEY: string = import.meta.env.VITE_KAKAO_REST_API_KEY;
+  const REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
+  const KAKAO_LOGIN_URI: string = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
     <CustomModal isOpen={isOpen} close={close}>
       <div className="px-10 py-14">
         <h1 className="text-center font-bold text-2xl col-span-3 mb-8">로그인</h1>
         <div className="mb-5">
-          <button
+          <Link
+            to={KAKAO_LOGIN_URI}
             className="col-span-3 flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
-            onClick={() => handleLogin('kakao')}
           >
             <RiKakaoTalkFill />
             <span className="ms-3">카카오 로그인</span>
-          </button>
+          </Link>
           <button
             className="col-span-3 flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg"
             onClick={() => handleLogin('google')}

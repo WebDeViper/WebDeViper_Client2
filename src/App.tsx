@@ -6,6 +6,7 @@ import SettingPage from './pages/SettingPage';
 import NoticePage from './pages/NoticePage';
 import LoginPage from './pages/LoginPage';
 import DetailNoticePage from './pages/DetailNoticePage';
+import KakaoPage from './pages/OauthPage/KakaoPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/setting" element={<SettingPage />} />
+        <Route path="/oauth/kakao" element={<KakaoPage />} />
       </Route>
     </Routes>
   );
