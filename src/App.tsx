@@ -4,10 +4,12 @@ import MainPage from './pages/MainPage';
 import RankingPage from './pages/RankingPage';
 import SettingPage from './pages/SettingPage';
 import NoticePage from './pages/NoticePage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<MainPage />} />
 
