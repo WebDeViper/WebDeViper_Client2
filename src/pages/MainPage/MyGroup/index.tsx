@@ -1,5 +1,5 @@
 import GroupItem from './GroupItem';
-import './style.css';
+// import './style.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const data = [
@@ -94,9 +94,9 @@ export default function MyGroup() {
     <section>
       <h2 className="font-bold text-2xl">내가 속한 그룹</h2>
       <div>
-        <Swiper slidesPerView={3} spaceBetween={10} className="swiper_custom pt-4 pb-10">
+        <Swiper slidesPerView={3} spaceBetween={10} className="swiper_custom">
           {data.map((item, index) => (
-            <SwiperSlide key={index} className="p-4">
+            <SwiperSlide key={index} className="">
               <GroupItem imagePath={item.group_image_path} subject={item.name} />
             </SwiperSlide>
           ))}

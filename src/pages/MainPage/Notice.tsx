@@ -3,20 +3,25 @@ import { MdOutlineSms } from 'react-icons/md';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css/autoplay';
-
-const data = [
-  {
-    desc: '우하하하',
-  },
-  {
-    desc: '우핳핳핳',
-  },
-  {
-    desc: '호롤롤롤',
-  },
-];
+import { useEffect, useState } from 'react';
+import { API } from '../../utils/axios';
 
 export default function Notice() {
+  const [notice, setNotice] = useState<Notice[]>([]);
+  useEffect(() => {
+    const getNotices = async () => {
+      try {
+        const response = await API.get('/notices');
+        const data = await response.data;
+        // console.log(data);
+        setNotice(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getNotices();
+  }, []);
+
   return (
     <section>
       <h2 className="font-bold text-2xl">공지사항</h2>
@@ -31,14 +36,18 @@ export default function Notice() {
             <Swiper
               direction={'vertical'}
               modules={[Autoplay]}
-              autoplay={{ delay: 4000 }}
+              autoplay={{ delay: 2000 }}
               slidesPerView={1}
               allowTouchMove={false}
-              loop={true}
+              // loop={true}
               className="h-6"
             >
-              {data.map((item, index) => (
-                <SwiperSlide key={index}>{item.desc}</SwiperSlide>
+              {notice.map(item => (
+                <SwiperSlide key={item.notice_id}>
+                  <Link to={`/notice/${item.notice_id}`} className="select-none">
+                    {item.title}
+                  </Link>
+                </SwiperSlide>
               ))}
             </Swiper>
           </li>
