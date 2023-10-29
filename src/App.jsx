@@ -8,7 +8,7 @@ import LoginPage from './pages/LoginPage';
 import DetailNoticePage from './pages/DetailNoticePage';
 import KakaoPage from './pages/OauthPage/KakaoPage';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom/dist';
+import { useLocation } from 'react-router-dom/dist';
 import { authUser } from './reducers/thunkFunctions';
 import { useEffect } from 'react';
 import NotAuthRoutes from './components/NotAuthRoutes';
@@ -18,21 +18,21 @@ function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.user?.isAuth);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuth) {
       dispatch(authUser());
-    } else {
-      // navigate('/login');
     }
-  }, [isAuth, pathname, dispatch, navigate]);
+  }, [isAuth, pathname, dispatch]);
 
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage isAuth={isAuth} />} />
-
+      {/* 로그인한 사람은 갈 수 없는 경로 */}
+      <Route element={<NotAuthRoutes isAuth={isAuth} />}>
+        <Route path="/login" element={<LoginPage isAuth={isAuth} />} />
+      </Route>
       <Route path="/" element={<Layout />}>
+        {/* 로그인 된 상태에서 접속 가능한 페이지 */}
         <Route element={<ProtectedRoutes isAuth={isAuth} />}>
           <Route index element={<MainPage />} />
           <Route path="/notice" element={<NoticePage />} />
@@ -40,6 +40,7 @@ function App() {
           <Route path="/ranking" element={<RankingPage />} />
           <Route path="/setting" element={<SettingPage />} />
         </Route>
+
         <Route path="/oauth/kakao" element={<KakaoPage />} />
       </Route>
     </Routes>

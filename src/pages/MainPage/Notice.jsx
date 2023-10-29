@@ -13,7 +13,6 @@ export default function Notice() {
       try {
         const response = await API.get('/notices');
         const data = await response.data;
-        // console.log(data);
         setNotice(data);
       } catch (err) {
         console.error(err);
