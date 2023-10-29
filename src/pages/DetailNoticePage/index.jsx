@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { API } from '../../utils/axios';
 
 export default function DetailNoticePage() {
-  const [notice, setNotice] = useState<Notice>();
+  const [notice, setNotice] = useState();
   const { noticeId } = useParams();
   useEffect(() => {
     const getNotice = async () => {

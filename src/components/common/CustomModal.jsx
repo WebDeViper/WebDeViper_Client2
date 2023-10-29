@@ -1,14 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import ReactModal from 'react-modal';
 
-interface Props {
-  isOpen: boolean;
-  close: () => void;
-  children: React.ReactNode;
-}
-
-export default function CustomModal({ isOpen, close, children }: Props) {
+export default function CustomModal({ isOpen, close, children }) {
   return (
     <Modal
       isOpen={isOpen}
@@ -22,7 +15,7 @@ export default function CustomModal({ isOpen, close, children }: Props) {
   );
 }
 
-const customStyles: ReactModal.Styles = {
+const customStyles = {
   overlay: {
     backgroundColor: ' rgba(0, 0, 0, 0.4)',
     width: '100%',

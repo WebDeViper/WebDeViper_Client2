@@ -2,14 +2,17 @@ import axios from 'axios';
 import React, { useCallback, useEffect } from 'react';
 import { API } from '../../utils/axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../reducers/thunkFunctions';
 
 export default function KakaoPage() {
   const navigate = useNavigate();
-  const KAKAO_REST_API_KEY: string = import.meta.env.VITE_KAKAO_REST_API_KEY;
-  const REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
+  const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
+  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+  const dispatch = useDispatch();
 
   const getToken = useCallback(
-    async (code: string) => {
+    async code => {
       try {
         const response = await axios.post('https://kauth.kakao.com/oauth/token', null, {
           params: {
@@ -22,10 +25,12 @@ export default function KakaoPage() {
 
         const { access_token } = response.data;
         const profile = await getFirebaseCustomToken(access_token);
-        const jwtToken = await getJwtToken(profile);
+        dispatch(loginUser(profile));
+        // const jwtToken = await getJwtToken(profile);
 
-        localStorage.setItem('accessToken', jwtToken.token);
-        navigate('/');
+        // localStorage.setItem('accessToken', jwtToken.token);
+        console.log(jwtToken);
+        // navigate('/');
       } catch (err) {
         console.log(err);
       }
@@ -33,7 +38,7 @@ export default function KakaoPage() {
     [KAKAO_REST_API_KEY, REDIRECT_URI, navigate]
   );
 
-  const getFirebaseCustomToken = async (access_token: string) => {
+  const getFirebaseCustomToken = async access_token => {
     try {
       const response = await axios.get('https://kapi.kakao.com/v2/user/me', {
         headers: {
@@ -48,7 +53,7 @@ export default function KakaoPage() {
     }
   };
 
-  const getJwtToken = async (profile: JSON) => {
+  const getJwtToken = async profile => {
     try {
       const response = await API.post('/user/kakao', profile);
       const jwtToken = await response.data;

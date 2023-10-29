@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
 
 export default function StudyGroup() {
-  const [studyGroup, setStudyGroup] = useState<Group[]>();
+  const [studyGroup, setStudyGroup] = useState();
   useEffect(() => {
     const getGroupData = async () => {
       try {
