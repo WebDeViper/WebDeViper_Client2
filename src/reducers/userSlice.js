@@ -6,9 +6,9 @@ const initialState = {
   userInfo: {
     id: '',
     email: '',
-    name: '',
-    role: 0,
-    image: '',
+    nickName: '',
+    category: null,
+    profileImg: '',
   },
   isAuth: false,
   isLoading: false,
