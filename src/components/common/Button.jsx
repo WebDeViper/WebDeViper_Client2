@@ -1,12 +1,6 @@
 import React from 'react';
 
-interface Props {
-  children: React.ReactNode;
-  customStyle?: string;
-  handleClick?: () => void;
-}
-
-export default function Button({ children, customStyle, handleClick }: Props) {
+export default function Button({ children, customStyle, handleClick }) {
   const styled = customStyle || '';
   return (
     <button

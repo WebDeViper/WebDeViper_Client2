@@ -8,7 +8,7 @@ export default function MainPage() {
     <div className="gap-11 flex flex-col">
       <Notice />
       <MyGroup />
-      <StudyGroup />
+      {/* <StudyGroup /> */}
     </div>
   );
 }

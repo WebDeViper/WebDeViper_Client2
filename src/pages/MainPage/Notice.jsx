@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { API } from '../../utils/axios';
 
 export default function Notice() {
-  const [notice, setNotice] = useState<Notice[]>([]);
+  const [notice, setNotice] = useState([]);
   useEffect(() => {
     const getNotices = async () => {
       try {

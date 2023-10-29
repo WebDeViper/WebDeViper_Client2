@@ -1,11 +1,6 @@
 import { Link } from 'react-router-dom';
 
-interface Props {
-  subject: string;
-  imagePath: string;
-}
-
-export default function GroupItem({ subject, imagePath }: Props) {
+export default function GroupItem({ subject, imagePath }) {
   return (
     <Link to="/">
       <div className="rounded-[4px] overflow-visible shadow-xl px-16 pb-5 pt-[25px]">

@@ -6,15 +6,10 @@ import Button from '../../components/common/Button';
 import CustomModal from '../../components/common/CustomModal';
 import { Link } from 'react-router-dom';
 
-interface Props {
-  isOpen: boolean;
-  close: () => void;
-}
-
-export default function LoginModal({ isOpen, close }: Props) {
-  const KAKAO_REST_API_KEY: string = import.meta.env.VITE_KAKAO_REST_API_KEY;
-  const REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
-  const KAKAO_LOGIN_URI: string = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+export default function LoginModal({ isOpen, close }) {
+  const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
+  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+  const KAKAO_LOGIN_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
     <CustomModal isOpen={isOpen} close={close}>
