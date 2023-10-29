@@ -14,8 +14,7 @@ export const loginUser = createAsyncThunk('user/loginUser', async (body, thunkAP
 
 export const authUser = createAsyncThunk('user/authUser', async (_, thunkAPI) => {
   try {
-    const response = await API.get(`/users/auth`);
-
+    const response = await API.get(`/user`);
     return response.data;
   } catch (error) {
     console.log(error);

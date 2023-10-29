@@ -26,16 +26,12 @@ export default function KakaoPage() {
         const { access_token } = response.data;
         const profile = await getFirebaseCustomToken(access_token);
         dispatch(loginUser(profile));
-        // const jwtToken = await getJwtToken(profile);
-
-        // localStorage.setItem('accessToken', jwtToken.token);
-        console.log(jwtToken);
-        // navigate('/');
+        navigate('/');
       } catch (err) {
         console.log(err);
       }
     },
-    [KAKAO_REST_API_KEY, REDIRECT_URI, navigate]
+    [KAKAO_REST_API_KEY, REDIRECT_URI, navigate, dispatch]
   );
 
   const getFirebaseCustomToken = async access_token => {
