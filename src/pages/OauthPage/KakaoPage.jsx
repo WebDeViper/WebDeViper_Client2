@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React, { useCallback, useEffect } from 'react';
-import { API } from '../../utils/axios';
+import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../reducers/thunkFunctions';
@@ -25,17 +24,15 @@ export default function KakaoPage() {
 
         const { access_token } = response.data;
         const profile = await getFirebaseCustomToken(access_token);
-        dispatch(loginUser(profile));
-        // const jwtToken = await getJwtToken(profile);
 
-        // localStorage.setItem('accessToken', jwtToken.token);
-        console.log(jwtToken);
-        // navigate('/');
+        // 리덕스에서 로그인 로직 처리 후 리덕스로 상태관리
+        dispatch(loginUser(profile));
+        navigate('/');
       } catch (err) {
         console.log(err);
       }
     },
-    [KAKAO_REST_API_KEY, REDIRECT_URI, navigate]
+    [KAKAO_REST_API_KEY, REDIRECT_URI, navigate, dispatch]
   );
 
   const getFirebaseCustomToken = async access_token => {
@@ -48,16 +45,6 @@ export default function KakaoPage() {
 
       const profile = response.data;
       return profile;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getJwtToken = async profile => {
-    try {
-      const response = await API.post('/user/kakao', profile);
-      const jwtToken = await response.data;
-      return jwtToken;
     } catch (err) {
       console.log(err);
     }
