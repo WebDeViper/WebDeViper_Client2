@@ -11,7 +11,9 @@ export default function UserMenu() {
     navigate('/login');
   };
   return (
-    <div className={`p-5 bg-semi_primary absolute right-0 top-full mt-[13px] ${styles.panel}`}>
+    <div
+      className={`p-5 bg-semi_primary absolute right-0 top-full mt-[13px] rounded-b-lg rounded-tl-lg ${styles.panel}`}
+    >
       <nav>
         <ul className="flex flex-col leading-[22px] gap-[15px]">
           <li>
