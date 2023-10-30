@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { authUser, loginUser, logoutUser } from './thunkFunctions';
+import { authUser, loginUser } from './thunkFunctions';
 import { toast } from 'react-toastify';
 
 const initialState = {
@@ -18,7 +18,16 @@ const initialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {}, // You can add reducer functions here if needed
+  reducers: {
+    // 동기적으로 백에 요청 없이 프론트에서 로그아웃시키는 코드
+    // state 변경하고 로컬 스토리지 값을 초기화
+    logout(state) {
+      state.isLoading = false;
+      state.userInfo = initialState.userInfo;
+      state.isAuth = false;
+      localStorage.clear();
+    },
+  }, // You can add reducer functions here if needed
   extraReducers: builder => {
     builder
       .addCase(loginUser.pending, state => {
@@ -50,23 +59,24 @@ const userSlice = createSlice({
         state.userInfo = initialState.userInfo;
         state.isAuth = false;
         localStorage.removeItem('accessToken');
-      })
-
-      .addCase(logoutUser.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(logoutUser.fulfilled, state => {
-        state.isLoading = false;
-        state.userInfo = initialState.userInfo;
-        state.isAuth = false;
-        localStorage.removeItem('accessToken');
-      })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-        toast.error(action.payload);
       });
+
+    // .addCase(logoutUser.pending, state => {
+    //   state.isLoading = true;
+    // })
+    // .addCase(logoutUser.fulfilled, state => {
+    //   state.isLoading = false;
+    //   state.userInfo = initialState.userInfo;
+    //   state.isAuth = false;
+    //   localStorage.clear();
+    // })
+    // .addCase(logoutUser.rejected, (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    //   toast.error(action.payload);
+    // });
   },
 });
 
 export default userSlice.reducer;
+export const { logout } = userSlice.actions;
