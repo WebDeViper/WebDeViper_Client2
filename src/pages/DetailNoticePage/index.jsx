@@ -5,13 +5,15 @@ import { API } from '../../utils/axios';
 export default function DetailNoticePage() {
   const [notice, setNotice] = useState();
   const { noticeId } = useParams();
+  // console.log(noticeId);
   useEffect(() => {
     const getNotice = async () => {
       try {
-        const response = await API.get(`/notices/${noticeId}`);
+        const response = await API.get(`/notice/${noticeId}`);
+        // const response = await API.get('/notices');
         const data = await response.data;
         console.log(data);
-        setNotice(data);
+        setNotice(data.result);
       } catch (err) {
         console.error(err);
       }
@@ -21,7 +23,7 @@ export default function DetailNoticePage() {
   return (
     <div>
       <h2>{notice?.title}</h2>
-      <p>DetailNoticePage</p>
+      <p>{notice?.content}</p>
     </div>
   );
 }

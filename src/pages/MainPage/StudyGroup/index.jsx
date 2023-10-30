@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
+import axios from 'axios';
 
 export default function StudyGroup() {
   const [studyGroup, setStudyGroup] = useState();
@@ -7,9 +8,8 @@ export default function StudyGroup() {
     const getGroupData = async () => {
       try {
         const response = await API.get('/group/studyGroups');
-        console.log(response);
         const data = await response.data;
-        setStudyGroup(data);
+        setStudyGroup(data.study_groups);
       } catch (err) {
         console.error(err);
       }
@@ -24,7 +24,7 @@ export default function StudyGroup() {
       </div>
       <div>
         {studyGroup?.map(item => (
-          <div>{item.name}</div>
+          <div key={item.group_id}>{item.name}</div>
         ))}
       </div>
     </section>
