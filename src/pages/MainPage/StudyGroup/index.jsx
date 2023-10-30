@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
 import axios from 'axios';
+import Button from '../../../components/common/Button';
 
 export default function StudyGroup() {
   const [studyGroup, setStudyGroup] = useState();
@@ -20,7 +21,7 @@ export default function StudyGroup() {
     <section className="mt-11">
       <div className="flex justify-between">
         <h2 className="font-bold text-2xl">스터디 그룹</h2>
-        <button className="bg-primary">스터디 그룹 추가</button>
+        <Button customStyle="rounded-lg">스터디 그룹 추가</Button>
       </div>
       <div>
         {studyGroup?.map(item => (

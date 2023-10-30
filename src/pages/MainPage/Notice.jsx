@@ -5,6 +5,7 @@ import { Autoplay } from 'swiper/modules';
 import 'swiper/css/autoplay';
 import { useEffect, useState } from 'react';
 import { API } from '../../utils/axios';
+import Button from '../../components/common/Button';
 
 export default function Notice() {
   const [notice, setNotice] = useState([]);
@@ -51,7 +52,9 @@ export default function Notice() {
             </Swiper>
           </li>
           <li className="px-[35px] text-primary font-semibold">
-            <Link to="/notice">더보기</Link>
+            <Link to="/notice">
+              <Button customStyle="rounded-lg bg-transparent !text-primary">더보기</Button>
+            </Link>
           </li>
         </ul>
       </div>
