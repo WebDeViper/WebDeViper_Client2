@@ -13,10 +13,14 @@ import { authUser } from './reducers/thunkFunctions';
 import { useEffect } from 'react';
 import NotAuthRoutes from './components/NotAuthRoutes';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import PageNotFound from './pages/404Page';
+import CategoryPage from './pages/CategoryPage';
 
 function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.user?.isAuth);
+  const category = useSelector(state => state.user?.userInfo.category);
+  console.log('App category >>>', category);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -32,8 +36,9 @@ function App() {
         <Route path="/login" element={<LoginPage isAuth={isAuth} />} />
       </Route>
       <Route path="/" element={<Layout />}>
+        <Route path="/category" element={<CategoryPage />} />
         {/* 로그인 된 상태에서 접속 가능한 페이지 */}
-        <Route element={<ProtectedRoutes isAuth={isAuth} />}>
+        <Route element={<ProtectedRoutes isAuth={isAuth} category={category} />}>
           <Route index element={<MainPage />} />
           <Route path="/notice" element={<NoticePage />} />
           <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
@@ -43,6 +48,7 @@ function App() {
 
         <Route path="/oauth/kakao" element={<KakaoPage />} />
       </Route>
+      <Route path="/*" element={<PageNotFound />} />
     </Routes>
   );
 }
