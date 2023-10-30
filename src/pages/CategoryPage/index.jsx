@@ -1,5 +1,11 @@
 import React from 'react';
+import CategoryGroup from './CategoryGroup';
 
 export default function CategoryPage() {
-  return <div>카테고리 선택 페이지</div>;
+  return (
+    <div>
+      <CategoryGroup title={'학생'} />
+      <CategoryGroup title={'공무원'} />
+    </div>
+  );
 }
