@@ -2,13 +2,13 @@
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { FcGoogle } from 'react-icons/fc';
 import { SiNaver } from 'react-icons/si';
+import { AiOutlineClose } from 'react-icons/ai';
 import Button from '../../components/common/Button';
 import CustomModal from '../../components/common/CustomModal';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 export default function LoginModal({ isOpen, close }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // API & Redirect URI
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
@@ -16,37 +16,39 @@ export default function LoginModal({ isOpen, close }) {
   const KAKAO_LOGIN_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   // style
-  const kakaoColor = '#FEE500';
-  const googleColor = '#fefefe';
-  const naverColor = '#2DB400';
-  const kakaoStyle = `col-span-3 flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[${kakaoColor}]`;
-  const googleStyle = `col-span-3 flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[${googleColor}]`;
-  const naverStyle = `col-span-3 flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[${naverColor}]`;
+  // const kakaoColor = '#FEE500';
+  // const googleColor = '#fefefe';
+  // const naverColor = '#2DB400';
+  const kakaoStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[#FEE500]`;
+  const googleStyle = `w-full mb-2 box-border flex items-center text-black text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[#fefefe]`;
+  const naverStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[#2DB400]`;
 
   const handleNavigate = uri => {
-    navigate(uri);
+    window.location.href = uri;
   };
 
   return (
     <CustomModal isOpen={isOpen} close={close}>
-      <div className="px-10 py-14">
+      <div className="px-10 py-14 grid grid-cols-3 relative">
+        <div className="absolute top-3 left-3">
+          <Button customStyle={'bg-transparent !text-primary'} handleClick={close}>
+            <AiOutlineClose size={30} />
+          </Button>
+        </div>
         <h1 className="text-center font-bold text-2xl col-span-3 mb-8">로그인</h1>
-        <div className="mb-5">
+        <div className="col-span-3">
           <Button handleClick={() => handleNavigate(`${KAKAO_LOGIN_URI}`)} customStyle={kakaoStyle}>
-            <RiKakaoTalkFill />
+            <RiKakaoTalkFill size={25} />
             <span className="ms-3">카카오 로그인</span>
           </Button>
-          <button className={googleStyle} onClick={() => handleLogin('google')}>
-            <FcGoogle />
+          <Button handleClick={() => handleNavigate(`${KAKAO_LOGIN_URI}`)} customStyle={googleStyle}>
+            <FcGoogle size={25} />
             <span className="ms-3">구글 로그인</span>
-          </button>
-          <button className={naverStyle} onClick={() => handleLogin('/naver')}>
-            <SiNaver />
+          </Button>
+          <Button handleClick={() => handleNavigate(`${KAKAO_LOGIN_URI}`)} customStyle={naverStyle}>
+            <SiNaver size={25} />
             <span className="ms-3">네이버 로그인</span>
-          </button>
-        </div>
-        <div className="text-center">
-          <Button handleClick={close}>닫기</Button>
+          </Button>
         </div>
       </div>
     </CustomModal>

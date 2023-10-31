@@ -5,6 +5,7 @@ import './test.css';
 export default function CustomModal({ isOpen, close, children }) {
   return (
     <Modal
+      closeTimeoutMS={200}
       isOpen={isOpen}
       onRequestClose={close}
       style={customStyles}
@@ -18,7 +19,7 @@ export default function CustomModal({ isOpen, close, children }) {
 
 const customStyles = {
   overlay: {
-    backgroundColor: ' rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     width: '100%',
     height: '100vh',
     zIndex: '9999',
@@ -27,7 +28,7 @@ const customStyles = {
     left: '0',
   },
   content: {
-    width: '30%',
+    width: '40%',
     height: 'fit-content',
     zIndex: '150',
     position: 'absolute',
@@ -37,7 +38,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     borderRadius: '10px',
     boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-    backgroundColor: 'white',
+    backgroundColor: '#bce3ef',
     justifyContent: 'center',
     overflow: 'auto',
   },
