@@ -13,8 +13,9 @@ export default function SignInPage() {
   const navigate = useNavigate();
 
   // 유저 정보 수정
-  const handleUserInfo = () => {
+  const handleUserInfo = async () => {
     dispatch(profileUser({ category: selectedCategory[0], nickName: nickName }));
+    alert(`환영합니다 ${nickName}님!`);
     navigate('/');
   };
   return (
