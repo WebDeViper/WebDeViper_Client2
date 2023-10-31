@@ -36,10 +36,9 @@ function App() {
         <Route path="/login" element={<LoginPage isAuth={isAuth} />} />
       </Route>
       <Route path="/" element={<Layout />}>
-        <Route path="/category" element={<CategoryPage />} />
         {/* 로그인 된 상태에서 접속 가능한 페이지 */}
         <Route element={<ProtectedRoutes isAuth={isAuth} category={category} />}>
-          <Route index element={<MainPage />} />
+          <Route index element={category ? <MainPage /> : <CategoryPage />} />
           <Route path="/notice" element={<NoticePage />} />
           <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
           <Route path="/ranking" element={<RankingPage />} />
