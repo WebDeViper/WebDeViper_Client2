@@ -5,10 +5,11 @@ import { SiNaver } from 'react-icons/si';
 import Button from '../../components/common/Button';
 import CustomModal from '../../components/common/CustomModal';
 import { Link } from 'react-router-dom';
+import { redirectUrl } from '../../utils/redirectUrl';
 
 export default function LoginModal({ isOpen, close }) {
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+  const REDIRECT_URI = redirectUrl();
   const KAKAO_LOGIN_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
