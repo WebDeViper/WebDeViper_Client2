@@ -15,6 +15,7 @@ import NotAuthRoutes from './components/NotAuthRoutes';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import PageNotFound from './pages/404Page';
 import SignInPage from './pages/SignInPage';
+import CalendarPage from './pages/CalendarPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
           <Route index element={category ? <MainPage /> : <SignInPage />} />
           <Route path="/notice" element={<NoticePage />} />
           <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/ranking" element={<RankingPage />} />
           <Route path="/setting" element={<SettingPage />} />
         </Route>
