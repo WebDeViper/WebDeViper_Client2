@@ -3,11 +3,13 @@ import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../reducers/thunkFunctions';
+import { redirectUrl } from '../../utils/redirectUrl';
 
 export default function KakaoPage() {
   const navigate = useNavigate();
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+
+  const REDIRECT_URI = redirectUrl();
   const dispatch = useDispatch();
 
   const getToken = useCallback(
