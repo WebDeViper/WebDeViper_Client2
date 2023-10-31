@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import NotAuthRoutes from './components/NotAuthRoutes';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import PageNotFound from './pages/404Page';
-import CategoryPage from './pages/CategoryPage';
+import SignInPage from './pages/SignInPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,10 +35,10 @@ function App() {
       <Route element={<NotAuthRoutes isAuth={isAuth} />}>
         <Route path="/login" element={<LoginPage isAuth={isAuth} />} />
       </Route>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout category={category} />}>
         {/* 로그인 된 상태에서 접속 가능한 페이지 */}
         <Route element={<ProtectedRoutes isAuth={isAuth} category={category} />}>
-          <Route index element={category ? <MainPage /> : <CategoryPage />} />
+          <Route index element={category ? <MainPage /> : <SignInPage />} />
           <Route path="/notice" element={<NoticePage />} />
           <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
           <Route path="/ranking" element={<RankingPage />} />
