@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../../../components/common/Button';
-import './index.scss';
 import { API } from '../../../utils/axios';
 
 export default function NickName({ nickName, setNickName }) {
@@ -30,7 +29,7 @@ export default function NickName({ nickName, setNickName }) {
       </div>
       <div className="nickInputWrap border-2 rounded-lg border-primary ps-5 pe-2 w-fit flex items-center">
         <input
-          className="font-bold"
+          className="font-bold w-[10rem] h-[3rem] focus:outline-none"
           type="text"
           placeholder="닉네임 입력"
           value={nickName}

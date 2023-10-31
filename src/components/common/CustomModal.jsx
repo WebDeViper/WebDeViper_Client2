@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import './test.css';
 
 export default function CustomModal({ isOpen, close, children }) {
   return (
@@ -26,7 +27,7 @@ const customStyles = {
     left: '0',
   },
   content: {
-    width: 'fit-content',
+    width: '30%',
     height: 'fit-content',
     zIndex: '150',
     position: 'absolute',
