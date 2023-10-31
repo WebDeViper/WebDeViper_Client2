@@ -16,7 +16,9 @@ export default function CategoryItem({ content, selectedCategory, setSelectedCat
     setIsActive(!isActive);
   };
 
-  const containerClass = `text-center border-2 rounded-lg py-1 ${isActive ? 'bg-primary text-white' : ''}`;
+  const containerClass = `text-center border-2 border-semi_primary rounded-lg py-1 ${
+    isActive ? 'bg-primary text-white border-transparent' : ''
+  }`;
 
   return (
     <div onClick={handleCategory} ref={categoryRef} className={containerClass}>
