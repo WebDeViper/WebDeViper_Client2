@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { FiUser } from 'react-icons/fi';
 import UserMenu from './UserMenu';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
   const [isShow, setIsShow] = useState(false);
+  const nickName = useSelector(state => state.user?.userInfo.nickName);
 
   const handleOnClick = () => {
     setIsShow(prev => !prev);
@@ -29,7 +31,9 @@ export default function Header() {
       </nav>
       <ul className="flex items-center gap-8">
         <li>
-          <span className="font-bold">김땡땡</span>
+          <span className="">
+            <b>{nickName}</b> 님
+          </span>
         </li>
         <li className="relative">
           <button onClick={handleOnClick} className="flex items-center">
