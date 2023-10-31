@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { redirectUrl } from '../../utils/redirectUrl';
 
-
 export default function LoginModal({ isOpen, close }) {
   // const navigate = useNavigate();
 
@@ -22,9 +21,9 @@ export default function LoginModal({ isOpen, close }) {
   // const kakaoColor = '#FEE500';
   // const googleColor = '#fefefe';
   // const naverColor = '#2DB400';
-  const kakaoStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[#FEE500]`;
-  const googleStyle = `w-full mb-2 box-border flex items-center text-black text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[#fefefe]`;
-  const naverStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg bg-[#2DB400]`;
+  const kakaoStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#FEE500]`;
+  const googleStyle = `w-full mb-2 box-border flex items-center !text-black text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#fefefe]`;
+  const naverStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#2DB400]`;
 
   const handleNavigate = uri => {
     window.location.href = uri;
