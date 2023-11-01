@@ -32,3 +32,14 @@ export const profileUser = createAsyncThunk('user/categoryUser', async (body, th
     return thunkAPI.rejectWithValue(error.response.data || error.message);
   }
 });
+
+export const createGroup = createAsyncThunk('group/createGroup', async (body, thunkAPI) => {
+  try {
+    const response = await API.patch('/group/~~', body);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return thunkAPI.rejectWithValue(error.response.data || error.message);
+  }
+});
