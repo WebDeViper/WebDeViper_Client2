@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@types/react-modal": "^3.16.2",
     "axios": "^1.5.1",
+    "flowbite-react": "^0.6.4",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-calendar": "^4.6.1",
