@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
 import axios from 'axios';
 import Button from '../../../components/common/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function StudyGroup() {
   const [studyGroup, setStudyGroup] = useState();
+  const navigate = useNavigate();
   useEffect(() => {
     const getGroupData = async () => {
       try {
@@ -17,11 +19,16 @@ export default function StudyGroup() {
     };
     getGroupData();
   }, []);
+  const handleCreateGroup = () => {
+    navigate('/group/create');
+  };
   return (
     <section className="mt-11">
       <div className="flex justify-between">
         <h2 className="font-bold text-2xl">스터디 그룹</h2>
-        <Button customStyle="rounded-lg">스터디 그룹 추가</Button>
+        <Button customStyle="rounded-lg" handleClick={handleCreateGroup}>
+          스터디 그룹 추가
+        </Button>
       </div>
       <div>
         {studyGroup?.map(item => (

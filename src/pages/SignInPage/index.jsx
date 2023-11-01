@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../../components/common/Button';
 import { useDispatch } from 'react-redux';
 import { profileUser } from '../../reducers/thunkFunctions';
