@@ -7,13 +7,8 @@ import './index.css';
 export default function CalendarPage() {
   const [value, onChange] = useState(new Date());
 
-  // const formatDay = date => {
-  //   // 날짜를 원하는 형식으로 포맷
-  //   const options = { year: 'numeric', month: 'short', day: 'numeric' };
-  //   return date.toLocaleDateString('ko-KR', options);
-  // };
   return (
-    <div className="calendar">
+    <div className="calendar w-10/12 mx-auto">
       <Calendar
         onChange={onChange}
         value={value}

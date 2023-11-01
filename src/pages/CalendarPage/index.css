@@ -1,21 +1,12 @@
 .calendar .react-calendar {
-  width: 100%;
+  @apply w-full;
 }
 .react-calendar .react-calendar__tile--active {
-  background: initial;
-  color: initial;
-  position: relative;
+  @apply relative bg-inherit text-inherit;
 }
 
-.react-calendar .react-calendar__tile--active:before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 1px solid;
-  left: 0;
-  top: 0;
-  z-index: 9;
+.react-calendar .react-calendar__tile--active::before {
+  @apply content-[''] absolute w-full h-full border border-black inset-0;
 }
 
 .react-calendar .react-calendar__tile:enabled:hover,
@@ -28,22 +19,10 @@
 }
 
 .react-calendar .react-calendar__month-view__days__day {
-  padding: 4px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  height: 10vw;
+  @apply h-28 flex justify-start items-start flex-col p-1;
 }
 .react-calendar .react-calendar__month-view__days__day p {
-  word-break: break-all;
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  background-color: skyblue;
-  width: 100%;
+  @apply truncate bg-slate-200 w-full;
 }
 
 .react-calendar abbr {
