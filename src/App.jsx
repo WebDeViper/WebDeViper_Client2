@@ -22,7 +22,6 @@ function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.user?.isAuth);
   const category = useSelector(state => state.user?.userInfo.category);
-  console.log('App category >>>', category);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -39,7 +38,7 @@ function App() {
       </Route>
       <Route path="/" element={<Layout category={category} />}>
         {/* 로그인 된 상태에서 접속 가능한 페이지 */}
-        <Route element={<ProtectedRoutes isAuth={isAuth} category={category} />}>
+        <Route element={<ProtectedRoutes isAuth={isAuth} />}>
           <Route index element={category ? <MainPage /> : <SignInPage />} />
           <Route path="/notice" element={<NoticePage />} />
           <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
