@@ -10,7 +10,8 @@ export default function CalendarPage() {
   const [openModal, setOpenModal] = useState(false);
 
   const handleOnChange = selectedValue => {
-    setSelectedValue(moment(selectedValue).format('YYYY-MM-DD'));
+    // setSelectedValue(moment(selectedValue).format('YYYY-MM-DD'));
+    setSelectedValue(selectedValue);
     setOpenModal(true);
   };
 
