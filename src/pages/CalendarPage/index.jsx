@@ -1,22 +1,32 @@
 import moment from 'moment';
 import { useState } from 'react';
 import Calendar from 'react-calendar';
-// import 'react-calendar/dist/Calendar.css';
 import './index.css';
+import { Button } from 'flowbite-react';
+import AddTodo from './AddTodo';
 
 export default function CalendarPage() {
-  const [value, onChange] = useState(new Date());
+  const [selectedValue, setSelectedValue] = useState(new Date());
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOnChange = selectedValue => {
+    setSelectedValue(moment(selectedValue).format('YYYY-MM-DD'));
+    setOpenModal(true);
+  };
+
+  console.log(selectedValue);
 
   return (
     <div className="calendar w-10/12 mx-auto">
       <Calendar
-        onChange={onChange}
-        value={value}
+        onChange={handleOnChange}
+        value={selectedValue}
         minDetail="year"
         formatDay={(_, date) => moment(date).format('D')}
         className="mx-auto"
         tileContent={({ activeStartDate, date, view }) => <p>It's Sunday!</p>}
       />
+      <AddTodo openModal={openModal} setOpenModal={setOpenModal} selectedValue={selectedValue} />
     </div>
   );
 }
