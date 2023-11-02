@@ -1,6 +1,5 @@
 import MyGroup from './MyGroup';
 import Notice from './Notice';
-import 'swiper/css';
 import StudyGroup from './StudyGroup';
 
 export default function MainPage() {
