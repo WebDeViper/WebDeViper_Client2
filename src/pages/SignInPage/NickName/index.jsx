@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import Button from '../../../components/common/Button';
 import { API } from '../../../utils/axios';
 
@@ -11,24 +11,35 @@ export default function NickName({ nickName, setNickName, isDuplicate, setIsDupl
     setIsDuplicate(!res.data ? false : true);
   };
   const handleInputChange = e => {
-    // 닉네임 입력 시 닉네임 상태값 설정하고 메세지는 초기화
-    setNickName(e.target.value);
-    setMessage('');
-  };
-  const handleBlur = () => {
-    // input 창에서 나오면 유효성 검사
-    const pattern = /^[A-Za-z0-9가-힣]{2,10}$/;
-    if (nickName) {
-      // 닉네임에 값이 있을 때에만 유효성 검사
-      if (!pattern.test(nickName)) {
-        setMessage('닉네임은 한글, 영문, 숫자를 포함한 2~10자 이하입니다!');
-        setIsValidate(false);
-      } else {
-        setIsValidate(true);
-      }
+    const inputNick = e.target.value;
+    // console.log(inputNick.trim().length);
+    inputNick.trim() ? setNickName(inputNick) : setNickName('');
+    if (!inputNick) {
+      setMessage('');
+    } else {
+      checkValidate(inputNick);
     }
   };
-  // 중복, 유효성 상태에 따른 스타일
+
+  const checkValidate = input => {
+    const pattern = /^[A-Za-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{2,10}$/;
+    if (!pattern.test(input.trim())) {
+      setMessage('닉네임은 한글, 영문, 숫자를 포함한 2~10자 이하입니다!');
+      setIsValidate(false);
+    } else {
+      setMessage('');
+      setIsValidate(true);
+    }
+  };
+  useEffect(() => {}, [nickName]);
+  console.log('닉네임 상태>>>', nickName);
+
+  // input에서 엔터로 중복체크
+  const handleKeyDown = e => {
+    if (e.code === 'Enter') {
+      isValidate ? handleCheckDuplicate() : '';
+    }
+  };
   const messageStyled = !isDuplicate ? 'text-primary' : 'text-red-600';
   const buttonStyled = isValidate ? '!bg-primary' : '!bg-gray-500';
   return (
@@ -42,9 +53,9 @@ export default function NickName({ nickName, setNickName, isDuplicate, setIsDupl
           className="font-bold w-[10rem] h-[3rem] border-transparent focus:ring-0 focus:border-transparent"
           type="text"
           placeholder="닉네임 입력"
-          value={nickName}
+          // value={nickName}
           onChange={handleInputChange}
-          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
         />
         {/* <Button handleClick={handleCheckDuplicate}>중복체크</Button> */}
         <button

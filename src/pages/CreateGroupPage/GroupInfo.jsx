@@ -9,12 +9,12 @@ export default function GroupInfo({ handleChangeInput, groupInfo, setGroupInfo }
         placeholder={'그룹명'}
         onChange={e => handleChangeInput(e, 'name')}
       />
-      <input
+      <textarea
         className="mb-2 text-center border-2 border-primary py-2 font-semibold rounded-lg"
-        type="text"
         placeholder={'그룹설명'}
+        value={groupInfo.description}
         onChange={e => handleChangeInput(e, 'description')}
-      />
+      ></textarea>
       <input
         className="mb-2 text-center border-2 border-primary py-2 font-semibold rounded-lg"
         type="password"
