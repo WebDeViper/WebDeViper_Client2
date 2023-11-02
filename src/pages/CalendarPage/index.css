@@ -28,3 +28,9 @@
 .react-calendar abbr {
   text-decoration: none;
 }
+
+/* 모달  */
+
+.calendar-modal .time-period button {
+  @apply flex justify-center;
+}
