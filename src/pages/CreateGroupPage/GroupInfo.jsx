@@ -1,8 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 export default function GroupInfo({ handleChangeInput, groupInfo, setGroupInfo }) {
-  const checkboxRef = useRef();
-
   return (
     <div className="groupInfo w-full flex flex-col">
       <input
@@ -29,15 +27,7 @@ export default function GroupInfo({ handleChangeInput, groupInfo, setGroupInfo }
         placeholder={'모집인원'}
         onChange={e => handleChangeInput(e, 'maximumNumberMember')}
       />
-      <label className="switch">
-        줌 여부
-        <input
-          type="checkbox"
-          ref={checkboxRef}
-          onChange={e => setGroupInfo({ ...groupInfo, isCameraOn: e.target.checked })}
-        />
-        {/* <span className="slider round"></span> */}
-      </label>
+
       {/* <p>ㅇㅇ</p> */}
     </div>
   );

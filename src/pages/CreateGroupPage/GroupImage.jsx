@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import Button from '../../components/common/Button';
 import ImageUploading from 'react-images-uploading';
 
-export default function GroupImage({ groupInfo, setGroupInfo }) {
-  const [images, setImages] = useState([]);
+export default function GroupImage({ groupInfo, setGroupInfo, images, setImages }) {
   const maxNumber = 1;
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
-    // console.log(imageList[0]?.file.name, addUpdateIndex);
     setImages(imageList);
     imageList.length > 0 ? setGroupInfo({ ...groupInfo, imagePath: imageList[0].file.name }) : '';
   };
+
   return (
-    <div className="groupImg w-full flex flex-col justify-center items-center bg-semi_primary rounded-lg p-2 me-2">
-      <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
+    <div className="groupImg w-full flex flex-col justify-center items-center bg-semi_primary rounded-lg me-2">
+      <ImageUploading value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
         {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
           // write your building UI
           <div className="upload__image-wrapper flex justify-center items-center w-full h-full">
@@ -33,7 +32,7 @@ export default function GroupImage({ groupInfo, setGroupInfo }) {
               imageList.map((image, index) => (
                 <div
                   key={index}
-                  className={`image-item flex flex-col justify-end items-end`}
+                  className={`image-item flex flex-col justify-end items-end border-none rounded-lg`}
                   style={{
                     backgroundImage: `url(${image['data_url']})`,
                     backgroundSize: 'cover', // 배경 이미지가 div를 가득 채우도록 설정
@@ -44,11 +43,17 @@ export default function GroupImage({ groupInfo, setGroupInfo }) {
                   }}
                 >
                   {/* <img className="block h-full w-auto" src={image['data_url']} alt="" /> */}
-                  <div className="image-item__btn-wrapper self-center">
-                    <Button customStyle={'me-3 !bg-semi_primary'} handleClick={() => onImageUpdate(index)}>
+                  <div className="image-item__btn-wrapper self-center mb-2">
+                    <Button
+                      customStyle={'me-3 !bg-transparent !border-2 !border-primary !text-primary'}
+                      handleClick={() => onImageUpdate(index)}
+                    >
                       변경
                     </Button>
-                    <Button customStyle={'!bg-semi_primary'} handleClick={() => onImageRemove(index)}>
+                    <Button
+                      customStyle={'!bg-transparent !border-2 !border-primary !text-primary'}
+                      handleClick={() => onImageRemove(index)}
+                    >
                       삭제
                     </Button>
                   </div>

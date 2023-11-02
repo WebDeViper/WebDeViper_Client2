@@ -6,11 +6,10 @@ export default function GroupCategory({ groupInfo, setGroupInfo }) {
   const handleClick = selectedCategory => setGroupInfo({ ...groupInfo, category: selectedCategory });
   return (
     <div className="groupCategory flex justify-between">
-      <span className="font-bold text-xl">카테고리</span>
       <DropDown
         items={items}
         title="카테고리 선택"
-        itemStyle={'text-lg'}
+        itemStyle={''}
         styles={'font-bold text-xl'}
         handleClick={handleClick}
       />
