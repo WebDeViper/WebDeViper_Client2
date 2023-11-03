@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API } from '../../utils/axios';
 import GroupImage from './GroupImage';
 import GroupInfo from './GroupInfo';
-import './index.css';
+// import './index.css';
 import GroupCategory from './GroupCategory';
 import GroupTargetTime from './GroupTargetTime';
 // import './index.css';

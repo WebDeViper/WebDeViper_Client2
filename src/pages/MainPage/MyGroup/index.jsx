@@ -1,6 +1,10 @@
 import GroupItem from './GroupItem';
 // import './style.css';
+import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+import { API } from '../../../utils/axios';
+import { useEffect, useState } from 'react';
 
 const data = [
   {
@@ -90,16 +94,48 @@ const data = [
 ];
 
 export default function MyGroup() {
+  const [myGroups, setMyGroups] = useState([]);
+  useEffect(() => {
+    const getMyGroups = async () => {
+      try {
+        const res = await API.get('/group/studyGroups/users');
+        console.log(res.data.study_groups);
+        setMyGroups(res.data.study_groups);
+      } catch (err) {
+        console.error('에러!!!', err);
+      }
+    };
+    getMyGroups();
+  }, []);
+  console.log('내그룹', myGroups);
   return (
     <section>
       <h2 className="font-bold text-2xl">내가 속한 그룹</h2>
       <div>
-        <Swiper slidesPerView={3} spaceBetween={10} className="swiper_custom">
-          {data.map((item, index) => (
-            <SwiperSlide key={index} className="">
-              <GroupItem imagePath={item.group_image_path} subject={item.name} />
-            </SwiperSlide>
-          ))}
+        <Swiper
+          navigation={true}
+          mousewheel={true}
+          keyboard={true}
+          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+          slidesPerView={3}
+          spaceBetween={10}
+          className="swiper_custom"
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={swiper => console.log(swiper)}
+        >
+          {myGroups?.map((item, index) => {
+            const { group_id, name, group_category_name, group_image_path, description } = item;
+            return (
+              <SwiperSlide key={index} className="">
+                <GroupItem
+                  imagePath={group_image_path}
+                  subject={name}
+                  category={group_category_name}
+                  description={description}
+                />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </section>
