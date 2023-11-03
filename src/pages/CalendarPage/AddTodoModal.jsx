@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import DatePicker from './DatePicker';
 
 export default function AddTodoModal({ openModal, setOpenModal, selectedValue }) {
-  const subjectRef = useRef(null);
+  const subjectInputRef = useRef(null);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [startTimeOfDay, setStartTimeOfDay] = useState('오후');
@@ -32,23 +32,13 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedValue })
     setEndDate(date);
   };
 
-  console.log(startDate, endDate);
-
-  const handleStartTimeOfDaySelection = e => {
-    setStartTimeOfDay(e);
-  };
-
-  const handleEndTimeOfDaySelection = e => {
-    setEndTimeOfDay(e);
-  };
-
   return (
     <Modal
       show={openModal}
       size="2xl"
       popup
       onClose={handleCloseModal}
-      initialFocus={subjectRef}
+      initialFocus={subjectInputRef}
       className="calendar-modal"
     >
       <Modal.Header />
@@ -59,20 +49,20 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedValue })
             <div className="mb-2 block">
               <Label htmlFor="subject" value="제목" />
             </div>
-            <TextInput ref={subjectRef} id="subject" type="text" required />
+            <TextInput ref={subjectInputRef} id="subject" type="text" required />
           </div>
           <DatePicker
-            text="시작"
+            label="시작"
             handleChange={handleStartDateChange}
             selectedDate={startDate}
-            handleTimeOfDaySelection={handleStartTimeOfDaySelection}
+            setTimeOfDay={setStartTimeOfDay}
             activeTimeOfDay={startTimeOfDay}
           />
           <DatePicker
-            text="종료"
+            label="종료"
             handleChange={handleEndDateChange}
             selectedDate={endDate}
-            handleTimeOfDaySelection={handleEndTimeOfDaySelection}
+            setTimeOfDay={setEndTimeOfDay}
             activeTimeOfDay={endTimeOfDay}
           />
 
@@ -84,6 +74,12 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedValue })
           </div>
         </div>
       </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={() => setOpenModal(false)}>확인</Button>
+        <Button color="gray" onClick={() => setOpenModal(false)}>
+          취소
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }
