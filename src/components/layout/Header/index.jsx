@@ -14,7 +14,7 @@ export default function Header() {
   return (
     <header className="flex justify-between pt-7 pb-5 relative z-50">
       <nav>
-        <ul className="flex items-center gap-6">
+        <ul className="flex items-center gap-6 font-semibold">
           <li>
             <Link to="/">홈</Link>
           </li>
