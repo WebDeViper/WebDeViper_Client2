@@ -3,7 +3,8 @@ import { useState } from 'react';
 import Calendar from 'react-calendar';
 import './index.css';
 import { Button } from 'flowbite-react';
-import AddTodo from './AddTodo';
+import AddTodoModal from './AddTodoModal';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function CalendarPage() {
   const [selectedValue, setSelectedValue] = useState(new Date());
@@ -15,8 +16,6 @@ export default function CalendarPage() {
     setOpenModal(true);
   };
 
-  console.log(selectedValue);
-
   return (
     <div className="calendar w-10/12 mx-auto">
       <Calendar
@@ -27,7 +26,7 @@ export default function CalendarPage() {
         className="mx-auto"
         tileContent={({ activeStartDate, date, view }) => <p>It's Sunday!</p>}
       />
-      <AddTodo openModal={openModal} setOpenModal={setOpenModal} selectedValue={selectedValue} />
+      <AddTodoModal openModal={openModal} setOpenModal={setOpenModal} selectedValue={selectedValue} />
     </div>
   );
 }
