@@ -10,9 +10,7 @@ export default function DetailNoticePage() {
     const getNotice = async () => {
       try {
         const response = await API.get(`/notice/${noticeId}`);
-        // const response = await API.get('/notices');
         const data = await response.data;
-        console.log(data);
         setNotice(data.result);
       } catch (err) {
         console.error(err);

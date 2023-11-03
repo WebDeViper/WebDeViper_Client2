@@ -10,8 +10,7 @@ export default function NoticePage() {
       try {
         const response = await API.get('/notices');
         const data = await response.data;
-        console.log(data);
-        setNotice(data);
+        setNotice(data.notices);
       } catch (err) {
         console.error(err);
       }
@@ -36,11 +35,11 @@ export default function NoticePage() {
           </tr>
         </thead>
         <tbody>
-          {notice.reverse().map(item => (
-            <tr key={item.notice_id} className="border-b-[1px] border-[rgba(0,0,0,0.3)]">
-              <td className="p-3">{item.notice_id}</td>
+          {notice.reverse().map((item, index) => (
+            <tr key={item._id} className="border-b-[1px] border-[rgba(0,0,0,0.3)]">
+              <td className="p-3">{index}</td>
               <td className="p-3">
-                <Link to={`/notice/${item.notice_id}`}>{item.title}</Link>
+                <Link to={`/notice/${item._id}`}>{item.title}</Link>
               </td>
               <td className="p-3">{moment(item.createdAt).format('YYYY.MM.DD')}</td>
             </tr>
