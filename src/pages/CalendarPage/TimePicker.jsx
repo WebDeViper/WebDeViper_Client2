@@ -1,20 +1,24 @@
 import { Label, ListGroup, TextInput } from 'flowbite-react';
 
-export default function TimePicker({ handleTimeOfDaySelection, activeTimeOfDay }) {
+export default function TimePicker({ setTimeOfDay, activeTimeOfDay }) {
+  const handleTimeOfDaySelection = e => {
+    setTimeOfDay(e.target.innerText);
+  };
+
   return (
     <div className="flex gap-4">
       <div className="flex items-center gap-4">
         <ListGroup className="w-16">
           <ListGroup.Item
             className="time-period"
-            onClick={e => handleTimeOfDaySelection(e.target.innerText)}
+            onClick={handleTimeOfDaySelection}
             active={activeTimeOfDay === '오전'}
           >
             오전
           </ListGroup.Item>
           <ListGroup.Item
             className="time-period"
-            onClick={e => handleTimeOfDaySelection(e.target.innerText)}
+            onClick={handleTimeOfDaySelection}
             active={activeTimeOfDay === '오후'}
           >
             오후

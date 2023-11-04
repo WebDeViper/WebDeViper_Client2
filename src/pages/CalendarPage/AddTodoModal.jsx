@@ -1,18 +1,30 @@
 import { Button, Textarea, Label, Modal, TextInput } from 'flowbite-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import DatePicker from './DatePicker';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export default function AddTodoModal({ openModal, setOpenModal, selectedValue }) {
-  const subjectRef = useRef(null);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [startTimeOfDay, setStartTimeOfDay] = useState('오후');
   const [endTimeOfDay, setEndTimeOfDay] = useState('오후');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   useEffect(() => {
     setStartDate(selectedValue);
     setEndDate(selectedValue);
   }, [selectedValue]);
+
+  useEffect(() => {
+    reset();
+  }, [openModal]);
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -32,58 +44,79 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedValue })
     setEndDate(date);
   };
 
-  console.log(startDate, endDate);
-
-  const handleStartTimeOfDaySelection = e => {
-    setStartTimeOfDay(e);
+  const onSubmit = data => {
+    console.log(data);
+    setOpenModal(false);
   };
 
-  const handleEndTimeOfDaySelection = e => {
-    setEndTimeOfDay(e);
+  const toastError = msg => {
+    toast.error(msg);
   };
 
   return (
-    <Modal
-      show={openModal}
-      size="2xl"
-      popup
-      onClose={handleCloseModal}
-      initialFocus={subjectRef}
-      className="calendar-modal"
-    >
-      <Modal.Header />
-      <Modal.Body>
-        <div className="space-y-6">
-          <h3 className="text-xl font-medium text-gray-900 dark:text-white">일정</h3>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="subject" value="제목" />
-            </div>
-            <TextInput ref={subjectRef} id="subject" type="text" required />
-          </div>
-          <DatePicker
-            text="시작"
-            handleChange={handleStartDateChange}
-            selectedDate={startDate}
-            handleTimeOfDaySelection={handleStartTimeOfDaySelection}
-            activeTimeOfDay={startTimeOfDay}
-          />
-          <DatePicker
-            text="종료"
-            handleChange={handleEndDateChange}
-            selectedDate={endDate}
-            handleTimeOfDaySelection={handleEndTimeOfDaySelection}
-            activeTimeOfDay={endTimeOfDay}
-          />
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <Modal show={openModal} size="2xl" popup onClose={handleCloseModal} className="calendar-modal">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Modal.Header />
+          <Modal.Body>
+            <div className="space-y-6">
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white">일정</h3>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="subject" value="제목" />
+                </div>
+                <TextInput
+                  id="subject"
+                  type="text"
+                  {...register('subject', {
+                    required: '유효한 시간을 입력하세요.',
+                  })}
+                />
+              </div>
+              {errors?.subject && openModal && toastError(errors.subject.message)}
+              <DatePicker
+                label="시작"
+                handleChange={handleStartDateChange}
+                selectedDate={startDate}
+                setTimeOfDay={setStartTimeOfDay}
+                activeTimeOfDay={startTimeOfDay}
+              />
+              <DatePicker
+                label="종료"
+                handleChange={handleEndDateChange}
+                selectedDate={endDate}
+                setTimeOfDay={setEndTimeOfDay}
+                activeTimeOfDay={endTimeOfDay}
+              />
 
-          <div className="">
-            <div className="mb-2 block">
-              <Label htmlFor="comment" value="내용" />
+              <div className="">
+                <div className="mb-2 block">
+                  <Label htmlFor="comment" value="내용" />
+                </div>
+                <Textarea id="comment" rows={4} />
+              </div>
             </div>
-            <Textarea id="comment" required rows={4} />
-          </div>
-        </div>
-      </Modal.Body>
-    </Modal>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit">확인</Button>
+            <Button type="button" color="gray" onClick={() => setOpenModal(false)}>
+              취소
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
+    </>
   );
 }
