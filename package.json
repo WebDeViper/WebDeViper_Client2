@@ -17,6 +17,7 @@
     "flowbite": "^2.0.0",
     "flowbite-react": "^0.6.4",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "react": "^18.2.0",
     "react-calendar": "^4.6.1",
     "react-datepicker": "^4.21.0",

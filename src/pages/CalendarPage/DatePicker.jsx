@@ -2,14 +2,35 @@ import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale';
 import TimePicker from './TimePicker';
 
-export default function CustomDatePicker({ label, selectedDate, handleChange, activeTimeOfDay, setTimeOfDay }) {
+export default function CustomDatePicker({
+  label,
+  selectedDate,
+  handleChange,
+  activeTimeOfDay,
+  setTimeOfDay,
+  register,
+  errors,
+  hourName,
+  minuteName,
+}) {
   return (
-    <div className="flex items-center gap-4">
+    <div>
       <div className="flex items-center gap-4">
-        <div className="whitespace-nowrap">{label}</div>
-        <DatePicker selected={selectedDate} onChange={handleChange} dateFormat="yyyy.MM.dd" locale={ko} />
+        <div className="flex items-center gap-4">
+          <div className="whitespace-nowrap">{label}</div>
+          <DatePicker selected={selectedDate} onChange={handleChange} dateFormat="yyyy.MM.dd" locale={ko} />
+        </div>
+        <TimePicker
+          setTimeOfDay={setTimeOfDay}
+          activeTimeOfDay={activeTimeOfDay}
+          register={register}
+          hourName={hourName}
+          minuteName={minuteName}
+        />
       </div>
-      <TimePicker setTimeOfDay={setTimeOfDay} activeTimeOfDay={activeTimeOfDay} />
+      {errors[hourName]?.message || errors[minuteName]?.message ? (
+        <p className="text-danger">{errors[hourName]?.message || errors[minuteName]?.message}</p>
+      ) : null}
     </div>
   );
 }
