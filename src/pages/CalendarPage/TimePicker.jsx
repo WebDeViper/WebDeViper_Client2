@@ -1,6 +1,9 @@
 import { Label, ListGroup, TextInput } from 'flowbite-react';
+import getNumbersOnly from '../../utils/getNumbersOnly';
 
-export default function TimePicker({ setTimeOfDay, activeTimeOfDay }) {
+const ERROR_MESSAGE = { message: '유효한 시간을 입력하세요.' };
+
+export default function TimePicker({ setTimeOfDay, activeTimeOfDay, register, minuteName, hourName }) {
   const handleTimeOfDaySelection = e => {
     setTimeOfDay(e.target.innerText);
   };
@@ -27,14 +30,47 @@ export default function TimePicker({ setTimeOfDay, activeTimeOfDay }) {
       </div>
       <div className="flex items-center gap-1">
         <div>
-          <TextInput id="small" type="text" sizing="sm" />
+          <TextInput
+            id="small"
+            type="text"
+            sizing="sm"
+            minLength="1"
+            maxLength="2"
+            {...register(hourName, {
+              required: ERROR_MESSAGE.message,
+              minLength: {
+                value: 1,
+                ...ERROR_MESSAGE,
+              },
+              maxLength: { value: 2, ...ERROR_MESSAGE },
+              max: { value: 12, ...ERROR_MESSAGE },
+              min: { value: 1, ...ERROR_MESSAGE },
+              setValueAs: v => getNumbersOnly(v),
+            })}
+          />
           <div className="block">
             <Label htmlFor="small" value="시간" />
           </div>
         </div>
         <span className="mb-7">:</span>
         <div>
-          <TextInput id="small" type="text" sizing="sm" />
+          <TextInput
+            id="small"
+            type="text"
+            sizing="sm"
+            maxLength="2"
+            {...register(minuteName, {
+              required: '유효한 시간을 입력하세요.',
+              minLength: {
+                value: 1,
+                ...ERROR_MESSAGE,
+              },
+              maxLength: { value: 2, ...ERROR_MESSAGE },
+              max: { value: 59, ...ERROR_MESSAGE },
+              min: { value: 0, ...ERROR_MESSAGE },
+              setValueAs: v => getNumbersOnly(v),
+            })}
+          />
           <div className="block">
             <Label htmlFor="small" value="분" />
           </div>

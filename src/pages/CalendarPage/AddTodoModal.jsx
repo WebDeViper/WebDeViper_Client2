@@ -4,18 +4,28 @@ import { useForm } from 'react-hook-form';
 import DatePicker from './DatePicker';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
+import { API } from '../../utils/axios';
+import moment from 'moment';
 
-export default function AddTodoModal({ openModal, setOpenModal, selectedValue }) {
+export default function AddTodoModal({ openModal, setOpenModal, selectedValue, setTodos }) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [startTimeOfDay, setStartTimeOfDay] = useState('오후');
   const [endTimeOfDay, setEndTimeOfDay] = useState('오후');
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      startHour: '4',
+      startMinute: '00',
+      endHour: '5',
+      endMinute: '00',
+    },
+  });
 
   useEffect(() => {
     setStartDate(selectedValue);
@@ -44,13 +54,41 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedValue })
     setEndDate(date);
   };
 
-  const onSubmit = data => {
-    console.log(data);
-    setOpenModal(false);
-  };
+  const onSubmit = async data => {
+    const ERR_MESSAGE = '시작 시간이 종료 시간보다 빨라야 합니다.';
+    const startTime = startTimeOfDay === '오전' ? Number(data.startHour) : Number(data.startHour) + 12;
+    const endTime = endTimeOfDay === '오전' ? Number(data.endHour) : Number(data.endHour) + 12;
+    if (startDate === endDate) {
+      if (startTime > endTime) return toast.error(ERR_MESSAGE);
+      if (startTime === endTime) {
+        if (data.startMinute > data.endMinute) return toast.error(ERR_MESSAGE);
+      }
+    }
 
-  const toastError = msg => {
-    toast.error(msg);
+    try {
+      const momentStartDate = moment(startDate).format('yyyy, MM, DD');
+      const momentEndDate = moment(endDate).format('yyyy, MM, DD');
+
+      const newStateDate = new Date(momentStartDate);
+      newStateDate.setHours(startTime);
+      newStateDate.setMinutes(data.startMinute);
+
+      const newEndDate = new Date(momentEndDate);
+      newEndDate.setHours(endTime);
+      newEndDate.setMinutes(data.endMinute);
+
+      const body = {
+        title: data.subject,
+        content: data.content,
+        start_time: newStateDate,
+        end_time: newEndDate,
+      };
+      await API.post('/todo_list', body);
+      setTodos(prev => [...prev, body]);
+      setOpenModal(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -81,31 +119,39 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedValue })
                   id="subject"
                   type="text"
                   {...register('subject', {
-                    required: '유효한 시간을 입력하세요.',
+                    required: '제목을 입력하세요.',
                   })}
                 />
               </div>
-              {errors?.subject && openModal && toastError(errors.subject.message)}
+              {errors?.subject && <span className="text-danger">{errors.subject.message}</span>}
               <DatePicker
                 label="시작"
+                hourName="startHour"
+                minuteName="startMinute"
                 handleChange={handleStartDateChange}
                 selectedDate={startDate}
                 setTimeOfDay={setStartTimeOfDay}
                 activeTimeOfDay={startTimeOfDay}
+                register={register}
+                errors={errors}
               />
               <DatePicker
                 label="종료"
+                hourName="endHour"
+                minuteName="endMinute"
                 handleChange={handleEndDateChange}
                 selectedDate={endDate}
                 setTimeOfDay={setEndTimeOfDay}
                 activeTimeOfDay={endTimeOfDay}
+                register={register}
+                errors={errors}
               />
 
               <div className="">
                 <div className="mb-2 block">
                   <Label htmlFor="comment" value="내용" />
                 </div>
-                <Textarea id="comment" rows={4} />
+                <Textarea id="comment" rows={4} {...register('content')} />
               </div>
             </div>
           </Modal.Body>

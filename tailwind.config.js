@@ -7,6 +7,7 @@ export default {
         primary: '#22a3cc',
         semi_primary: '#bce3ef',
         secondary: '#bfd9ff',
+        danger: '#e74c3c',
       },
       container: {
         screens: {
