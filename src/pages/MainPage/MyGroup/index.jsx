@@ -128,6 +128,7 @@ export default function MyGroup() {
             return (
               <SwiperSlide key={index} className="">
                 <GroupItem
+                  group_id={group_id}
                   imagePath={group_image_path}
                   subject={name}
                   category={group_category_name}

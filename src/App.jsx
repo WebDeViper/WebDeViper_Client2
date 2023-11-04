@@ -17,6 +17,8 @@ import PageNotFound from './pages/404Page';
 import SignInPage from './pages/SignInPage';
 import CalendarPage from './pages/CalendarPage';
 import CreateGroupPage from './pages/CreateGroupPage';
+import ChatPage from './pages/ChatPage';
+import MyGroupPage from './pages/MyGroupPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +49,8 @@ function App() {
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/group/:groupId" /*element={}*/ />
           <Route path="/group/create" element={<CreateGroupPage />} />
+          <Route path="/group/:groupId" element={<MyGroupPage />} />
+          <Route path="/group/:groupId/chat" element={<ChatPage />} />
         </Route>
 
         <Route path="/oauth/kakao" element={<KakaoPage />} />
