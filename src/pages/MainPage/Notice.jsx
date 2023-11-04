@@ -14,7 +14,7 @@ export default function Notice() {
       try {
         const response = await API.get('/notices');
         const data = await response.data;
-        setNotice(data);
+        setNotice(data.notices);
       } catch (err) {
         console.error(err);
       }
@@ -43,8 +43,8 @@ export default function Notice() {
               className="h-6"
             >
               {notice.map(item => (
-                <SwiperSlide key={item.notice_id}>
-                  <Link to={`/notice/${item.notice_id}`} className="select-none">
+                <SwiperSlide key={item._id}>
+                  <Link to={`/notice/${item._id}`} className="select-none">
                     {item.title}
                   </Link>
                 </SwiperSlide>
