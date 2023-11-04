@@ -67,6 +67,7 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.userInfo = action.payload.userInfo;
         state.isAuth = true;
+        localStorage.setItem('accessToken', action.payload.token);
       })
       .addCase(profileUser.rejected, (state, action) => {
         state.isLoading = false;
