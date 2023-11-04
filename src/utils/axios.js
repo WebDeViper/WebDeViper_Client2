@@ -18,3 +18,16 @@ API.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+API.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error.response.data.msg === '토큰 만료') {
+      window.location.reload();
+    }
+
+    return Promise.reject(error);
+  }
+);
