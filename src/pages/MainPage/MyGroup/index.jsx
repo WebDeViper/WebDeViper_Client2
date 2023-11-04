@@ -124,14 +124,14 @@ export default function MyGroup() {
           onSwiper={swiper => console.log(swiper)}
         >
           {myGroups?.map((item, index) => {
-            const { group_id, name, group_category_name, group_image_path, description } = item;
+            const { group_id, group_name, group_category, group_image_path, group_description } = item;
             return (
               <SwiperSlide key={index} className="">
                 <GroupItem
                   imagePath={group_image_path}
-                  subject={name}
-                  category={group_category_name}
-                  description={description}
+                  subject={group_name}
+                  category={group_category}
+                  description={group_description}
                 />
               </SwiperSlide>
             );
