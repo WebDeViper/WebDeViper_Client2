@@ -4,6 +4,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 export default function MyGroupPage() {
   const location = useLocation();
   const roomId = location.state.roomId;
+  console.log('룸아이디 오는거 확인>>>', roomId);
   const { groupId } = useParams();
   const navigate = useNavigate();
 
