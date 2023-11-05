@@ -93,17 +93,15 @@ const data = [
     updatedAt: '2023-10-26T11:23:29.000Z',
   },
 ];
-
+// const handleRooms = rooms => {
+//   setRooms(rooms);
+// };
+// socket.on('rooms', handleRooms);
 export default function MyGroup() {
-  const [rooms, setRooms] = useState([]);
+  // const [rooms, setRooms] = useState([]);
 
   const [myGroups, setMyGroups] = useState([]);
   useEffect(() => {
-    const handleRooms = rooms => {
-      setRooms(rooms);
-    };
-    socket.on('rooms', handleRooms);
-
     const getMyGroups = async () => {
       try {
         const res = await API.get('/group/studyGroups/users');
@@ -113,11 +111,8 @@ export default function MyGroup() {
         console.error('에러!!!', err);
       }
     };
-    getMyGroups();
 
-    return () => {
-      socket.off('rooms', handleRooms);
-    };
+    getMyGroups();
   }, []);
   console.log('내그룹', myGroups);
   return (
@@ -137,11 +132,11 @@ export default function MyGroup() {
         >
           {myGroups?.map((item, index) => {
             const { _id, group_name, group_category, group_image_path, group_description } = item;
-            const roomId = rooms.find(room => room.group === _id)._id;
+            // const roomId = rooms.find(room => room.group === _id)._id;
             return (
               <SwiperSlide key={index} className="">
                 <GroupItem
-                  roomId={roomId}
+                  // roomId={roomId}
                   group_id={_id}
                   imagePath={group_image_path}
                   subject={group_name}
