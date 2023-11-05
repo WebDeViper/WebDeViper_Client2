@@ -15,7 +15,6 @@ export default function CreateGroupPage() {
 
   const [groupInfo, setGroupInfo] = useState({
     name: '',
-    password: '',
     description: '',
     category: '',
     dailyGoalTime: null,
@@ -70,7 +69,7 @@ export default function CreateGroupPage() {
           </Button>
         </div>
       </div>
-      <div className="groupTop flex mb-5">
+      <div className="groupTop flex lg:flex-row xs:flex-col mb-5">
         <GroupImage groupInfo={groupInfo} setGroupInfo={setGroupInfo} images={images} setImages={setImages} />
         <GroupInfo handleChangeInput={handleChangeInput} groupInfo={groupInfo} setGroupInfo={setGroupInfo} />
       </div>

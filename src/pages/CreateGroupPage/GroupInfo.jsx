@@ -10,25 +10,17 @@ export default function GroupInfo({ handleChangeInput, groupInfo, setGroupInfo }
         onChange={e => handleChangeInput(e, 'name')}
       />
       <textarea
-        className="mb-2 text-center border-2 border-primary py-2 font-semibold rounded-lg"
+        className="mb-2 text-center border-2 border-primary py-2 font-semibold rounded-lg h-full"
         placeholder={'그룹설명'}
         value={groupInfo.description}
         onChange={e => handleChangeInput(e, 'description')}
       ></textarea>
       <input
         className="mb-2 text-center border-2 border-primary py-2 font-semibold rounded-lg"
-        type="password"
-        placeholder={'비밀번호'}
-        onChange={e => handleChangeInput(e, 'password')}
-      />
-      <input
-        className="mb-2 text-center border-2 border-primary py-2 font-semibold rounded-lg"
         type="number"
         placeholder={'모집인원'}
         onChange={e => handleChangeInput(e, 'maximumNumberMember')}
       />
-
-      {/* <p>ㅇㅇ</p> */}
     </div>
   );
 }

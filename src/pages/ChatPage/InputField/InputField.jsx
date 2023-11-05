@@ -8,6 +8,7 @@ const InputField = ({ message, setMessage, sendMessage }) => {
       <div className="plus-button">+</div>
       <form onSubmit={sendMessage} className="input-container">
         <Input
+          className="input"
           placeholder="메시지를 입력하세요…"
           value={message}
           onChange={event => setMessage(event.target.value)}
