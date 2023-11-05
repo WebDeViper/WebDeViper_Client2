@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import socket from '../../utils/socketServer';
+import { chatSocket } from '../../utils/socketServer';
 import { Button } from '@mui/base/Button';
 import './index.css';
 import InputField from './InputField/InputField';
@@ -18,7 +18,7 @@ const ChatPage = () => {
 
   // 채팅창 떠날 때
   const leaveRoom = () => {
-    socket.emit('leaveRoom', user, res => {
+    chatSocket.emit('leaveRoom', user, res => {
       if (res.ok) navigate(-1); // 다시 채팅방 리스트 페이지로 돌아감
     });
   };
@@ -29,21 +29,21 @@ const ChatPage = () => {
   useEffect(() => {
     console.log('유저는>>', user);
 
-    socket.emit('joinRoom', user, roomId, res => {
+    chatSocket.emit('joinRoom', user, roomId, res => {
       if (res && res.ok) {
         console.log('successfully join', res);
       } else {
         console.log('fail to join', res);
       }
     });
-    socket.on('message', message => {
+    chatSocket.on('message', message => {
       // message 이벤트를 수신하면 이 함수가 실행됩니다.
       // 여기서 message는 서버에서 보낸 데이터입니다.
       console.log('서버로부터 메시지 수신:', message, '라고?');
       setChatLog(prevState => prevState.concat(message));
     });
     // 서버에서 이전 채팅 로그를 받아온다
-    socket.emit('getChatLog', roomId, res => {
+    chatSocket.emit('getChatLog', roomId, res => {
       if (res?.isOk) {
         console.log('서버에서 받은 채팅 로그:', res.data);
         setChatLog(prevState => prevState.concat(res.data));
@@ -53,7 +53,7 @@ const ChatPage = () => {
 
   const sendMessage = event => {
     event.preventDefault();
-    socket.emit('sendMessage', roomId, message, res => {
+    chatSocket.emit('sendMessage', roomId, message, res => {
       if (!res.ok) {
         console.log('error message', res.error);
       }

@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 import { API } from '../../../utils/axios';
 import { useEffect, useState } from 'react';
-import socket from '../../../utils/socketServer';
 
 const data = [
   {
@@ -93,13 +92,7 @@ const data = [
     updatedAt: '2023-10-26T11:23:29.000Z',
   },
 ];
-// const handleRooms = rooms => {
-//   setRooms(rooms);
-// };
-// socket.on('rooms', handleRooms);
 export default function MyGroup() {
-  // const [rooms, setRooms] = useState([]);
-
   const [myGroups, setMyGroups] = useState([]);
   useEffect(() => {
     const getMyGroups = async () => {
