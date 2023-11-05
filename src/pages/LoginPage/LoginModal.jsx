@@ -14,8 +14,13 @@ export default function LoginModal({ isOpen, close }) {
 
   // API & Redirect URI
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-  const REDIRECT_URI = redirectUrl();
-  const KAKAO_LOGIN_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_REDIRECT_URI = redirectUrl('kakao');
+  const KAKAO_LOGIN_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
+  const NAVER_STATE = import.meta.env.VITE_NAVER_STATE;
+  const NAVER_REDIRECT_URI = redirectUrl('naver');
+  const NAVER_LOGIN_URI = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=${NAVER_STATE}`;
 
   // style
   // const kakaoColor = '#FEE500';
@@ -47,7 +52,7 @@ export default function LoginModal({ isOpen, close }) {
             <FcGoogle size={25} />
             <span className="ms-3">구글 로그인</span>
           </Button>
-          <Button handleClick={() => handleNavigate(`${KAKAO_LOGIN_URI}`)} customStyle={naverStyle}>
+          <Button handleClick={() => handleNavigate(`${NAVER_LOGIN_URI}`)} customStyle={naverStyle}>
             <SiNaver size={25} />
             <span className="ms-3">네이버 로그인</span>
           </Button>
