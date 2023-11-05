@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import socket from '../../../utils/socketServer';
 import { API } from '../../../utils/axios';
 
 import { useEffect, useState } from 'react';
