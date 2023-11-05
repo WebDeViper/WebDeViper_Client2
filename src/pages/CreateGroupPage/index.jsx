@@ -69,11 +69,11 @@ export default function CreateGroupPage() {
           </Button>
         </div>
       </div>
-      <div className="groupTop flex lg:flex-row xs:flex-col mb-5">
+      <div className="groupTop flex flex-col md:flex-row mb-5">
         <GroupImage groupInfo={groupInfo} setGroupInfo={setGroupInfo} images={images} setImages={setImages} />
         <GroupInfo handleChangeInput={handleChangeInput} groupInfo={groupInfo} setGroupInfo={setGroupInfo} />
       </div>
-      <div className="groupBot flex w-full justify-between self-center px-10">
+      <div className="groupBot flex flex-col md:flex-row  w-full justify-between self-center px-10">
         <GroupCategory groupInfo={groupInfo} setGroupInfo={setGroupInfo} />
         <GroupTargetTime groupInfo={groupInfo} setGroupInfo={setGroupInfo} />
         <label className="switch flex w-fit justify-center items-center">
