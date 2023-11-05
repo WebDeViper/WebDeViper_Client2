@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 import { API } from '../../../utils/axios';
 import { useEffect, useState } from 'react';
+import socket from '../../../utils/socketServer';
 
 const data = [
   {
@@ -94,8 +95,15 @@ const data = [
 ];
 
 export default function MyGroup() {
+  const [rooms, setRooms] = useState([]);
+
   const [myGroups, setMyGroups] = useState([]);
   useEffect(() => {
+    const handleRooms = rooms => {
+      setRooms(rooms);
+    };
+    socket.on('rooms', handleRooms);
+
     const getMyGroups = async () => {
       try {
         const res = await API.get('/group/studyGroups/users');
@@ -106,6 +114,10 @@ export default function MyGroup() {
       }
     };
     getMyGroups();
+
+    return () => {
+      socket.off('rooms', handleRooms);
+    };
   }, []);
   console.log('내그룹', myGroups);
   return (
@@ -124,11 +136,13 @@ export default function MyGroup() {
           onSwiper={swiper => console.log(swiper)}
         >
           {myGroups?.map((item, index) => {
-            const { group_id, group_name, group_category, group_image_path, group_description } = item;
+            const { _id, group_name, group_category, group_image_path, group_description } = item;
+            const roomId = rooms.find(room => room.group === _id)._id;
             return (
               <SwiperSlide key={index} className="">
                 <GroupItem
-                  group_id={group_id}
+                  roomId={roomId}
+                  group_id={_id}
                   imagePath={group_image_path}
                   subject={group_name}
                   category={group_category}

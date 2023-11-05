@@ -47,10 +47,9 @@ function App() {
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/ranking" element={<RankingPage />} />
           <Route path="/setting" element={<SettingPage />} />
-          <Route path="/group/:groupId" /*element={}*/ />
           <Route path="/group/create" element={<CreateGroupPage />} />
           <Route path="/group/:groupId" element={<MyGroupPage />} />
-          <Route path="/group/:groupId/chat" element={<ChatPage />} />
+          <Route path="/group/chat/:roomId/" element={<ChatPage />} />
         </Route>
 
         <Route path="/oauth/kakao" element={<KakaoPage />} />
