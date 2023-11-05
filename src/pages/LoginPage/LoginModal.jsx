@@ -22,6 +22,10 @@ export default function LoginModal({ isOpen, close }) {
   const NAVER_REDIRECT_URI = redirectUrl('naver');
   const NAVER_LOGIN_URI = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=${NAVER_STATE}`;
 
+  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const GOOGLE_REDIRECT_URL = redirectUrl('google');
+  const GOOGLE_LOGIN_URI = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URL}&response_type=code&scope=email profile`;
+
   // style
   // const kakaoColor = '#FEE500';
   // const googleColor = '#fefefe';
@@ -48,7 +52,7 @@ export default function LoginModal({ isOpen, close }) {
             <RiKakaoTalkFill size={25} />
             <span className="ms-3">카카오 로그인</span>
           </Button>
-          <Button handleClick={() => handleNavigate(`${KAKAO_LOGIN_URI}`)} customStyle={googleStyle}>
+          <Button handleClick={() => handleNavigate(`${GOOGLE_LOGIN_URI}`)} customStyle={googleStyle}>
             <FcGoogle size={25} />
             <span className="ms-3">구글 로그인</span>
           </Button>

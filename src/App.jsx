@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import DetailNoticePage from './pages/DetailNoticePage';
 import KakaoPage from './pages/OauthPage/KakaoPage';
 import NaverPage from './pages/OauthPage/NaverPage';
+import GooglePage from './pages/OauthPage/GooglePage';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/dist';
 import { authUser } from './reducers/thunkFunctions';
@@ -54,6 +55,7 @@ function App() {
         </Route>
 
         <Route path="/oauth/kakao" element={<KakaoPage />} />
+        <Route path="/oauth/google" element={<GooglePage />} />
         <Route path="/oauth/naver" element={<NaverPage />} />
       </Route>
       <Route path="/*" element={<PageNotFound />} />
