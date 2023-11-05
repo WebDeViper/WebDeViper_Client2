@@ -9,21 +9,26 @@ import { useSelector } from 'react-redux';
 
 const ChatPage = () => {
   // console.log('유저정보는', user);
-  const user = useSelector(state => state.user);
-  console.log('유저는>>', user);
-  const { id } = useParams(); // 유저가 조인한 방의 아이디를 url에서 가져온다
-
-  const navigate = useNavigate();
+  const user = useSelector(state => state.user?.userInfo);
+  const { roomId } = useParams(); // 유저가 조인한 방의 아이디를 url에서 가져온다
   const [chatLog, setChatLog] = useState([]); // 배열로 변경
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  // 채팅창 떠날 때
   const leaveRoom = () => {
     socket.emit('leaveRoom', user, res => {
-      if (res.ok) navigate('/'); // 다시 채팅방 리스트 페이지로 돌아감
+      if (res.ok) navigate(-1); // 다시 채팅방 리스트 페이지로 돌아감
     });
   };
-  console.log('message List', chatLog);
+
+  // console.log('message List', chatLog);
+  // console.log('룸아이디???', roomId);
+  // 채팅 화면 처음 들어올 때
   useEffect(() => {
-    socket.emit('joinRoom', user, id, res => {
+    console.log('유저는>>', user);
+
+    socket.emit('joinRoom', user, roomId, res => {
       if (res && res.ok) {
         console.log('successfully join', res);
       } else {
@@ -33,11 +38,11 @@ const ChatPage = () => {
     socket.on('message', message => {
       // message 이벤트를 수신하면 이 함수가 실행됩니다.
       // 여기서 message는 서버에서 보낸 데이터입니다.
-      console.log('서버로부터 메시지 수신:', message);
+      console.log('서버로부터 메시지 수신:', message, '라고?');
       setChatLog(prevState => prevState.concat(message));
     });
-    //   // 서버에서 이전 채팅 로그를 받아온다
-    socket.emit('getChatLog', id, res => {
+    // 서버에서 이전 채팅 로그를 받아온다
+    socket.emit('getChatLog', roomId, res => {
       if (res?.isOk) {
         console.log('서버에서 받은 채팅 로그:', res.data);
         setChatLog(prevState => prevState.concat(res.data));
@@ -47,7 +52,7 @@ const ChatPage = () => {
 
   const sendMessage = event => {
     event.preventDefault();
-    socket.emit('sendMessage', id, message, res => {
+    socket.emit('sendMessage', roomId, message, res => {
       if (!res.ok) {
         console.log('error message', res.error);
       }
