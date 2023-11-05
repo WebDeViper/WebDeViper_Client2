@@ -9,7 +9,7 @@ export default function KakaoPage() {
   const navigate = useNavigate();
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
 
-  const REDIRECT_URI = redirectUrl();
+  const REDIRECT_URI = redirectUrl('kakao');
   const dispatch = useDispatch();
 
   const getToken = useCallback(
@@ -25,7 +25,8 @@ export default function KakaoPage() {
         });
 
         const { access_token } = response.data;
-        const profile = await getFirebaseCustomToken(access_token);
+        let profile = await getFirebaseCustomToken(access_token);
+        profile.provider = 'kakao';
 
         // 리덕스에서 로그인 로직 처리 후 리덕스로 상태관리
         dispatch(loginUser(profile));

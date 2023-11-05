@@ -3,7 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loginUser = createAsyncThunk('user/loginUser', async (body, thunkAPI) => {
   try {
-    const response = await API.post(`/user/kakao`, body);
+    // const response = await API.post(`/user/join?provider=${provider}`, body);
+    const response = await API.post(`/user/join`, body);
 
     return response.data;
   } catch (error) {
