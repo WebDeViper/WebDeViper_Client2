@@ -45,13 +45,13 @@ export default function GroupImage({ groupInfo, setGroupInfo, images, setImages 
                   {/* <img className="block h-full w-auto" src={image['data_url']} alt="" /> */}
                   <div className="image-item__btn-wrapper self-center mb-2">
                     <Button
-                      customStyle={'me-3 !bg-transparent !border-2 !border-primary !text-primary'}
+                      customStyle={'me-3 !bg-transparent !border-2 !border-white !text-white'}
                       handleClick={() => onImageUpdate(index)}
                     >
                       변경
                     </Button>
                     <Button
-                      customStyle={'!bg-transparent !border-2 !border-primary !text-primary'}
+                      customStyle={'!bg-transparent !border-2 !border-white !text-white'}
                       handleClick={() => onImageRemove(index)}
                     >
                       삭제

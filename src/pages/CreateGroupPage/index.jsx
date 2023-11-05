@@ -49,6 +49,7 @@ export default function CreateGroupPage() {
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log(res.data, '데이터는>>>');
 
       if (res.data) {
         alert('그룹 생성 완료');
