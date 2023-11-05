@@ -12,11 +12,11 @@ export default function GroupImage({ groupInfo, setGroupInfo, images, setImages 
   };
 
   return (
-    <div className="groupImg w-full flex flex-col justify-center items-center bg-semi_primary rounded-lg me-2">
+    <div className="groupImg w-full h-72 flex flex-col justify-center items-center bg-semi_primary rounded-lg me-2">
       <ImageUploading value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
         {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
           // write your building UI
-          <div className="upload__image-wrapper flex justify-center items-center w-full h-full">
+          <div className="upload__image-wrapper flex flex-wrap justify-center items-center w-full h-full">
             {imageList.length === 0 && (
               <button
                 className="font-semibold w-full h-full"

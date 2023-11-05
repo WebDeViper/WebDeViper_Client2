@@ -11,6 +11,7 @@ const ChatPage = () => {
   // console.log('유저정보는', user);
   const user = useSelector(state => state.user?.userInfo);
   const { roomId } = useParams(); // 유저가 조인한 방의 아이디를 url에서 가져온다
+  console.log('룸 아이디>>', roomId);
   const [chatLog, setChatLog] = useState([]); // 배열로 변경
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
