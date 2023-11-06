@@ -21,8 +21,8 @@ export default function NaverPage() {
           state: state,
         };
 
-        const response = await axios.post('http://localhost:8001/api/auth/naver/token', data);
-        const accessToekn = response.data.naverTokens;
+        const response = await axios.post(`${window.location.origin}/api/auth/naver/token`, data);
+        const accessToken = response.data.naverTokens;
 
         let profile = response.data.naverUser.response;
         profile.provider = 'naver';
