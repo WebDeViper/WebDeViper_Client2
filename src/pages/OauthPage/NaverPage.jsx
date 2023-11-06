@@ -9,6 +9,7 @@ export default function NaverPage() {
   const navigate = useNavigate();
   const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
   const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
+  const NAVER_BACKEND_API = import.meta.env.VITE_NAVER_BACKEND_API;
 
   const REDIRECT_URI = redirectUrl('naver');
   const dispatch = useDispatch();
@@ -21,8 +22,8 @@ export default function NaverPage() {
           state: state,
         };
 
-        const response = await axios.post('http://localhost:8001/api/auth/naver/token', data);
-        const accessToekn = response.data.naverTokens;
+        const response = await axios.post(NAVER_BACKEND_API, data);
+        const accessToken = response.data.naverTokens;
 
         let profile = response.data.naverUser.response;
         profile.provider = 'naver';
