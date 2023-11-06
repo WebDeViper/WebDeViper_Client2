@@ -41,18 +41,17 @@ export default function MyGroup() {
             const { _id, group_name, group_category, group_image_path, group_description } = item;
             // const roomId = rooms.find(room => room.group === _id)._id;
             return (
-              <>
-                <SwiperSlide key={index} className="">
-                  <GroupItem
-                    // roomId={roomId}
-                    group_id={_id}
-                    imagePath={group_image_path}
-                    subject={group_name}
-                    category={group_category}
-                    description={group_description}
-                  />
-                </SwiperSlide>
-              </>
+              <SwiperSlide key={index}>
+                <GroupItem
+                  key={_id}
+                  // roomId={roomId}
+                  group_id={_id}
+                  imagePath={group_image_path}
+                  subject={group_name}
+                  category={group_category}
+                  description={group_description}
+                />
+              </SwiperSlide>
             );
           })}
         </Swiper>
