@@ -20,7 +20,17 @@ export default function GroupInfo() {
 
   return (
     <div>
-      <GroupRequest myOwnGroup={myOwnGroup} />
+      <div className="myOwnGroupWrap">
+        <h2 className="font-bold text-xl mb-5">그룹 가입 요청</h2>
+        {myOwnGroup.map(group => (
+          <GroupRequest
+            key={group._id}
+            requests={group.join_requests}
+            groupName={group.group_name}
+            groupId={group._id}
+          />
+        ))}
+      </div>
       <MyGroupRequest />
     </div>
   );
