@@ -2,14 +2,15 @@ import React from 'react';
 import { API } from '../../../utils/axios';
 
 export default function GroupRequest({ requests, groupName, groupId }) {
-  const handleAccept = async () => {
-    console.log('수락!!!');
-    const res = await API.post(`/group/studyGroup/${groupId}/requests/accept`);
+  const handleAccept = async requestName => {
+    console.log('수락!!!', requests);
+    console.log(requestName);
+    const res = await API.post(`/group/studyGroup/${groupId}/${requestName}/requests/accept`);
     console.log(res.data, '수락 응답!!');
   };
-  const handleReject = async () => {
+  const handleReject = async requestName => {
     console.log('거절!!!');
-    const res = await API.post(`/group/studyGroup/${groupId}/requests/reject`);
+    const res = await API.post(`/group/studyGroup/${groupId}/${requestName}/requests/reject`);
     console.log(res.data, '거절 응답!!');
   };
   return (
@@ -24,13 +25,13 @@ export default function GroupRequest({ requests, groupName, groupId }) {
             <div className="btnWrap flex gap-1">
               <button
                 className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"
-                onClick={handleAccept}
+                onClick={() => handleAccept(request.user_name)}
               >
                 수락
               </button>
               <button
                 className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400"
-                onClick={handleReject}
+                onClick={() => handleReject(request.user_name)}
               >
                 삭제
               </button>
