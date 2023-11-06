@@ -1,16 +1,21 @@
-import { Link } from 'react-router-dom';
 import { FiUser } from 'react-icons/fi';
-import UserMenu from './UserMenu';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { Dropdown } from 'flowbite-react';
+import { logout } from '../../../reducers/userSlice';
+import styles from './style.module.css';
 
 export default function Header() {
-  const [isShow, setIsShow] = useState(false);
   const nickName = useSelector(state => state.user?.userInfo.nickName);
 
-  const handleOnClick = () => {
-    setIsShow(prev => !prev);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
   };
+
   return (
     <header className="flex justify-between pt-7 pb-5 relative z-50">
       <nav>
@@ -36,14 +41,33 @@ export default function Header() {
           </span>
         </li>
         <li className="relative">
-          <button onClick={handleOnClick} className="flex items-center">
-            <span className="cursor-pointer text-[#A3A3A3] text-2xl">
-              <FiUser />
-            </span>
-          </button>
+          <Dropdown
+            theme={customTheme}
+            inline
+            renderTrigger={() => (
+              <span className="cursor-pointer text-[#A3A3A3] text-2xl">
+                <FiUser />
+              </span>
+            )}
+          >
+            <Dropdown.Item as={Link} to="myPage" className="text-black text-sm hover:!bg-transparent">
+              마이페이지
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="calendar" className="text-black text-sm hover:!bg-transparent">
+              TODO 캘린더
+            </Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout} className="text-black text-sm hover:!bg-transparent">
+              로그아웃
+            </Dropdown.Item>
+          </Dropdown>
         </li>
       </ul>
-      {isShow && <UserMenu />}
     </header>
   );
 }
+
+const customTheme = {
+  floating: {
+    base: `!bg-semi_primary absolute !right-0 top-full mt-[20px] !left-auto !top-full rounded-b-lg rounded-tl-lg !transform-none focus-visible:outline-none border-none w-max ${styles.panel}`,
+  },
+};
