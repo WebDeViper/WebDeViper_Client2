@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import Button from '../../../components/common/Button';
 import { API } from '../../../utils/axios';
-import { useDispatch } from 'react-redux';
 import { profileUser } from '../../../reducers/thunkFunctions';
 
-export default function EditNickName() {
+export default function EditNickName({ dispatch }) {
   const [message, setMessage] = useState('');
   const [nickName, setNickName] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(true);
   const [isValidate, setIsValidate] = useState(false);
-  const dispatch = useDispatch();
 
   const handleCheckDuplicate = async () => {
     // 중복체크
@@ -60,7 +58,8 @@ export default function EditNickName() {
   const messageStyled = !isDuplicate ? 'text-primary' : 'text-red-600';
   const buttonStyled = isValidate ? '!bg-primary' : '!bg-gray-500';
   return (
-    <div className="flex flex-col items-end">
+    <div className="flex flex-col items-end border-2 rounded-lg border-semi_primary p-2 mb-3">
+      <h2 className="font-bold text-2xl mb-5 self-start">닉네임 변경</h2>
       <div className="wrap flex">
         <div className="nickInputWrap border-2 rounded-lg border-primary ps-5 pe-2 w-fit flex items-center me-2">
           <input

@@ -65,7 +65,7 @@ export default function EditProfileImage() {
   };
 
   return (
-    <div>
+    <div className="border-2 rounded-lg border-semi_primary p-2 self-start">
       <h2 className="font-bold text-2xl mb-5">프로필 이미지</h2>
       <div className="flex">
         <img
