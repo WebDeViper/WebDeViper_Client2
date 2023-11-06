@@ -21,6 +21,7 @@ import CalendarPage from './pages/CalendarPage';
 import CreateGroupPage from './pages/CreateGroupPage';
 import ChatPage from './pages/ChatPage';
 import MyGroupPage from './pages/MyGroupPage';
+import MyPage from './pages/MyPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
           <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/ranking" element={<RankingPage />} />
+          <Route path="/myPage" element={<MyPage />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/group/create" element={<CreateGroupPage />} />
           <Route path="/group/:groupId" element={<MyGroupPage />} />
