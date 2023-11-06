@@ -11,7 +11,7 @@ export default function GroupInfo() {
     const getGroups = async () => {
       const res = await API.get('/group/studyGroups/users');
       console.log(res.data);
-      const filteredGroup = res.data.study_groups.filter(group => group.group_leader === loginUserId);
+      const filteredGroup = res.data.study_groups;
       setMyOwnGroup(filteredGroup);
     };
     getGroups();
