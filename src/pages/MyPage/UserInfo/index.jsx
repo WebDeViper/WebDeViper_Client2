@@ -8,7 +8,7 @@ export default function UserInfo() {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center">
+    <div className="flex flex-col md:flex-row justify-between items-center mb-5">
       <EditProfileImage />
       <div className="right-container">
         <EditNickName dispatch={dispatch} />
