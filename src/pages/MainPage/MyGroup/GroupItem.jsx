@@ -32,17 +32,23 @@ export default function GroupItem({ group_id, subject, imagePath, category, desc
 
   return (
     <Link to={`/group/${group_id}`} state={{ roomId: roomId }}>
-      <div className="rounded-[4px] shadow-xl px-16 pb-5 pt-[25px]">
+      <div className="rounded-[4px] shadow-xl px-9 pb-5 pt-[25px] h-full">
         <div className="flex items-center flex-col">
-          <div className="rounded-full w-16">
-            <img src={`${import.meta.env.VITE_APP_BACK_URL}${imagePath}`} alt="귀여운 우유" />
-          </div>
-          <div className="mt-4 text-center">
-            <h3 className="font-bold">{subject}</h3>
-            <p style={{ overflowWrap: 'anywhere' }}>{truncatedDescription}</p>
+          <img
+            className="rounded-full w-16 h-16"
+            src={`${import.meta.env.VITE_APP_BACK_URL}${imagePath}`}
+            alt="귀여운 우유"
+          />
+          <div className="mt-4 h-24 flex flex-col">
+            <h3 className="font-bold text-center">{subject}</h3>
+            <p className="text-start" style={{ overflowWrap: 'anywhere' }}>
+              {truncatedDescription}
+            </p>
           </div>
           <div className="mt-2.5">
-            <span className="block font-bold">{category}</span>
+            <span class="block bg-indigo-100 text-indigo-800 text-md font-bold mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
+              {category}
+            </span>
           </div>
         </div>
       </div>
