@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { API } from '../../utils/axios';
 import moment from 'moment';
 
-export default function AddTodoModal({ openModal, setOpenModal, selectedValue, setTodos }) {
+export default function AddTodoModal({ openModal, setOpenModal, selectedDate, setTodos }) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [startTimeOfDay, setStartTimeOfDay] = useState('오후');
@@ -28,9 +28,9 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedValue, s
   });
 
   useEffect(() => {
-    setStartDate(selectedValue);
-    setEndDate(selectedValue);
-  }, [selectedValue]);
+    setStartDate(selectedDate);
+    setEndDate(selectedDate);
+  }, [selectedDate]);
 
   useEffect(() => {
     reset();

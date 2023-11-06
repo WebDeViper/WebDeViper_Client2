@@ -8,9 +8,10 @@ import { useEffect } from 'react';
 import { API } from '../../utils/axios';
 
 export default function CalendarPage() {
-  const [selectedValue, setSelectedValue] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [openModal, setOpenModal] = useState(false);
   const [todos, setTodos] = useState([]);
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
   useEffect(() => {
     const fetchTodoList = async () => {
@@ -20,50 +21,66 @@ export default function CalendarPage() {
     };
     fetchTodoList();
   }, []);
-
-  const handleOnChange = selectedValue => {
-    setSelectedValue(selectedValue);
-    setOpenModal(true);
-  };
-
-  const tileContent = ({ date, view }) => {
-    const formattedDate = moment(date).format('YYYY-MM-DD');
-
-    const matchingEvents = todos.filter(event => {
-      const eventStartDate = moment(event.start_time).tz('Asia/Seoul').format('YYYY-MM-DD');
-      const eventEndDate = moment(event.end_time).tz('Asia/Seoul').format('YYYY-MM-DD');
+  useEffect(() => {
+    const selectedTodos = [...todos].filter(date => {
+      const formattedDate = getFormattedDate(selectedDate);
+      const eventStartDate = getFormattedDate(moment(date.start_time).tz('Asia/Seoul'));
+      const eventEndDate = getFormattedDate(moment(date.end_time).tz('Asia/Seoul'));
       return formattedDate >= eventStartDate && formattedDate <= eventEndDate;
     });
+    setFilteredTodos(selectedTodos);
+  }, [selectedDate]);
 
-    const content1 = matchingEvents[0] ? matchingEvents[0].title : '';
-    const content2 = matchingEvents[1] ? matchingEvents[1].title : '';
+  const handleOnChange = selectedDate => {
+    setSelectedDate(selectedDate);
+  };
 
-    return [
-      <div key="content1">
-        <p>{content1}</p>
-      </div>,
-      <div key="content2">
-        <p>{content2}</p>
-      </div>,
-    ];
+  const getFormattedDate = date => moment(date).format('YYYY-MM-DD');
+
+  const filterMatchingEvents = (date, todos) => {
+    const formattedDate = getFormattedDate(date);
+
+    return todos.filter(event => {
+      const eventStartDate = getFormattedDate(moment(event.start_time).tz('Asia/Seoul'));
+      const eventEndDate = getFormattedDate(moment(event.end_time).tz('Asia/Seoul'));
+      return formattedDate >= eventStartDate && formattedDate <= eventEndDate;
+    });
+  };
+
+  const TodoCalendarTile = ({ date, view }) => {
+    const matchingEvents = filterMatchingEvents(date, todos);
+
+    return (
+      <div className="w-full">
+        {matchingEvents.slice(0, 2).map((event, index) => (
+          <p key={`content${index}`}>{event.title}</p>
+        ))}
+      </div>
+    );
   };
 
   return (
     <div className="calendar w-10/12 mx-auto">
       <Calendar
         onChange={handleOnChange}
-        value={selectedValue}
+        value={selectedDate}
         minDetail="year"
         formatDay={(_, date) => moment(date).format('D')}
         className="mx-auto"
-        tileContent={tileContent}
+        tileContent={TodoCalendarTile}
+        // showNeighboringMonth={false}
       />
-      <AddTodoModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        selectedValue={selectedValue}
-        setTodos={setTodos}
-      />
+      <AddTodoModal openModal={openModal} setOpenModal={setOpenModal} selectedDate={selectedDate} setTodos={setTodos} />
+
+      <div>
+        <ul>
+          {filteredTodos.map(item => (
+            <li key={item._id}>{item.title}</li>
+          ))}
+        </ul>
+      </div>
+
+      <button onClick={() => setOpenModal(true)}>추가하기</button>
     </div>
   );
 }

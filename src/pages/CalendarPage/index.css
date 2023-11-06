@@ -18,11 +18,23 @@
   background: initial;
 }
 
+/* 빨간날 */
+.react-calendar .react-calendar__month-view__days__day--weekend {
+  color: initial;
+}
+
 .react-calendar .react-calendar__month-view__days__day {
   @apply h-28 flex justify-start items-start flex-col p-1;
 }
+
+/* 할 일 달력에 표시 */
 .react-calendar .react-calendar__month-view__days__day p {
-  @apply truncate bg-slate-200 w-full;
+  @apply truncate w-full mb-1 p-1 bg-red-200 rounded-md;
+}
+
+/* 오늘 날짜 selected */
+.react-calendar .react-calendar__tile--now {
+  background: none;
 }
 
 .react-calendar abbr {
@@ -30,7 +42,6 @@
 }
 
 /* 모달  */
-
 .calendar-modal .time-period button {
   @apply flex justify-center;
 }
