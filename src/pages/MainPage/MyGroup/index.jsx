@@ -33,7 +33,7 @@ export default function MyGroup() {
           modules={[Navigation, Pagination, Mousewheel, Keyboard]}
           slidesPerView={3}
           spaceBetween={10}
-          className="swiper_custom"
+          className="swiper_custom p-3 h-72"
           onSlideChange={() => console.log('slide change')}
           onSwiper={swiper => console.log(swiper)}
         >
