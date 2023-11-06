@@ -6,12 +6,14 @@ import AddTodoModal from './AddTodoModal';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
 import { API } from '../../utils/axios';
+import { Button } from 'flowbite-react';
 
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [openModal, setOpenModal] = useState(false);
   const [todos, setTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const [updateTodo, setUpdateTodo] = useState(null);
 
   useEffect(() => {
     const fetchTodoList = async () => {
@@ -29,7 +31,7 @@ export default function CalendarPage() {
       return formattedDate >= eventStartDate && formattedDate <= eventEndDate;
     });
     setFilteredTodos(selectedTodos);
-  }, [selectedDate]);
+  }, [selectedDate, todos]);
 
   const handleOnChange = selectedDate => {
     setSelectedDate(selectedDate);
@@ -59,6 +61,16 @@ export default function CalendarPage() {
     );
   };
 
+  const handleAddTodo = () => {
+    setOpenModal(true);
+    setUpdateTodo(null);
+  };
+
+  const handleUpdateTodo = item => {
+    setUpdateTodo(item);
+    setOpenModal(true);
+  };
+
   return (
     <div className="calendar w-10/12 mx-auto">
       <Calendar
@@ -70,17 +82,27 @@ export default function CalendarPage() {
         tileContent={TodoCalendarTile}
         // showNeighboringMonth={false}
       />
-      <AddTodoModal openModal={openModal} setOpenModal={setOpenModal} selectedDate={selectedDate} setTodos={setTodos} />
+      <AddTodoModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        selectedDate={selectedDate}
+        setTodos={setTodos}
+        updateTodo={updateTodo}
+      />
 
       <div>
         <ul>
           {filteredTodos.map(item => (
-            <li key={item._id}>{item.title}</li>
+            <li key={item._id}>
+              <div className="cursor-pointer" onClick={() => handleUpdateTodo(item)}>
+                {item.title}
+              </div>
+            </li>
           ))}
         </ul>
       </div>
 
-      <button onClick={() => setOpenModal(true)}>추가하기</button>
+      <Button onClick={handleAddTodo}>추가하기</Button>
     </div>
   );
 }
