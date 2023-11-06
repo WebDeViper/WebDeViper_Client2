@@ -8,8 +8,8 @@ export default function UserInfo() {
     <div className="flex flex-col md:flex-row justify-between items-center">
       <EditProfileImage />
       <div className="right-container">
-        <EditCategory />
         <EditNickName />
+        <EditCategory />
       </div>
     </div>
   );

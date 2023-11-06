@@ -16,14 +16,16 @@ export default function SignInPage() {
   const navigate = useNavigate();
 
   // 유저 정보 수정
-  const handleUserInfo = async () => {
+  const handleUserInfo = () => {
     if (isDuplicate && !category) {
       alert('중복 체크 및 카테고리 선택을 해주세요!');
     } else if (isDuplicate) {
-      alert('');
+      alert('중복체크를 해주세요!');
+    } else if (!category) {
+      alert('카테고리 선택을 해주세요!');
     } else {
       dispatch(profileUser({ category: category[0], nickName: nickName }));
-      await alert(`환영합니다 ${nickName}님!`);
+      alert(`환영합니다 ${nickName}님!`);
       navigate('/');
     }
   };
