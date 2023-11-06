@@ -43,12 +43,12 @@ const ChatPage = () => {
       setChatLog(prevState => prevState.concat(message));
     });
     // 서버에서 이전 채팅 로그를 받아온다
-    chatSocket.emit('getChatLog', roomId, res => {
-      if (res?.isOk) {
-        console.log('서버에서 받은 채팅 로그:', res.data);
-        setChatLog(prevState => prevState.concat(res.data));
-      }
-    });
+    // chatSocket.emit('getChatLog', roomId, res => {
+    //   if (res?.isOk) {
+    //     console.log('서버에서 받은 채팅 로그:', res.data);
+    //     setChatLog(prevState => prevState.concat(res.data));
+    //   }
+    // });
   }, []);
 
   const sendMessage = event => {
@@ -62,17 +62,18 @@ const ChatPage = () => {
   };
 
   return (
-    <div>
-      <div className="App">
-        <nav>
-          <Button onClick={leaveRoom} className="back-button">
-            ←
-          </Button>
-          <div className="nav-user">{user.nick_name}</div>
-        </nav>
-        <div>{chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={user} /> : null}</div>
-        <InputField message={message} setMessage={setMessage} sendMessage={sendMessage} />
-      </div>
+    <div
+      className="chatContainer flex flex-col"
+      style={{ backgroundImage: "url('../../../public/img/background.png')" }}
+    >
+      <nav>
+        <Button onClick={leaveRoom} className="back-button">
+          ←
+        </Button>
+        <div className="nav-user">{user.nick_name}</div>
+      </nav>
+      {chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={user} /> : null}
+      <InputField message={message} setMessage={setMessage} sendMessage={sendMessage} />
     </div>
   );
 };
