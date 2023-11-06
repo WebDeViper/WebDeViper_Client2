@@ -1,5 +1,8 @@
 // 모달 개념 으로 만들기
 import { useEffect, useState } from 'react';
+// import './index.css';
+// import video from '../../../public/video/1100452489-preview.mp4';
+// import video from '../../../public/video/1093805953-preview.mp4';
 import LoginModal from './LoginModal';
 import Button from '../../components/common/Button';
 import Title from './Title';
@@ -24,6 +27,9 @@ export default function LoginPage({ isAuth }) {
 
   return (
     <div className="bg-[url('/img/main_cover.jpg')] bg-cover h-screen flex flex-col w-screen items-center justify-between">
+      {/* <video autoPlay loop muted> */}
+      {/* <source src={video} type="video/mp4" /> */}
+      {/* </video> */}
       <Title />
       <Button customStyle="h-10 absolute bottom-10 left-50" handleClick={handleOpenModal}>
         로그인
