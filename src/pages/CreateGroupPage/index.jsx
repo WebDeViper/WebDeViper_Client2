@@ -4,10 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API } from '../../utils/axios';
 import GroupImage from './GroupImage';
 import GroupInfo from './GroupInfo';
-// import './index.css';
 import GroupCategory from './GroupCategory';
 import GroupTargetTime from './GroupTargetTime';
-// import './index.css';
 
 export default function CreateGroupPage() {
   const checkboxRef = useRef();
@@ -24,15 +22,34 @@ export default function CreateGroupPage() {
   });
 
   const [images, setImages] = useState([]);
+  const [error, setError] = useState(null);
 
   const handleChangeInput = (e, key) => {
     setGroupInfo({ ...groupInfo, [key]: e.target.value });
   };
 
   const handleCreateGroup = async () => {
+    // 유효성 검사
+    if (!groupInfo.name || !groupInfo.category || !groupInfo.dailyGoalTime || groupInfo.maximumNumberMember === null) {
+      // setError('모든 필수 항목을 입력하세요.');
+      if (!groupInfo.name) {
+        alert('그룹 이름을 입력하세요.');
+        return;
+      } else if (!groupInfo.category) {
+        alert('그룹 카테고리를 선택하세요.');
+        return;
+      } else if (!groupInfo.dailyGoalTime) {
+        alert('그룹 목표시간을 선택하세요.');
+        return;
+      } else if (!groupInfo.maximumNumberMember) {
+        alert('그룹 모집인원을 선택하세요.');
+        return;
+      }
+    }
+
     const formData = new FormData();
 
-    // groupInfo 데이터를 FormData에 추가
+    // 그룹 정보 데이터를 FormData에 추가
     for (const key in groupInfo) {
       formData.append(key, groupInfo[key]);
     }
@@ -42,14 +59,13 @@ export default function CreateGroupPage() {
       formData.append('groupImgFile', images[0].file);
     }
 
-    // 요청
+    // 그룹 생성 요청
     try {
       const res = await API.post('/group/studyGroup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(res.data, '데이터는>>>');
 
       if (res.data) {
         alert('그룹 생성 완료');
@@ -74,7 +90,7 @@ export default function CreateGroupPage() {
         <GroupImage groupInfo={groupInfo} setGroupInfo={setGroupInfo} images={images} setImages={setImages} />
         <GroupInfo handleChangeInput={handleChangeInput} groupInfo={groupInfo} setGroupInfo={setGroupInfo} />
       </div>
-      <div className="groupBot flex flex-col md:flex-row  w-full justify-between self-center px-10">
+      <div className="groupBot flex flex-col md:flex-row w-full justify-between self-center px-10">
         <GroupCategory groupInfo={groupInfo} setGroupInfo={setGroupInfo} />
         <GroupTargetTime groupInfo={groupInfo} setGroupInfo={setGroupInfo} />
         <label className="switch flex w-fit justify-center items-center">
@@ -86,6 +102,7 @@ export default function CreateGroupPage() {
           />
         </label>
       </div>
+      {/* {error && <div className="error-message">{error}</div>} */}
     </div>
   );
 }

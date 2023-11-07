@@ -1,24 +1,35 @@
 import React from 'react';
+import { useState } from 'react';
 import { API } from '../../../utils/axios';
 
 export default function GroupRequest({ requests, groupName, groupId }) {
+  const [request, setRequest] = useState(requests);
+
   const handleAccept = async requestName => {
     console.log('수락!!!', requests);
     console.log(requestName);
     const res = await API.post(`/group/studyGroup/${groupId}/${requestName}/requests/accept`);
     console.log(res.data, '수락 응답!!');
+
+    // 요청을 수락한 후 해당 요청을 배열에서 제거
+    const updatedRequests = requests.filter(request => request.user_name !== requestName);
+    setRequest(updatedRequests);
   };
   const handleReject = async requestName => {
     console.log('거절!!!');
     const res = await API.post(`/group/studyGroup/${groupId}/${requestName}/requests/reject`);
     console.log(res.data, '거절 응답!!');
+
+    // 요청을 거절한 후 해당 요청을 배열에서 제거
+    const updatedRequests = requests.filter(request => request.user_name !== requestName);
+    setRequest(updatedRequests);
   };
   return (
     <div className="mb-5 flex flex-col w-fit h-fit gap-2 border-2 rounded-lg border-primary p-2">
       <span className="bg-blue-100 text-blue-800 text-lg font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 h-fit w-fit self-center">
         {groupName}
       </span>
-      {requests.map(request => (
+      {request.map(request => (
         <div key={request._id} className="flex flex-col justify-center gap-2 w-full">
           <div className="request-body flex text-sm items-center justify-between gap-3">
             <div>{request.user_name}</div>

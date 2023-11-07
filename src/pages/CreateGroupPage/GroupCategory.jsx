@@ -4,7 +4,7 @@ import categories from '../../data/category';
 
 export default function GroupCategory({ groupInfo, setGroupInfo }) {
   const items = [...categories.student, ...categories.worker, ...categories.etc];
-  // console.log([...categories.student, ...categories.worker, ...categories.etc]);
+
   const handleClick = selectedCategory => setGroupInfo({ ...groupInfo, category: selectedCategory });
   return (
     <div className="groupCategory flex flex-col justify-between border-2 rounded-lg !border-semi_primary p-2">
