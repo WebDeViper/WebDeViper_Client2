@@ -1,13 +1,9 @@
 import React, { useRef, useState } from 'react';
 
 export default function CategoryItem({ content, category, setCategory }) {
-  // const categoryRef = useRef();
-  // const [isActive, setIsActive] = useState(false);
-
   const handleCategory = value => {
     setCategory(value);
   };
-
   return (
     <div
       onClick={() => handleCategory(content)}

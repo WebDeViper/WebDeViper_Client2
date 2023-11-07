@@ -1,9 +1,11 @@
 import React from 'react';
 import CategoryGroup from './CategoryGroup';
+import categories from '../../../data/category';
 
 export default function Category({ category, setCategory }) {
-  const studentArr = ['초등학생', '중학생', '고등학생', '대학생'];
-  const publicArr = ['경찰', '소방관', '행정고시', '군인'];
+  const studentArr = [...categories.student];
+  const workerArr = [...categories.worker];
+  const etcArr = [...categories.etc];
 
   return (
     <div className="categoryContainer">
@@ -12,7 +14,8 @@ export default function Category({ category, setCategory }) {
       </div>
       <div className="categoryWrap flex flex-col">
         <CategoryGroup title={'학생'} contentArr={studentArr} category={category} setCategory={setCategory} />
-        <CategoryGroup title={'공무원'} contentArr={publicArr} category={category} setCategory={setCategory} />
+        <CategoryGroup title={'직장인'} contentArr={workerArr} category={category} setCategory={setCategory} />
+        <CategoryGroup title={'기타'} contentArr={etcArr} category={category} setCategory={setCategory} />
       </div>
     </div>
   );

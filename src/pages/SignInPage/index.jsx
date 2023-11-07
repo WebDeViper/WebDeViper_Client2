@@ -7,7 +7,7 @@ import Category from './Category';
 import NickName from './NickName';
 
 export default function SignInPage() {
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState('');
   const [nickName, setNickName] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(true);
   const [isValidate, setIsValidate] = useState(false);
@@ -24,7 +24,7 @@ export default function SignInPage() {
     } else if (!category) {
       alert('카테고리 선택을 해주세요!');
     } else {
-      dispatch(profileUser({ category: category[0], nickName: nickName }));
+      dispatch(profileUser({ category, nickName }));
       alert(`환영합니다 ${nickName}님!`);
       navigate('/');
     }
@@ -33,7 +33,7 @@ export default function SignInPage() {
     <div className="flex flex-col justify-center h-screen">
       <div className="titleWrap flex justify-between mb-10">
         <h1 className="font-bold text-3xl underline underline-offset-8 decoration-sky-500">카테고리 및 닉네임 설정</h1>
-        {isValidate && !isDuplicate && category.length > 0 && (
+        {isValidate && !isDuplicate && category && (
           <Button
             handleClick={handleUserInfo}
             customStyle={`border-2 p-3 self-end bg-transparent !text-primary border-primary border-2 text-lg`}
