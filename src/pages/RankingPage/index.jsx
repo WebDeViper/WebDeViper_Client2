@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { API } from '../../utils/axios';
 import { Dropdown } from 'flowbite-react';
+import categories from '../../data/category';
+import DropDown from '../../components/common/DropDown';
 
-const items = ['경찰', '소방관', '군인', '초등학생', '중학생', '고등학생', '등등'];
+const items = [...categories.student, ...categories.worker, ...categories.etc];
 
 export default function RankingPage() {
   const [category, setCategory] = useState(null);
@@ -29,9 +31,9 @@ export default function RankingPage() {
   }, [category]);
 
   // 카테고리 선택 시 category state 업데이트
-  const handleChangeCategory = selectedCategory => {
-    console.log(selectedCategory, '바뀐 카테고리');
-    setCategory(selectedCategory);
+  const handleChangeCategory = cate => {
+    console.log('바뀐 카테고리>>', cate);
+    setCategory(cate);
   };
 
   useEffect(() => {
@@ -48,13 +50,12 @@ export default function RankingPage() {
       랭킹페이지 드가쟈~~~
       <div className="title flex mb-3">
         <h2 className="font-bold text-2xl">랭킹</h2>
-        <Dropdown renderTrigger={() => <span>{category ? category : '카테고리 선택'}</span>}>
-          {items.map((item, index) => (
-            <Dropdown.Item onClick={() => handleChangeCategory(item)} key={index}>
-              {item}
-            </Dropdown.Item>
-          ))}
-        </Dropdown>
+        <DropDown
+          title={category ? category : '카테고리 선택'}
+          items={items}
+          styles={'font-bold text-xl'}
+          handleClick={handleChangeCategory}
+        ></DropDown>
         <span>{category}</span>
       </div>
       <div className="body">

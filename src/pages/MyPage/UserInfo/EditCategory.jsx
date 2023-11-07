@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import DropDown from '../../../components/common/DropDown';
 import Button from '../../../components/common/Button';
 import { profileUser } from '../../../reducers/thunkFunctions';
+import categories from '../../../data/category';
 
-const items = ['공무원', '학생', '선생님'];
+const items = [...categories.student, ...categories.worker, ...categories.etc];
 
 export default function EditCategory({ dispatch }) {
   const [category, setCategory] = useState(null);
