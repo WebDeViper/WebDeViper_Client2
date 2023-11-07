@@ -17,13 +17,13 @@ export default function TimerPage() {
   const [isRunning, setIsRunning] = useState(false);
   const userId = useSelector(state => state.user?.userInfo?.id);
   const [socket, setSocket] = useState(null);
-  const [time, setTime] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
   const [data, setData] = useState({});
   const [subject, setSubject] = useState('영어');
   const intervalRefs = useRef({});
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(false);
 
-  const diffRef = useRef(0);
+  const diffTimeRef = useRef(0);
 
   const handleChangeSubject = currentSubject => {
     setSubject(currentSubject);
@@ -73,8 +73,8 @@ export default function TimerPage() {
     setIsStartButtonVisible(true);
 
     const newIntervalRef = setInterval(() => {
-      diffRef.current += 1;
-      setTime(prevTime => prevTime + 1);
+      diffTimeRef.current += 1;
+      setTotalTime(prevTime => prevTime + 1);
     }, 1000);
     intervalRefs.current['self'] = newIntervalRef;
 
@@ -96,7 +96,7 @@ export default function TimerPage() {
 
       if (updatedData[userId]) {
         const userToUpdate = updatedData[userId];
-        userToUpdate.time = time;
+        userToUpdate.time = totalTime;
         userToUpdate.stopwatch_running = false;
       }
       return updatedData;
@@ -104,7 +104,7 @@ export default function TimerPage() {
 
     // Pause 이벤트를 서버로 보냄
 
-    const time = diffRef.current;
+    const time = diffTimeRef.current;
     socket.emit('pause_watch', {
       userId,
       // roomNickname,
@@ -113,7 +113,7 @@ export default function TimerPage() {
       stopwatch_running: false,
     });
 
-    diffRef.current = 0;
+    diffTimeRef.current = 0;
   };
 
   // useEffect(() => {
@@ -191,7 +191,7 @@ export default function TimerPage() {
   // Reset 버튼 클릭 이벤트 핸들러
   const resetTimer = () => {
     clearInterval(intervalRefs.current['self']);
-    setTime(0);
+    setTotalTime(0);
     socket.emit('reset_watch', {
       userId,
       // roomNickname,
@@ -202,7 +202,7 @@ export default function TimerPage() {
   return (
     <div>
       <h1>My stopwatch</h1>
-      <h2>내 시간 : {formatTime(time)}</h2>
+      <h2>내 시간 : {formatTime(totalTime)}</h2>
       <p>현재 선택 과목 : {subject}</p>
       <div className="flex gap-4">
         <Button onClick={() => handleChangeSubject('영어')}>영어</Button>
