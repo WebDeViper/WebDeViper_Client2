@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 export default function GroupInfo() {
   const loginUserId = useSelector(state => state.user?.userInfo?.id);
   const [myOwnGroup, setMyOwnGroup] = useState([]);
+  const [myPendingGroup, setMyPendingGroup] = useState([]);
   useEffect(() => {
     const getGroups = async () => {
       const res = await API.get('/group/studyGroups/users');
@@ -31,7 +32,12 @@ export default function GroupInfo() {
           />
         ))}
       </div>
-      <MyGroupRequest />
+      <div className="myPendingGroupWrap">
+        <h2 className="font-bold text-xl mb-5">신청중인 그룹</h2>
+
+        {/* map 돌려서 그룹 어쩌구~~~ */}
+        <MyGroupRequest />
+      </div>
     </div>
   );
 }
