@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
+import { Button } from 'flowbite-react';
 
 const formatTime = seconds => {
   const padZero = value => (value < 10 ? `0${value}` : `${value}`);
@@ -18,8 +19,9 @@ export default function TimerPage() {
   const [socket, setSocket] = useState(null);
   const [time, setTime] = useState(0);
   const [data, setData] = useState({});
-  const [subject, setSubject] = useState('수학');
+  const [subject, setSubject] = useState('영어');
   const intervalRefs = useRef({});
+  const [isStartButtonVisible, setIsStartButtonVisible] = useState(false);
 
   const diffRef = useRef(0);
 
@@ -68,6 +70,7 @@ export default function TimerPage() {
     }
 
     setIsRunning(true);
+    setIsStartButtonVisible(true);
 
     const newIntervalRef = setInterval(() => {
       diffRef.current += 1;
@@ -86,6 +89,7 @@ export default function TimerPage() {
   // Pause 버튼 클릭 이벤트 핸들러
   const handlePause = () => {
     clearInterval(intervalRefs.current['self']);
+    setIsStartButtonVisible(false);
 
     setData(prevData => {
       const updatedData = { ...prevData };
@@ -198,15 +202,21 @@ export default function TimerPage() {
   return (
     <div>
       <h1>My stopwatch</h1>
-
       <h2>내 시간 : {formatTime(time)}</h2>
-      <button onClick={() => handleChangeSubject('영어')}>영어</button>
-      <button onClick={() => handleChangeSubject('수학')}>수학</button>
-      <button onClick={() => handleChangeSubject('국어')}>국어</button>
-      <div>
-        <button onClick={handleStart}>Start</button>
-        <button onClick={handlePause}>Pause</button>
-        <button onClick={resetTimer}>Reset</button>
+      <p>현재 선택 과목 : {subject}</p>
+      <div className="flex gap-4">
+        <Button onClick={() => handleChangeSubject('영어')}>영어</Button>
+        <Button onClick={() => handleChangeSubject('수학')}>수학</Button>
+        <Button onClick={() => handleChangeSubject('국어')}>국어</Button>
+      </div>
+      <div className="mt-5 flex gap-4">
+        {isStartButtonVisible ? (
+          <Button onClick={handlePause}>Pause</Button>
+        ) : (
+          <Button onClick={handleStart}>Start</Button>
+        )}
+
+        <Button onClick={resetTimer}>Reset</Button>
       </div>
       <h2>Other User's Stopwatches</h2>
       <ul>
