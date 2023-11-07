@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
-import axios from 'axios';
 import Button from '../../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 
