@@ -38,7 +38,11 @@ export default function MyGroup() {
           onSwiper={swiper => console.log(swiper)}
         >
           {myGroups?.map((item, index) => {
-            const { _id, group_name, group_category, group_image_path, group_description } = item;
+            const { _id, is_private, group_name, group_category, group_image_path, group_description } = item;
+            if (is_private) {
+              //is_private이 true 면 보여주지않음
+              return null;
+            }
             // const roomId = rooms.find(room => room.group === _id)._id;
             return (
               <SwiperSlide key={index}>
