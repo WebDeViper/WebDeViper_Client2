@@ -53,6 +53,9 @@ export default function Header() {
             <Dropdown.Item as={Link} to="myPage" className="text-black text-sm hover:!bg-transparent">
               마이페이지
             </Dropdown.Item>
+            <Dropdown.Item as={Link} to="timer" className="text-black text-sm hover:!bg-transparent">
+              공부하러 가기
+            </Dropdown.Item>
             <Dropdown.Item as={Link} to="calendar" className="text-black text-sm hover:!bg-transparent">
               TODO 캘린더
             </Dropdown.Item>
