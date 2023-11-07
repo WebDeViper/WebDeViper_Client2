@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { API } from '../../utils/axios';
-import { Dropdown } from 'flowbite-react';
 import categories from '../../data/category';
 import DropDown from '../../components/common/DropDown';
+import { Card } from 'flowbite-react';
 
 const items = [...categories.student, ...categories.worker, ...categories.etc];
 
@@ -47,36 +47,69 @@ export default function RankingPage() {
 
   return (
     <div className="rankingWrap flex flex-col">
-      랭킹페이지 드가쟈~~~
-      <div className="title flex mb-3">
-        <h2 className="font-bold text-2xl">랭킹</h2>
+      <div className="title flex items-center mb-3">
+        <h2 className="font-bold text-2xl me-2">랭킹</h2>
         <DropDown
           title={category ? category : '카테고리 선택'}
           items={items}
-          styles={'font-bold text-xl'}
+          styles={'font-bold text-lg'}
           handleClick={handleChangeCategory}
         ></DropDown>
-        <span>{category}</span>
       </div>
+      {!userTop3.length && <Card className="font-bold">아직 랭킹이 없어요!</Card>}
       <div className="body">
-        <div className="top3 flex justify-evenly">
+        <div className="top3 flex justify-evenly md:mb-5">
           {userTop3.map((user, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <span>{index + 1}등</span>
-              <span className="font-bold">{user.user_nickname}</span>
-              <span>{user.user_total_time ? user.user_total_time : '00:00:00'}</span>
+            <div key={index} className="flex justify-between items-center w-1/4 border-2 rounded-lg py-2 px-10">
+              <div className="userImg">
+                <img
+                  className="w-20 h-20"
+                  src={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
+                  alt=""
+                />
+              </div>
+              <div className="userInfo flex flex-col items-center">
+                <span>{index + 1}등</span>
+                <span className="font-bold">{user.user_nickname}</span>
+                <span>{user.user_total_time ? user.user_total_time : '00:00:00'}</span>
+              </div>
             </div>
           ))}
         </div>
-        <div className="other">
+        <div className="other flex flex-col gap-2">
           {userOther.map((user, index) => (
-            <div key={index} className="border-2">
-              <span className="font-bold me-5">{user.user_nickname}</span>
-              <span>{user.user_total_time}</span>
-            </div>
+            <Card
+              // theme={{ theme: customTheme2 }}
+              key={index}
+              className="h-20 md:max-w-full"
+              horizontal
+              imgSrc={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
+            >
+              <span className="font-bold">{user.user_nickname}</span>
+              <span>{user.user_total_time || '00:00:00'}</span>
+            </Card>
           ))}
         </div>
       </div>
     </div>
   );
 }
+
+const customTheme = {
+  root: {
+    base: 'flex rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800',
+    children: 'flex h-full justify-center gap-4 p-6',
+    horizontal: {
+      off: 'flex-col',
+      on: 'flex-col md:max-w-xl md:flex-row',
+    },
+    href: 'hover:bg-gray-100 dark:hover:bg-gray-700',
+  },
+  img: {
+    base: '',
+    horizontal: {
+      off: 'rounded-t-lg',
+      on: 'h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg',
+    },
+  },
+};
