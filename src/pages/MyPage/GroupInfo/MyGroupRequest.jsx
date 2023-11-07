@@ -1,26 +1,5 @@
 import React from 'react';
 
-// const ex = {
-//   _id: '6549195a76f889d485aa7845',
-//   group_leader: '654916b4d5d56c93e8fdf78d',
-//   group_name: '소방소방',
-//   group_category: '소방관',
-//   group_description: 'ㅎㅇㅎㅇ',
-//   group_image_path: '/api/static/groupImg/defaultGroup.jpeg',
-//   group_maximum_member: 2,
-//   daily_goal_time: 'null',
-//   is_camera_on: false,
-//   members: ['654916b4d5d56c93e8fdf78d', '654916b4d5d56c93e8fdf78d', '654916496d5674be9114dc75'],
-//   join_requests: [
-//     {
-//       user_id: '654916496d5674be9114dc75',
-//       user_name: '태훈카카오1',
-//       _id: '6549363173256282807010d7',
-//     },
-//   ],
-//   __v: 4,
-// };
-
 export default function MyGroupRequest({ groupInfo }) {
   console.log('>>>>', groupInfo);
   const handleCancelRequest = () => {
