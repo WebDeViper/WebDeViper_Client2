@@ -22,6 +22,7 @@ import CreateGroupPage from './pages/CreateGroupPage';
 import ChatPage from './pages/ChatPage';
 import MyGroupPage from './pages/MyGroupPage';
 import MyPage from './pages/MyPage';
+import TimerPage from './pages/TimerPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
         <Route element={<ProtectedRoutes isAuth={isAuth} />}>
           <Route index element={category ? <MainPage /> : <SignInPage />} />
           <Route path="/notice" element={<NoticePage />} />
+          <Route path="/timer" element={<TimerPage />} />
           <Route path="/notice/:noticeId" element={<DetailNoticePage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/ranking" element={<RankingPage />} />
