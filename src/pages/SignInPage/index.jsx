@@ -30,7 +30,7 @@ export default function SignInPage() {
     }
   };
   return (
-    <div className="flex flex-col justify-center h-screen">
+    <div className="flex flex-col justify-center mt-14">
       <div className="titleWrap flex justify-between mb-10">
         <h1 className="font-bold text-3xl underline underline-offset-8 decoration-sky-500">카테고리 및 닉네임 설정</h1>
         {isValidate && !isDuplicate && category && (
