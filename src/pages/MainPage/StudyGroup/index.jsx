@@ -29,13 +29,12 @@ export default function StudyGroup() {
       const res = await API.post(`/group/studyGroup/${groupId}/join`);
       console.log('상태코드는', res.status);
 
-      if (res.status === 200) {
+      if (!res.data.isFull) {
         console.log('그룹신청완료 >>', res.data);
         const data = res.data.message;
         return alert(data);
-      } else if (res.status === 202) {
-        // const data = res.data.message;
-        alert('이미 그룹요청을 한 상태입니다.'); // 304 상태 코드에 대한 알림 표시
+      } else {
+        alert(`${res.data.message}`);
       }
     } catch (err) {
       console.error(err.message);
