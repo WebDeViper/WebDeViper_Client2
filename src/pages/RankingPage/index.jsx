@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { API, BACK } from '../../utils/axios';
-import { useSelector } from 'react-redux';
+import { API } from '../../utils/axios';
 import { Dropdown } from 'flowbite-react';
 
 const items = ['경찰', '소방관', '군인', '초등학생', '중학생', '고등학생', '등등'];
@@ -10,19 +9,20 @@ export default function RankingPage() {
   const [category, setCategory] = useState(null);
 
   const get = async () => {
-    const res = await BACK.get('/ranking');
+    const res = await API.get('/ranking');
     console.log('랭킹 데이터>>', res.data);
     const { topUsers, topGroups } = res.data;
     setRankList(topUsers);
   };
 
   const getCategory = useCallback(async () => {
-    const res = await BACK.get(`/ranking?category=${category}`);
+    const res = await API.get(`/ranking?category=${category}`);
     setRankList(res.data.topUsers);
   }, [category]);
 
-  const handleChangeCategory = () => {
-    console.log('카테고리 변경!!');
+  const handleChangeCategory = e => {
+    setCategory(e.target.value);
+    // console.log('카테고리 변경!!');
   };
 
   useEffect(() => {
