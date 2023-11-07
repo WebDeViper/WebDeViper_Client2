@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import GroupRequest from './GroupRequest';
 import MyGroupRequest from './MyGroupRequest';
 import { API } from '../../../utils/axios';
-import { useSelector } from 'react-redux';
 
 export default function GroupInfo() {
-  const loginUserId = useSelector(state => state.user?.userInfo?.id);
   const [myOwnGroup, setMyOwnGroup] = useState([]);
-  const [myPendingGroup, setMyPendingGroup] = useState([]);
+  const [pendingGroups, setPendingGroups] = useState([]);
 
   useEffect(() => {
     const getGroups = async () => {
@@ -16,19 +14,25 @@ export default function GroupInfo() {
       const filteredGroup = res.data.study_groups;
       setMyOwnGroup(filteredGroup);
     };
-    const getMyReqGroups = async () => {
-      const res = await API.get('/user');
-      console.log('제발 이것만~~', res.data);
+    const getPendingGroups = async () => {
+      try {
+        const res = await API.get('/group/pendingGroups');
+        setPendingGroups(res.data.pendingGroups); // 서버에서 받은 데이터를 설정
+      } catch (error) {
+        console.error('Error fetching pending groups:', error);
+      }
     };
+
     getGroups();
-    getMyReqGroups();
+    getPendingGroups();
   }, []);
-  console.log('내 그룹', myOwnGroup);
+  console.log('그룹 가입 요청 어쩌구', myOwnGroup);
+  console.log('내 신청 중 그룹', pendingGroups);
 
   return (
     <div>
-      <h2 className="font-bold text-xl mb-5">그룹 가입 요청</h2>
-      <div className="myOwnGroupWrap flex md:flex-row flex-col flex-wrap gap-1">
+      <h2 className="font-bold text-xl md:mb-5 mb-1">그룹 가입 요청</h2>
+      <div className="myOwnGroupWrap flex flex-wrap md:gap-1 md:mb-5 mb-1">
         {myOwnGroup.map(
           group =>
             group.join_requests.length > 0 && (
@@ -41,13 +45,11 @@ export default function GroupInfo() {
             )
         )}
       </div>
-      <div className="myPendingGroupWrap">
-        <h2 className="font-bold text-xl mb-5">신청중인 그룹</h2>
-
-        {/* map 돌려서 그룹 어쩌구~~~ */}
-        <MyGroupRequest />
+      <h2 className="font-bold text-xl md:mb-5 mb-1">신청중인 그룹</h2>
+      <div className="myPendingGroupWrap flex flex-wrap md:gap-1">
+        {pendingGroups.length > 0 &&
+          pendingGroups.map((group, index) => <MyGroupRequest key={index} groupInfo={group} />)}
       </div>
-
     </div>
   );
 }
