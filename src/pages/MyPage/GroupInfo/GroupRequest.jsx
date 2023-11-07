@@ -15,12 +15,12 @@ export default function GroupRequest({ requests, groupName, groupId }) {
   };
   return (
     <div className="mb-5 flex flex-col w-fit h-fit gap-2 border-2 rounded-lg border-primary p-2">
-      <span className="bg-blue-100 text-blue-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 h-fit">
+      <span className="bg-blue-100 text-blue-800 text-lg font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 h-fit w-fit self-center">
         {groupName}
       </span>
       {requests.map(request => (
-        <div key={request._id} className="flex flex-col justify-center w-fit gap-2">
-          <div className="request-right flex text-sm items-center gap-3">
+        <div key={request._id} className="flex flex-col justify-center gap-2 w-full">
+          <div className="request-body flex text-sm items-center justify-between gap-3">
             <div>{request.user_name}</div>
             <div className="btnWrap flex gap-1">
               <button
