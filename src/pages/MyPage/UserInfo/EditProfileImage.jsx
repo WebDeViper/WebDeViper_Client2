@@ -65,16 +65,16 @@ export default function EditProfileImage() {
   };
 
   return (
-    <div className="border-2 rounded-lg border-semi_primary p-2 self-start">
+    <div className="border-2 rounded-lg border-semi_primary p-2 self-start flex flex-col w-full h-full mb-1 md:mb-0">
       <h2 className="font-bold text-2xl mb-5">프로필 이미지</h2>
-      <div className="flex">
+      <div className="flex h-full">
         <img
           className="rounded-full w-32 h-32 me-3"
           src={!isImgChanged ? import.meta.env.VITE_APP_BACK_URL + profileImgPath : imgRef.current.src}
           alt="유저 프로필 이미지"
         />
         <form onSubmit={handleSubmit}>
-          <div className="profile-right flex flex-col">
+          <div className="profile-right flex h- flex-col">
             <input
               type="file"
               className="hidden"

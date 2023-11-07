@@ -46,7 +46,7 @@ export default function GroupItem({ group_id, subject, imagePath, category, desc
             </p>
           </div>
           <div className="mt-2.5">
-            <span class="block bg-indigo-100 text-indigo-800 text-md font-bold mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
+            <span className="block bg-indigo-100 text-indigo-800 text-md font-bold mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
               {category}
             </span>
           </div>

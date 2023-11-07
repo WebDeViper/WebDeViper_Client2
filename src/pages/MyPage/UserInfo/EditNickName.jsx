@@ -58,7 +58,7 @@ export default function EditNickName({ dispatch }) {
   const messageStyled = !isDuplicate ? 'text-primary' : 'text-red-600';
   const buttonStyled = isValidate ? '!bg-primary' : '!bg-gray-500';
   return (
-    <div className="flex flex-col items-end border-2 rounded-lg border-semi_primary p-2 mb-3">
+    <div className="flex flex-col items-end border-2 rounded-lg border-semi_primary p-2 md:mb-3 mb-1">
       <h2 className="font-bold text-2xl mb-5 self-start">닉네임 변경</h2>
       <div className="wrap flex">
         <div className="nickInputWrap border-2 rounded-lg border-primary ps-5 pe-2 w-fit flex items-center me-2">
