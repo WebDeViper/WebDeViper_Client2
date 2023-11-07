@@ -7,7 +7,7 @@ import Category from './Category';
 import NickName from './NickName';
 
 export default function SignInPage() {
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState();
   const [nickName, setNickName] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(true);
   const [isValidate, setIsValidate] = useState(false);
