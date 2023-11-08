@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { Button } from 'flowbite-react';
+import { API } from '../../utils/axios';
 
 const formatTime = seconds => {
   const padZero = value => (value < 10 ? `0${value}` : `${value}`);
@@ -18,7 +19,7 @@ export default function TimerPage() {
   const userId = useSelector(state => state.user?.userInfo?.id);
   const [socket, setSocket] = useState(null);
   const [totalTime, setTotalTime] = useState(0);
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
   const [subject, setSubject] = useState('영어');
   const intervalRefs = useRef({});
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(false);
@@ -31,6 +32,19 @@ export default function TimerPage() {
 
   useEffect(() => {
     setSocket(io('http://localhost:8002/stopwatch', { auth: { userId } }));
+    const fetchUserTimer = async () => {
+      try {
+        const response = await API.get('/timer');
+        const data = await response.data;
+        const groupData = data.groupData.slice(1);
+        console.log(groupData, '뿌잉');
+        setData(groupData[0].members);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    console.log('sadfsdalkj');
+    fetchUserTimer();
   }, [userId]);
 
   useEffect(() => {
@@ -123,13 +137,13 @@ export default function TimerPage() {
   //       socket.current.emit('updateTimer', {
   //         userId,
   //         subject,
-  //         time,
+  //         totalTime,
   //         stopwatch_running: true,
   //       });
   //     }
   //   }, 60 * 60 * 1000); // 1시간마다 실행
   //   return () => clearInterval(updateTimerInterval);
-  // }, [isRunning, subject, time, userId]);
+  // }, [isRunning, subject, totalTime, userId]);
 
   // 스톱워치 시작 이벤트 핸들러
   const handleStartWatchEvent = receivedData => {
@@ -139,6 +153,7 @@ export default function TimerPage() {
       [receivedData.userId]: receivedData,
     }));
 
+    console.log(receivedData, 'receivedData');
     if (receivedData.stopwatch_running) {
       const startTime = receivedData.time || 0;
       const startTimeStamp = Date.now();
@@ -220,13 +235,13 @@ export default function TimerPage() {
       </div>
       <h2>Other User's Stopwatches</h2>
       <ul>
-        {Object.values(data).map(userData => {
+        {data?.map((userData, index) => {
           return (
-            <li key={userData.userId}>
-              <strong>{userData.userId}:</strong>{' '}
-              {userData.stopwatch_running
-                ? `Running - ${formatTime(userData.time || 0)}`
-                : `Paused - ${formatTime(userData.time || 0)}`}
+            <li key={index}>
+              <strong>{userData.nick_name}:</strong>{' '}
+              {userData.total_time
+                ? `Running - ${formatTime(userData.total_time || 0)}`
+                : `Paused - ${formatTime(userData.total_time || 0)}`}
             </li>
           );
         })}
