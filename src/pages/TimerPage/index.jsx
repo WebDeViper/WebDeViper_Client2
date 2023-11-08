@@ -32,7 +32,7 @@ export default function TimerPage() {
   };
 
   useEffect(() => {
-    setSocket(io('http://localhost:8002/stopwatch', { auth: { userId } }));
+    setSocket(io(import.meta.env.VITE_APP_SOCKET_STOPWATCH_SERVER_URL, { auth: { userId } }));
     const fetchUserTimer = async () => {
       try {
         const response = await API.get('/timer');
