@@ -2,7 +2,7 @@ import React from 'react';
 import { API } from '../../utils/axios';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
-export default function MyGroupPage() {
+export default function DetailGroupPage() {
   const { groupId } = useParams();
   const location = useLocation();
   const roomId = location.state.roomId;

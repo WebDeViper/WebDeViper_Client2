@@ -49,6 +49,8 @@ export default function RankingPage() {
     <div className="rankingWrap flex flex-col">
       <div className="title flex items-center mb-3">
         <h2 className="font-bold text-2xl me-2">랭킹</h2>
+        <span>어제 기준 랭킹. ~~시마다 업데이트</span>
+        {/* 초단위 */}
         <DropDown
           title={category ? category : '카테고리 선택'}
           items={items}

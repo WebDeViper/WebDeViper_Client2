@@ -20,7 +20,7 @@ import SignInPage from './pages/SignInPage';
 import CalendarPage from './pages/CalendarPage';
 import CreateGroupPage from './pages/CreateGroupPage';
 import ChatPage from './pages/ChatPage';
-import MyGroupPage from './pages/MyGroupPage';
+import DetailGroupPage from './pages/DetailGroupPage';
 import MyPage from './pages/MyPage';
 import TimerPage from './pages/TimerPage';
 
@@ -54,7 +54,7 @@ function App() {
           <Route path="/myPage" element={<MyPage />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/group/create" element={<CreateGroupPage />} />
-          <Route path="/group/:groupId" element={<MyGroupPage />} />
+          <Route path="/group/:groupId" element={<DetailGroupPage />} />
           <Route path="/group/chat/:roomId/" element={<ChatPage />} />
         </Route>
 
