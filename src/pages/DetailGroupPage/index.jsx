@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Button from '../../components/common/Button';
+import { Badge } from 'flowbite-react';
 
 export default function DetailGroupPage() {
   const { groupId } = useParams();
@@ -149,10 +150,20 @@ export default function DetailGroupPage() {
         </div>
         <section className="studyInfoWrap w-1/3">
           <ul className="grid grid-cols-2 gap-4">
-            <li className="p-2 border bg-gray-100">카테고리 : {group_category}</li>
-            <li className="p-2 border bg-gray-100">목표시간 : {daily_goal_time}</li>
-            <li className="p-2 border bg-gray-100">
-              인원 : {members.length} / {group_maximum_member}
+            <li className="p-2">
+              <Badge color="dark" size="lg">
+                카테고리 : {group_category}
+              </Badge>
+            </li>
+            <li className="p-2">
+              <Badge color="dark" size="lg">
+                목표시간 : {daily_goal_time}
+              </Badge>
+            </li>
+            <li className="p-2">
+              <Badge color="dark" size="lg">
+                인원 : {members.length} / {group_maximum_member}
+              </Badge>
             </li>
           </ul>
         </section>
