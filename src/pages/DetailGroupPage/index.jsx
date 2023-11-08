@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Button from '../../components/common/Button';
-import { useSelector } from 'react-redux';
 
 export default function DetailGroupPage() {
   const { groupId } = useParams();
