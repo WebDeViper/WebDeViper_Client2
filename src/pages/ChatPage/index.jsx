@@ -29,9 +29,9 @@ const ChatPage = () => {
   // console.log('룸아이디???', room);
   // 채팅 화면 처음 들어올 때
   useEffect(() => {
-    // console.log('유저는>>', user);
+    console.log('유저는>>', userInfo);
 
-    chatSocket.emit('joinRoom', user, room, res => {
+    chatSocket.emit('joinRoom', userInfo.nickName, room, res => {
       if (res && res.isOk) {
         console.log('successfully join', res);
       } else {
