@@ -52,7 +52,7 @@ const ChatPage = () => {
     //   }
     // });
   }, []);
-
+  //
   const sendMessage = event => {
     event.preventDefault();
     chatSocket.emit('sendMessage', room, user, message, res => {
