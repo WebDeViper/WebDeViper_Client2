@@ -1,15 +1,16 @@
 import React from 'react';
-import { Card } from 'flowbite-react';
 
 export default function GroupRank({ groupTop3, groupOther }) {
   return (
     <div className="groupRankingWrap">
-      {!groupTop3?.length && <Card className="font-bold">아직 랭킹이 없어요!</Card>}
       <div className="groupRanking">
-        <div className="top3 flex justify-evenly md:mb-5">
-          {top3.groupTop3.map((group, index) => (
-            <div key={index} className="flex justify-between items-center w-1/4 border-2 rounded-lg py-2 px-10">
-              <div className="groupInfo flex flex-col items-center">
+        <div className="top3 flex md:flex-row flex-col md:justify-evenly md:mb-5">
+          {groupTop3.map((group, index) => (
+            <div
+              key={index}
+              className="flex justify-center md:items-center sm:w-1/4 mb-3 border-2 rounded-lg py-2 px-10"
+            >
+              <div className="groupInfoWrap flex flex-col items-center">
                 <span>{index + 1}등</span>
                 <span className="font-bold">{group.group_name}</span>
                 <span>{group.groupTotalTime ? group.groupTotalTime : '00:00:00'}</span>
