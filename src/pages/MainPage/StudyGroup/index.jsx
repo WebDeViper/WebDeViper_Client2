@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
 import Button from '../../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
-import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import GroupItem from '../GroupItem';
 import { useSelector } from 'react-redux';
+import { Card } from 'flowbite-react';
 
 export default function StudyGroup() {
   const [studyGroup, setStudyGroup] = useState([]);
@@ -18,7 +19,7 @@ export default function StudyGroup() {
         const response = await API.get('/group/studyGroups');
         console.log('카테고리 같은 스터디그룹 리스트 >>', response.data);
         const data = await response.data;
-        setStudyGroup(data.study_groups.filter(group => group.group_leader !== userId));
+        setStudyGroup(data.study_groups.filter(group => !group.members.includes(userId)));
       } catch (err) {
         console.error(err, '에러!!!!!!@#!@#@!#');
       }
@@ -38,11 +39,17 @@ export default function StudyGroup() {
         </Button>
       </div>
       <div>
+        {!studyGroup.length && (
+          <Card className="h-20 w-full">
+            <h1 className="font-bold text-lg">아직 생성된 스터디그룹이 없어요!</h1>
+            <p className="font-semibold">그룹을 생성해보세요!</p>
+          </Card>
+        )}
+
         <Swiper
           navigation={true}
-          mousewheel={true}
           keyboard={true}
-          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+          modules={[Navigation, Pagination, Keyboard]}
           slidesPerView={3}
           spaceBetween={10}
           className="swiper_custom p-3 h-72"
