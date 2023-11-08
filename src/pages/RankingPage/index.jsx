@@ -5,7 +5,7 @@ import DropDown from '../../components/common/DropDown';
 import { useSelector } from 'react-redux';
 import UserRank from './userRank';
 import GroupRank from './groupRank';
-import { Card } from 'flowbite-react';
+import { Card, Badge } from 'flowbite-react';
 
 const items = [...categories.student, ...categories.worker, ...categories.etc];
 
@@ -80,7 +80,7 @@ export default function RankingPage() {
       <div className="rankHeader flex flex-col justify-center mb-3">
         <div className="rankCategoryWrap flex items-center">
           <h2 className="font-bold text-2xl me-2">랭킹</h2>
-          <span>어제 기준 랭킹 12시마다 업데이트</span>
+          <Badge color="pink">어제 기준 랭킹 12시마다 업데이트</Badge>
         </div>
         {/* 초단위 */}
         <DropDown
