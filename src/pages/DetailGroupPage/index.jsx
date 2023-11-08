@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Button from '../../components/common/Button';
-import { Badge, Progress } from 'flowbite-react';
+import { Badge } from 'flowbite-react';
 
 export default function DetailGroupPage() {
   const { groupId } = useParams();
@@ -14,6 +14,8 @@ export default function DetailGroupPage() {
   const { roomId, groupInfo } = location.state;
   const [isPending, setIsPending] = useState(null);
   const { id: userId, nickName: userName } = useSelector(state => state.user?.userInfo);
+  const [leaderName, setLeaderName] = useState('');
+  const [profileImgPath, setProfileImgPath] = useState('');
   // const { subject, imagePath, category, description, time, leader, maxMember } = groupInfo;
   // console.log('룸아이디 오는거 확인>>>', roomId);
   // console.log('그룹정보 오는거 확인>>>', groupInfo);
@@ -75,8 +77,8 @@ export default function DetailGroupPage() {
     }
   };
 
-  // 신청중인 그룹 가져오기
   useEffect(() => {
+    // 신청중인 그룹 가져오기
     const getPendingGroups = async () => {
       try {
         const res = await API.get('/group/pendingGroups');
@@ -86,8 +88,22 @@ export default function DetailGroupPage() {
         console.error('Error fetching pending groups:', error);
       }
     };
+    // 그룹 리더 정보 가져오기
+    // TODO: userId로 조회해서 통으로 데이터 가져오는 api 연결
+    const getGroupLeaderName = async () => {
+      try {
+        const res = await API.get('/user');
+        if (res.data.userInfo) {
+          setLeaderName(res.data.userInfo.nickName);
+          setProfileImgPath(res.data.userInfo.profileImg);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
     getPendingGroups();
+    getGroupLeaderName();
   }, []);
 
   // 그룹 신청
@@ -111,6 +127,7 @@ export default function DetailGroupPage() {
     }
   };
 
+  // 그룹 신청 취소
   const handleCancelRequest = async () => {
     try {
       const res = await API.delete(`/group/studyGroup/${groupId}/joinRequests`);
@@ -151,29 +168,36 @@ export default function DetailGroupPage() {
           {/* 그룹 제목 */}
           <h1 className="font-bold text-5xl">{group_name}</h1>
         </div>
-        <div className="studyContent_user flex mb-3">
+        <div className="studyContent_user flex items-center mb-3">
           {/* 그룹장 */}
-          <span className="font-bold text-lg">그룹장: {group_leader}</span>
+          <img
+            className="rounded-full w-10 h-10 me-3"
+            src={import.meta.env.VITE_APP_BACK_URL + profileImgPath}
+            alt="유저 프로필 이미지"
+          />
+          <span className="font-bold text-lg">{leaderName}</span>
         </div>
-        <section className="studyInfoWrap md:w-1/3 w-full">
-          <ul className="grid md:grid-cols-2 grid-cols-3 gap-4">
+        <section className="studyInfoWrap md:w-1/2 w-full">
+          <ul className="grid md:grid-cols-2 grid-cols-3 gap-2">
             <li className="p-2 flex md:flex-row flex-col items-center gap-2">
               <Badge color="indigo" size="lg" className="font-bold">
                 카테고리
               </Badge>
-              {group_category}
+              <span className="font-semibold">{group_category}</span>
             </li>
             <li className="p-2 flex md:flex-row flex-col items-center gap-2">
               <Badge color="indigo" size="lg" className="font-bold">
                 목표시간
               </Badge>
-              {daily_goal_time}
+              <span className="font-semibold">{daily_goal_time}</span>
             </li>
             <li className="p-2 flex md:flex-row flex-col items-center gap-2">
               <Badge color="indigo" size="lg" className="font-bold">
                 인원
               </Badge>
-              {members.length} / {group_maximum_member}
+              <span className="font-semibold">
+                {members.length} / {group_maximum_member}
+              </span>
             </li>
           </ul>
         </section>
