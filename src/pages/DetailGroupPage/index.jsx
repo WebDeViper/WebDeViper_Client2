@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../../utils/axios';
+import { chatSocket } from '../../utils/socketServer';
+import { useSelector } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Button from '../../components/common/Button';
@@ -33,7 +35,15 @@ export default function DetailGroupPage() {
 
   // 채팅창 이동
   const handleChat = () => {
-    navigate(`/group/chat/${roomId}`);
+    chatSocket.emit('login', userName, res => {
+      if (res && res.isOk) {
+        console.log('successfully login', res);
+        navigate(`/group/chat/${groupId}`);
+      } else {
+        console.log('fail to login', res);
+        alert('로그인해주세요!');
+      }
+    });
   };
 
   // 뒤로가기
