@@ -4,7 +4,7 @@ import { chatSocket } from '../../utils/socketServer';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
-export default function MyGroupPage() {
+export default function DetailGroupPage() {
   const { groupId } = useParams();
   // const location = useLocation();
   // const roomId = location.state.roomId;

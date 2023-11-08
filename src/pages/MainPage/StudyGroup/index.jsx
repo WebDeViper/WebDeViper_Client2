@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
 import Button from '../../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import GroupItem from '../StudyGroup/GroupItem';
 
 export default function StudyGroup() {
   const [studyGroup, setStudyGroup] = useState([]);
@@ -22,43 +25,50 @@ export default function StudyGroup() {
   const handleCreateGroup = () => {
     navigate('/group/create');
   };
-  const groupRequest = async groupId => {
-    try {
-      console.log('그룹아이디는', groupId);
-      const res = await API.post(`/group/studyGroup/${groupId}/join`);
-      console.log('상태코드는', res.status);
-
-      if (!res.data.isFull) {
-        console.log('그룹신청완료 >>', res.data);
-        const data = res.data.message;
-        return alert(data);
-      } else {
-        alert(`${res.data.message}`);
-      }
-    } catch (err) {
-      console.error(err.message);
-      alert('요청 처리 중 오류가 발생했습니다.');
-    }
-  };
 
   return (
     <section className="mt-11">
-      <div className="flex justify-between">
-        <h2 className="font-bold text-2xl">스터디 그룹</h2>
+      <div className="top flex justify-between mb-5">
+        <h2 className="font-bold text-2xl">이런 스터디는 어떠세요?</h2>
         <Button customStyle="rounded-lg" handleClick={handleCreateGroup}>
           스터디 그룹 추가
         </Button>
       </div>
       <div>
-        {studyGroup?.map((item, index) => (
-          <div key={index}>
-            {console.log(item)}
-            {item.group_name}
-            <Button customStyle="rounded-lg" handleClick={() => groupRequest(item._id)}>
-              그룹신청
-            </Button>
-          </div>
-        ))}
+        <Swiper
+          navigation={true}
+          mousewheel={true}
+          keyboard={true}
+          modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+          slidesPerView={3}
+          spaceBetween={10}
+          className="swiper_custom p-3 h-72"
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={swiper => console.log(swiper)}
+        >
+          {studyGroup?.map((item, index) => {
+            const { _id, is_private, group_name, group_category, group_image_path, group_description, members } = item;
+            if (is_private) {
+              //is_private이 true 면 보여주지않음
+              return null;
+            }
+            // const roomId = rooms.find(room => room.group === _id)._id;
+            return (
+              <SwiperSlide key={index}>
+                <GroupItem
+                  key={_id}
+                  // roomId={roomId}
+                  group_id={_id}
+                  imagePath={group_image_path}
+                  subject={group_name}
+                  category={group_category}
+                  description={group_description}
+                  members={members}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
     </section>
   );
