@@ -1,4 +1,4 @@
-import GroupItem from './GroupItem';
+import GroupItem from '../GroupItem';
 // import './style.css';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -21,7 +21,7 @@ export default function MyGroup() {
 
     getMyGroups();
   }, []);
-  console.log('내그룹', myGroups);
+  // console.log('내그룹', myGroups);
   return (
     <section>
       <h2 className="font-bold text-2xl">내가 속한 그룹</h2>
@@ -54,6 +54,7 @@ export default function MyGroup() {
                   subject={group_name}
                   category={group_category}
                   description={group_description}
+                  groupInfo={item}
                 />
               </SwiperSlide>
             );
