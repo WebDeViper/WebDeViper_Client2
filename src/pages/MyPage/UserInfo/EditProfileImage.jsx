@@ -86,7 +86,7 @@ export default function EditProfileImage() {
             {isImgChanged ? (
               <div>
                 <Button type="button" customStyle={'mb-3 me-2'}>
-                  변경
+                  적용
                 </Button>
                 <Button
                   customStyle={'mb-3 !bg-transparent !text-primary !border-primary border-2'}
