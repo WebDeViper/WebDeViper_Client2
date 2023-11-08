@@ -24,6 +24,7 @@ const MessageContainer = ({ chatLog, user }) => {
         }}
       >
         {chatLog.map((message, index) => {
+          console.log(message, 'messagemessage');
           // console.log('index', index);
           return (
             <Container key={index}>
