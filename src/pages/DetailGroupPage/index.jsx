@@ -12,7 +12,7 @@ export default function DetailGroupPage() {
   // console.log('@@@#$@#$#@$#@$@#$ location 새로고침>>>>', location);
   const { roomId, groupInfo } = location.state;
   const [isPending, setIsPending] = useState(null);
-  const userId = useSelector(state => state.user?.userInfo?.id);
+  const { id: userId, nickName: userName } = useSelector(state => state.user?.userInfo);
   // const { subject, imagePath, category, description, time, leader, maxMember } = groupInfo;
   // console.log('룸아이디 오는거 확인>>>', roomId);
   // console.log('그룹정보 오는거 확인>>>', groupInfo);
