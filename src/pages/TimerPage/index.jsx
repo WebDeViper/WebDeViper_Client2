@@ -22,8 +22,9 @@ export default function TimerPage() {
   const [otherUserData, setOtherUserData] = useState([]);
   const [myData, setMyData] = useState(0);
   const [subject, setSubject] = useState('영어');
-  const intervalRefs = useRef({});
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(false);
+  const intervalRefs = useRef({});
+  const myIntervalRef = useRef();
 
   const diffTimeRef = useRef(0);
 
@@ -33,39 +34,40 @@ export default function TimerPage() {
 
   useEffect(() => {
     setSocket(io(import.meta.env.VITE_APP_SOCKET_STOPWATCH_SERVER_URL, { auth: { userId } }));
-    const fetchUserTimer = async () => {
-      try {
-        const response = await API.get('/timer');
-        const data = response.data;
-        const groupData = data.groupData.slice(1);
-        const myData = data.userTimerInfo;
-
-        console.log(groupData[0].members, '우히이히히');
-        setOtherUserData(groupData[0].members); // 나중에 해당 그룹으로 정보 찾기 수정 필요
-        setMyData(myData);
-        setTotalTime(myData.total_time);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserTimer();
+    // const fetchUserTimer = async () => {
+    //   try {
+    //     const response = await API.get('/timer');
+    //     const data = response.data;
+    //     // const groupData = data.groupData.slice(1);
+    //     const groupData = data.groupData;
+    //     const myData = data.userTimerInfo;
+    //     console.log(data, 'data');
+    //     // console.log(userId, 'userId');
+    //     console.log(groupData[0], 'groupData');
+    //     // console.log(groupData[1].members, '우히이히히');
+    //     setOtherUserData(groupData[1].members); // 나중에 해당 그룹으로 정보 찾기 수정 필요
+    //     setMyData(myData);
+    //     setTotalTime(myData.total_time);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    // fetchUserTimer();
   }, [userId]);
 
   useEffect(() => {
     if (!socket) return;
     socket.on('welcome', userGroups => {
-      // console.log(userGroups);
-
       // userGroups 배열을 순회하며 각 그룹에 join 요청을 보냅니다.
       userGroups.forEach(groupId => {
         socket.emit('joinGroup', groupId);
-
-        console.log('서버에 방에 입장하고 싶다는 요청을 보냄!!groupId:', groupId);
       });
     });
 
-    socket.on('groupJoined', groupId => {
-      console.log(`클라이언트가 그룹 ${groupId}에 연결했습니다.`);
+    socket.on('groupJoined', useData => {
+      setOtherUserData(useData[1].members);
+      const myTotalTime = useData[1].members.find(item => item._id === userId);
+      setTotalTime(myTotalTime.total_time);
     });
 
     socket.on('myStopwatchStart-to-Other', handleStartWatchEvent);
@@ -74,9 +76,9 @@ export default function TimerPage() {
     window.addEventListener('beforeunload', handlePause); // 새로 고침 감지 후 데이터 저장
 
     return () => {
-      for (const userId in intervalRefs.current) {
-        clearInterval(intervalRefs.current[userId]);
-      }
+      // for (const userId in intervalRefs.current) {
+      //   clearInterval(intervalRefs.current[userId]);
+      // }
 
       window.removeEventListener('beforeunload', handlePause); // 새로 고침 감지 후 데이터 저장
 
@@ -86,20 +88,16 @@ export default function TimerPage() {
     };
   }, [socket]);
 
-  const handleStart = () => {
-    // 이전 인터벌을 정리
-    if (intervalRefs.current['self']) {
-      clearInterval(intervalRefs.current['self']);
-    }
+  console.log(otherUserData);
 
+  const handleStart = () => {
     setIsRunning(true);
     setIsStartButtonVisible(true);
 
-    const newIntervalRef = setInterval(() => {
+    myIntervalRef.current = setInterval(() => {
       diffTimeRef.current += 1;
       setTotalTime(prevTime => prevTime + 1);
     }, 1000);
-    intervalRefs.current['self'] = newIntervalRef;
 
     // 스타트 이벤트를 서버로 보냄
     socket.emit('start_watch', {
@@ -111,19 +109,8 @@ export default function TimerPage() {
 
   // Pause 버튼 클릭 이벤트 핸들러
   const handlePause = () => {
-    clearInterval(intervalRefs.current['self']);
     setIsStartButtonVisible(false);
-
-    // setOtherUserData(prevData => {
-    //   const updatedData = { ...prevData };
-
-    //   if (updatedData[userId]) {
-    //     const userToUpdate = updatedData[userId];
-    //     userToUpdate.time = totalTime;
-    //     userToUpdate.stopwatch_running = false;
-    //   }
-    //   return updatedData;
-    // });
+    clearInterval(myIntervalRef.current);
 
     // Pause 이벤트를 서버로 보냄
 
@@ -156,61 +143,35 @@ export default function TimerPage() {
   // }, [isRunning, subject, totalTime, userId]);
 
   // 스톱워치 시작 이벤트 핸들러
+
   const handleStartWatchEvent = receivedData => {
-    console.log('Received myStopwatchStart-to-Other event:', receivedData);
-    setOtherUserData(prevData => ({
-      ...prevData,
-      [receivedData.userId]: receivedData,
-    }));
-
-    console.log(receivedData, 'receivedData');
-    if (receivedData.stopwatch_running) {
-      const startTime = receivedData.time || 0;
-      const startTimeStamp = Date.now();
-
-      const updateInterval = setInterval(() => {
-        const currentTimeStamp = Date.now();
-        const elapsedTime = Math.floor((currentTimeStamp - startTimeStamp) / 1000);
-        console.log(elapsedTime);
-        const updatedTime = startTime + elapsedTime;
-        setOtherUserData(prevData => ({
-          ...prevData,
-          [receivedData.userId]: {
-            ...prevData[receivedData.userId],
-            time: updatedTime,
-          },
-        }));
-
-        if (!receivedData.stopwatch_running) {
-          clearInterval(updateInterval);
-        }
+    if (receivedData.is_running) {
+      let time = 0;
+      const newIntervalRef = setInterval(() => {
+        time += 1;
+        console.log('실행');
+        setOtherUserData(prevData =>
+          prevData.map(item => {
+            if (item._id === receivedData._id) {
+              return {
+                ...item,
+                is_running: receivedData.is_running,
+                total_time: receivedData.time + time,
+              };
+            }
+            return item;
+          })
+        );
       }, 1000);
-
-      intervalRefs.current[receivedData.userId] = updateInterval;
+      intervalRefs.current[receivedData._id] = newIntervalRef;
     }
   };
 
   // Pause 이벤트 핸들러
   const handlePauseWatchEvent = async receivedData => {
-    console.log('Received myStopwatchPause-to-Other event:', receivedData);
+    console.log(receivedData, 'handlePauseWatchEvent');
 
-    // 내 스톱워치를 정지했을 때만 내 스톱워치 업데이트
-    if (!receivedData.stopwatch_running && receivedData.userId === userId) {
-      clearInterval(intervalRefs.current[receivedData.userId]);
-    }
-
-    setOtherUserData(prevData => {
-      const updatedData = { ...prevData };
-
-      if (updatedData[receivedData.userId]) {
-        const userToUpdate = updatedData[receivedData.userId];
-
-        // 모든 사용자의 스톱워치 정보 업데이트
-        userToUpdate.stopwatch_running = receivedData.stopwatch_running;
-        userToUpdate.time = receivedData.time;
-      }
-      return updatedData;
-    });
+    clearInterval(intervalRefs.current[receivedData._id]);
   };
 
   // Reset 버튼 클릭 이벤트 핸들러
