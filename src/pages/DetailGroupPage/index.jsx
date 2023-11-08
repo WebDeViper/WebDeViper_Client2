@@ -1,17 +1,27 @@
 import React from 'react';
 import { API } from '../../utils/axios';
+import { chatSocket } from '../../utils/socketServer';
+import { useSelector } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 export default function DetailGroupPage() {
   const { groupId } = useParams();
-  const location = useLocation();
-  const roomId = location.state.roomId;
-  console.log('룸아이디 오는거 확인>>>', roomId);
-
+  // const location = useLocation();
+  // const roomId = location.state.roomId;
+  // console.log('룸아이디 오는거 확인>>>', roomId);
+  const userName = useSelector(state => state.user?.userInfo?.nickName);
   const navigate = useNavigate();
 
   const handleChat = () => {
-    navigate(`/group/chat/${roomId}`);
+    chatSocket.emit('login', userName, res => {
+      if (res && res.isOk) {
+        console.log('successfully login', res);
+        navigate(`/group/chat/${groupId}`);
+      } else {
+        console.log('fail to login', res);
+        alert('로그인해주세요!');
+      }
+    });
   };
 
   const buttonStyle = (backgroundColor, color) => ({
