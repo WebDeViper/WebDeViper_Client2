@@ -55,7 +55,7 @@ const ChatPage = () => {
 
   const sendMessage = event => {
     event.preventDefault();
-    chatSocket.emit('sendMessage', room, message, res => {
+    chatSocket.emit('sendMessage', room, user, message, res => {
       if (!res.isOk) {
         console.log('error message', res.error);
       }
