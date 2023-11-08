@@ -29,20 +29,24 @@ const ChatPage = () => {
   // console.log('룸아이디???', room);
   // 채팅 화면 처음 들어올 때
   useEffect(() => {
-    console.log('유저는>>', userInfo);
+    // console.log('유저는>>', userInfo);
 
     chatSocket.emit('joinRoom', userInfo.nickName, room, res => {
       if (res && res.isOk) {
         console.log('successfully join', res);
+        console.log(res.data, 'resDAta');
+        setChatLog(res.data);
       } else {
-        console.log('fail to join', res);
+        // console.log('fail to join', res);
       }
     });
+
     chatSocket.on('message', message => {
       // message 이벤트를 수신하면 이 함수가 실행됩니다.
       // 여기서 message는 서버에서 보낸 데이터입니다.
+      // setChatLog(prevChatLog => [...prevChatLog, message]);
       console.log('서버로부터 메시지 수신:', message, '라고?');
-      setChatLog(prevState => prevState.concat(message));
+      setChatLog(prev => [...prev, message]);
     });
     // 서버에서 이전 채팅 로그를 받아온다
     // chatSocket.emit('getChatLog', room, res => {
@@ -52,6 +56,8 @@ const ChatPage = () => {
     //   }
     // });
   }, []);
+
+  console.log(chatLog, 'chatLogchatLogchatLogchatLog');
   //
   const sendMessage = event => {
     event.preventDefault();
@@ -62,6 +68,8 @@ const ChatPage = () => {
       setMessage('');
     });
   };
+
+  console.log(chatLog, 'chatLogchatLogchatLogchatLog');
 
   return (
     <div
