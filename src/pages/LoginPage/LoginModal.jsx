@@ -30,7 +30,7 @@ export default function LoginModal({ isOpen, close }) {
   // const kakaoColor = '#FEE500';
   // const googleColor = '#fefefe';
   // const naverColor = '#2DB400';
-  const kakaoStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#FEE500]`;
+  const kakaoStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#FEE500] !text-[#3D1D1E]`;
   const googleStyle = `w-full mb-2 box-border flex items-center !text-black text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#fefefe]`;
   const naverStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#2DB400]`;
 
@@ -42,7 +42,7 @@ export default function LoginModal({ isOpen, close }) {
     <CustomModal isOpen={isOpen} close={close}>
       <div className="px-10 py-14 grid grid-cols-3 relative">
         <div className="absolute top-3 left-3">
-          <Button customStyle={'bg-transparent !text-primary'} handleClick={close}>
+          <Button customStyle={'bg-transparent'} handleClick={close}>
             <AiOutlineClose size={30} />
           </Button>
         </div>

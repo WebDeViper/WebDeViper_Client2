@@ -28,7 +28,7 @@ const customStyles = {
     left: '0',
   },
   content: {
-    width: '40%',
+    maxWidth: '500px',
     height: 'fit-content',
     zIndex: '150',
     position: 'absolute',
@@ -38,7 +38,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     borderRadius: '10px',
     boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-    backgroundColor: '#bce3ef',
+    backgroundColor: 'rgba(200,200,200,0.9)',
     justifyContent: 'center',
     overflow: 'auto',
   },
