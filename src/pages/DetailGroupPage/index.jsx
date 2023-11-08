@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Button from '../../components/common/Button';
-import { Badge } from 'flowbite-react';
+import { Badge, Progress } from 'flowbite-react';
 
 export default function DetailGroupPage() {
   const { groupId } = useParams();
@@ -111,9 +111,16 @@ export default function DetailGroupPage() {
     }
   };
 
-  const handleCancelRequest = () => {
-    console.log('내가 신청중인 그룹 취소!!');
-    // TODO: 그룹 신청 취소 api 연결
+  const handleCancelRequest = async () => {
+    try {
+      const res = await API.delete(`/group/studyGroup/${groupId}/joinRequests`);
+      if (res.data.isSuccess) {
+        setIsPending(false);
+        alert(`${res.data.message}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -148,22 +155,25 @@ export default function DetailGroupPage() {
           {/* 그룹장 */}
           <span className="font-bold text-lg">그룹장: {group_leader}</span>
         </div>
-        <section className="studyInfoWrap w-1/3">
-          <ul className="grid grid-cols-2 gap-4">
-            <li className="p-2">
-              <Badge color="dark" size="lg">
-                카테고리 : {group_category}
+        <section className="studyInfoWrap md:w-1/3 w-full">
+          <ul className="grid md:grid-cols-2 grid-cols-3 gap-4">
+            <li className="p-2 flex md:flex-row flex-col items-center gap-2">
+              <Badge color="indigo" size="lg" className="font-bold">
+                카테고리
               </Badge>
+              {group_category}
             </li>
-            <li className="p-2">
-              <Badge color="dark" size="lg">
-                목표시간 : {daily_goal_time}
+            <li className="p-2 flex md:flex-row flex-col items-center gap-2">
+              <Badge color="indigo" size="lg" className="font-bold">
+                목표시간
               </Badge>
+              {daily_goal_time}
             </li>
-            <li className="p-2">
-              <Badge color="dark" size="lg">
-                인원 : {members.length} / {group_maximum_member}
+            <li className="p-2 flex md:flex-row flex-col items-center gap-2">
+              <Badge color="indigo" size="lg" className="font-bold">
+                인원
               </Badge>
+              {members.length} / {group_maximum_member}
             </li>
           </ul>
         </section>
@@ -171,7 +181,7 @@ export default function DetailGroupPage() {
 
       <div className="studyContent_postContentWrap mb-5">
         <h2 className="text-xl font-semibold">그룹 소개</h2>
-        <div className="studyContent_postContent border-2 w-full p-5">{group_description}</div>
+        <div className="studyContent_postContent w-full p-5 shadow-md min-h-[200px]">{group_description}</div>
       </div>
 
       <div className="studyContent_btnWrap self-center">
