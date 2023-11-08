@@ -83,8 +83,9 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedDate, se
         start_time: newStateDate,
         end_time: newEndDate,
       };
-      await API.post('/todo_list', body);
-      setTodos(prev => [...prev, body]);
+      const response = await API.post('/todo_list', body);
+      const newData = response.data.result;
+      setTodos(prev => [...prev, newData]);
       setOpenModal(false);
     } catch (err) {
       console.log(err);
