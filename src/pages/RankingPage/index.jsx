@@ -80,16 +80,15 @@ export default function RankingPage() {
         </div>
         <div className="other flex flex-col gap-2">
           {userOther.map((user, index) => (
-            <Card
-              // theme={{ theme: customTheme2 }}
-              key={index}
-              className="h-20 md:max-w-full"
-              horizontal
-              imgSrc={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
-            >
+            <div className="h-20 md:max-w-full flex border-2 items-center rounded-lg gap-2 p-4">
+              <img
+                src={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
+                alt="유저 이미지"
+                className="h-full rounded-lg"
+              />
               <span className="font-bold">{user.user_nickname}</span>
               <span>{user.user_total_time || '00:00:00'}</span>
-            </Card>
+            </div>
           ))}
         </div>
       </div>
