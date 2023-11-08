@@ -18,7 +18,7 @@ export default function GroupItem({ group_id, subject, imagePath, category, desc
       try {
         const res = await API.get('/group/rooms');
         console.log('요청', res.data);
-        const foundRoom = res.data.find(room => room.group === group_id);
+        const foundRoom = res.data.find(room => room._id === group_id);
         if (foundRoom) {
           setRoomId(foundRoom._id); // 찾은 roomId를 설정
         }
@@ -31,7 +31,7 @@ export default function GroupItem({ group_id, subject, imagePath, category, desc
   }, [group_id]);
 
   return (
-    <Link to={`/group/${group_id}`} state={{ roomId: roomId }}>
+    <Link to={`/group/${group_id}`}>
       <div className="rounded-[4px] shadow-xl px-9 pb-5 pt-[25px] h-full">
         <div className="flex items-center flex-col">
           <img

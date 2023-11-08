@@ -9,9 +9,11 @@ import { useSelector } from 'react-redux';
 
 const ChatPage = () => {
   // console.log('유저정보는', user);
-  const user = useSelector(state => state.user?.userInfo);
-  const { roomId } = useParams(); // 유저가 조인한 방의 아이디를 url에서 가져온다
-  console.log('룸 아이디>>', roomId);
+  const user = useSelector(state => state.user?.userInfo.nickName);
+  const userInfo = useSelector(state => state.user?.userInfo);
+  const { groupId } = useParams(); // 유저가 조인한 방의 아이디를 url에서 가져온다
+  const room = groupId;
+  console.log('그룹 아이디>>', room);
   const [chatLog, setChatLog] = useState([]); // 배열로 변경
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -19,18 +21,18 @@ const ChatPage = () => {
   // 채팅창 떠날 때
   const leaveRoom = () => {
     chatSocket.emit('leaveRoom', user, res => {
-      if (res.ok) navigate(-1); // 다시 채팅방 리스트 페이지로 돌아감
+      if (res.isOk) navigate(-1); // 다시 채팅방 리스트 페이지로 돌아감
     });
   };
 
   // console.log('message List', chatLog);
-  // console.log('룸아이디???', roomId);
+  // console.log('룸아이디???', room);
   // 채팅 화면 처음 들어올 때
   useEffect(() => {
-    console.log('유저는>>', user);
+    // console.log('유저는>>', user);
 
-    chatSocket.emit('joinRoom', user, roomId, res => {
-      if (res && res.ok) {
+    chatSocket.emit('joinRoom', user, room, res => {
+      if (res && res.isOk) {
         console.log('successfully join', res);
       } else {
         console.log('fail to join', res);
@@ -43,7 +45,7 @@ const ChatPage = () => {
       setChatLog(prevState => prevState.concat(message));
     });
     // 서버에서 이전 채팅 로그를 받아온다
-    // chatSocket.emit('getChatLog', roomId, res => {
+    // chatSocket.emit('getChatLog', room, res => {
     //   if (res?.isOk) {
     //     console.log('서버에서 받은 채팅 로그:', res.data);
     //     setChatLog(prevState => prevState.concat(res.data));
@@ -53,8 +55,8 @@ const ChatPage = () => {
 
   const sendMessage = event => {
     event.preventDefault();
-    chatSocket.emit('sendMessage', roomId, message, res => {
-      if (!res.ok) {
+    chatSocket.emit('sendMessage', room, message, res => {
+      if (!res.isOk) {
         console.log('error message', res.error);
       }
       setMessage('');
@@ -70,9 +72,9 @@ const ChatPage = () => {
         <Button onClick={leaveRoom} className="back-button">
           ←
         </Button>
-        <div className="nav-user">{user.nick_name}</div>
+        <div className="nav-user">{user}</div>
       </nav>
-      {chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={user} /> : null}
+      {chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={userInfo} /> : null}
       <InputField message={message} setMessage={setMessage} sendMessage={sendMessage} />
     </div>
   );
