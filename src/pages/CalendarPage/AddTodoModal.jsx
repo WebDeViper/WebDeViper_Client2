@@ -38,15 +38,25 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedDate, se
       const updateStartTime =
         updateStartTimeOfDay === '오전'
           ? moment(updateTodo.start_time).hour()
-          : moment(updateTodo.start_time).hour() + 12;
+          : moment(updateTodo.start_time).hour() - 12;
       const updateEndTime =
-        updateEntTimeOfDay === '오전' ? moment(updateTodo.ent_time).hour() : moment(updateTodo.ent_time).hour() + 12;
+        updateEntTimeOfDay === '오전' ? moment(updateTodo.end_time).hour() : moment(updateTodo.end_time).hour() - 12;
 
       setStartTimeOfDay(updateStartTimeOfDay);
       setEndTimeOfDay(updateEntTimeOfDay);
-      // console.log(updateStartTimeOfDay);
+
+      const updateStartMinute = moment(updateTodo.start_time).minute();
+
+      const updateEndMinute = moment(updateTodo.end_time).minute();
+
+      // handleStartDateChange(updateTodo.start_time);
+      // handleEndDateChange(updateTodo.end_time);
       reset({
         title: updateTodo.title,
+        startHour: updateStartTime.toString(),
+        startMinute: updateStartMinute.toString(),
+        endHour: updateEndTime.toString(),
+        endMinute: updateEndMinute.toString(),
         content: updateTodo.content,
       });
     } else {
