@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GroupRequest from './GroupRequest';
 import MyGroupRequest from './MyGroupRequest';
 import { API } from '../../../utils/axios';
+import { Card } from 'flowbite-react';
 
 export default function GroupInfo() {
   const [myOwnGroup, setMyOwnGroup] = useState([]);
@@ -32,6 +33,8 @@ export default function GroupInfo() {
   return (
     <div>
       <h2 className="font-bold text-xl md:mb-5 mb-1">그룹 가입 요청</h2>
+      {/* <Card>요청이 없습니다.</Card> */}
+
       <div className="myOwnGroupWrap flex flex-wrap md:gap-1 md:mb-5 mb-1">
         {myOwnGroup.map(
           group =>
