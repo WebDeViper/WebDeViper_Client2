@@ -19,7 +19,8 @@ export default function TimerPage() {
   const userId = useSelector(state => state.user?.userInfo?.id);
   const [socket, setSocket] = useState(null);
   const [totalTime, setTotalTime] = useState(0);
-  const [data, setData] = useState();
+  const [otherUserData, setOtherUserData] = useState([]);
+  const [myData, setMyData] = useState(0);
   const [subject, setSubject] = useState('영어');
   const intervalRefs = useRef({});
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(false);
@@ -35,22 +36,25 @@ export default function TimerPage() {
     const fetchUserTimer = async () => {
       try {
         const response = await API.get('/timer');
-        const data = await response.data;
+        const data = response.data;
         const groupData = data.groupData.slice(1);
-        console.log(groupData, '뿌잉');
-        setData(groupData[0].members);
+        const myData = data.userTimerInfo;
+
+        console.log(groupData[0].members, '우히이히히');
+        setOtherUserData(groupData[0].members); // 나중에 해당 그룹으로 정보 찾기 수정 필요
+        setMyData(myData);
+        setTotalTime(myData.total_time);
       } catch (err) {
         console.log(err);
       }
     };
-    console.log('sadfsdalkj');
     fetchUserTimer();
   }, [userId]);
 
   useEffect(() => {
     if (!socket) return;
     socket.on('welcome', userGroups => {
-      console.log(userGroups);
+      // console.log(userGroups);
 
       // userGroups 배열을 순회하며 각 그룹에 join 요청을 보냅니다.
       userGroups.forEach(groupId => {
@@ -67,10 +71,15 @@ export default function TimerPage() {
     socket.on('myStopwatchStart-to-Other', handleStartWatchEvent);
     socket.on('myStopwatchPause-to-Other', handlePauseWatchEvent);
 
+    window.addEventListener('beforeunload', handlePause); // 새로 고침 감지 후 데이터 저장
+
     return () => {
       for (const userId in intervalRefs.current) {
         clearInterval(intervalRefs.current[userId]);
       }
+
+      window.removeEventListener('beforeunload', handlePause); // 새로 고침 감지 후 데이터 저장
+
       socket.disconnect();
       socket.off('myStopwatchStart-to-Other', handleStartWatchEvent);
       socket.off('myStopwatchPause-to-Other', handlePauseWatchEvent);
@@ -105,21 +114,22 @@ export default function TimerPage() {
     clearInterval(intervalRefs.current['self']);
     setIsStartButtonVisible(false);
 
-    setData(prevData => {
-      const updatedData = { ...prevData };
+    // setOtherUserData(prevData => {
+    //   const updatedData = { ...prevData };
 
-      if (updatedData[userId]) {
-        const userToUpdate = updatedData[userId];
-        userToUpdate.time = totalTime;
-        userToUpdate.stopwatch_running = false;
-      }
-      return updatedData;
-    });
+    //   if (updatedData[userId]) {
+    //     const userToUpdate = updatedData[userId];
+    //     userToUpdate.time = totalTime;
+    //     userToUpdate.stopwatch_running = false;
+    //   }
+    //   return updatedData;
+    // });
 
     // Pause 이벤트를 서버로 보냄
 
     const time = diffTimeRef.current;
     socket.emit('pause_watch', {
+      // 안에 정보는 건들지 말기
       userId,
       // roomNickname,
       subject,
@@ -148,7 +158,7 @@ export default function TimerPage() {
   // 스톱워치 시작 이벤트 핸들러
   const handleStartWatchEvent = receivedData => {
     console.log('Received myStopwatchStart-to-Other event:', receivedData);
-    setData(prevData => ({
+    setOtherUserData(prevData => ({
       ...prevData,
       [receivedData.userId]: receivedData,
     }));
@@ -163,7 +173,7 @@ export default function TimerPage() {
         const elapsedTime = Math.floor((currentTimeStamp - startTimeStamp) / 1000);
         console.log(elapsedTime);
         const updatedTime = startTime + elapsedTime;
-        setData(prevData => ({
+        setOtherUserData(prevData => ({
           ...prevData,
           [receivedData.userId]: {
             ...prevData[receivedData.userId],
@@ -189,7 +199,7 @@ export default function TimerPage() {
       clearInterval(intervalRefs.current[receivedData.userId]);
     }
 
-    setData(prevData => {
+    setOtherUserData(prevData => {
       const updatedData = { ...prevData };
 
       if (updatedData[receivedData.userId]) {
@@ -235,7 +245,7 @@ export default function TimerPage() {
       </div>
       <h2>Other User's Stopwatches</h2>
       <ul>
-        {data?.map((userData, index) => {
+        {otherUserData?.map((userData, index) => {
           return (
             <li key={index}>
               <strong>{userData.nick_name}:</strong>{' '}
