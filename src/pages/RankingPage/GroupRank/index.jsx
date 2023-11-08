@@ -20,7 +20,10 @@ export default function GroupRank({ groupTop3, groupOther }) {
         </div>
         <div className="other flex flex-col gap-2">
           {groupOther?.map(group => (
-            <div key={group._id} className="h-20 md:max-w-full flex border-2 items-center rounded-lg gap-2 p-4">
+            <div
+              key={Math.random() * 1000000000000}
+              className="h-20 md:max-w-full flex border-2 items-center rounded-lg gap-2 p-4"
+            >
               <img
                 // src={import.meta.env.VITE_APP_BACK_URL + '그룹 이미지 경로'}
                 alt="그룹 이미지"

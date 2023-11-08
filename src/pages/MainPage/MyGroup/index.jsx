@@ -40,8 +40,8 @@ export default function MyGroup() {
           slidesPerView={3}
           spaceBetween={10}
           className="swiper_custom p-3 h-72"
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={swiper => console.log(swiper)}
+          // onSlideChange={() => console.log('slide change')}
+          // onSwiper={swiper => console.log(swiper)}
         >
           {myGroups?.map((item, index) => {
             const { _id, is_private, group_name, group_category, group_image_path, group_description } = item;

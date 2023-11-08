@@ -26,6 +26,7 @@ export default function StudyGroup() {
     };
     getGroupData();
   }, []);
+
   const handleCreateGroup = () => {
     navigate('/group/create');
   };
@@ -53,8 +54,8 @@ export default function StudyGroup() {
           slidesPerView={3}
           spaceBetween={10}
           className="swiper_custom p-3 h-72"
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={swiper => console.log(swiper)}
+          // onSlideChange={() => console.log('slide change')}
+          // onSwiper={swiper => console.log(swiper)}
         >
           {studyGroup?.map((item, index) => {
             const { _id, is_private, group_name, group_category, group_image_path, group_description, members } = item;
