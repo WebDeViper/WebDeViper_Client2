@@ -54,8 +54,8 @@ export default function CalendarPage() {
 
     return (
       <div className="w-full">
-        {matchingEvents.slice(0, 2).map((event, index) => (
-          <p key={`content${index}`}>{event.title}</p>
+        {matchingEvents.slice(0, 2).map(event => (
+          <p key={event._id}>{event.title}</p>
         ))}
       </div>
     );

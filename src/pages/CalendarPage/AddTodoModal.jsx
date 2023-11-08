@@ -7,25 +7,52 @@ import { toast } from 'react-toastify';
 import { API } from '../../utils/axios';
 import moment from 'moment';
 
-export default function AddTodoModal({ openModal, setOpenModal, selectedDate, setTodos }) {
+const defaultValues = {
+  title: '',
+  startHour: '4',
+  startMinute: '00',
+  endHour: '5',
+  endMinute: '00',
+  content: '',
+};
+
+export default function AddTodoModal({ openModal, setOpenModal, selectedDate, setTodos, updateTodo }) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [startTimeOfDay, setStartTimeOfDay] = useState('오후');
   const [endTimeOfDay, setEndTimeOfDay] = useState('오후');
+
+  console.log(updateTodo);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
-    defaultValues: {
-      startHour: '4',
-      startMinute: '00',
-      endHour: '5',
-      endMinute: '00',
-    },
-  });
+  } = useForm();
+
+  useEffect(() => {
+    if (updateTodo) {
+      const updateStartTimeOfDay = moment(updateTodo.start_time).hour() > 12 ? '오후' : '오전';
+      const updateEntTimeOfDay = moment(updateTodo.ent_time).hour() > 12 ? '오후' : '오전';
+      const updateStartTime =
+        updateStartTimeOfDay === '오전'
+          ? moment(updateTodo.start_time).hour()
+          : moment(updateTodo.start_time).hour() + 12;
+      const updateEndTime =
+        updateEntTimeOfDay === '오전' ? moment(updateTodo.ent_time).hour() : moment(updateTodo.ent_time).hour() + 12;
+
+      setStartTimeOfDay(updateStartTimeOfDay);
+      setEndTimeOfDay(updateEntTimeOfDay);
+      // console.log(updateStartTimeOfDay);
+      reset({
+        title: updateTodo.title,
+        content: updateTodo.content,
+      });
+    } else {
+      reset(defaultValues);
+    }
+  }, [updateTodo]);
 
   useEffect(() => {
     setStartDate(selectedDate);
@@ -78,13 +105,14 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedDate, se
       newEndDate.setMinutes(data.endMinute);
 
       const body = {
-        title: data.subject,
+        title: data.title,
         content: data.content,
         start_time: newStateDate,
         end_time: newEndDate,
       };
-      await API.post('/todo_list', body);
-      setTodos(prev => [...prev, body]);
+      const response = await API.post('/todo_list', body);
+      const newData = response.data.result;
+      setTodos(prev => [...prev, newData]);
       setOpenModal(false);
     } catch (err) {
       console.log(err);
@@ -113,17 +141,17 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedDate, se
               <h3 className="text-xl font-medium text-gray-900 dark:text-white">일정</h3>
               <div>
                 <div className="mb-2 block">
-                  <Label htmlFor="subject" value="제목" />
+                  <Label htmlFor="title" value="제목" />
                 </div>
                 <TextInput
-                  id="subject"
+                  id="title"
                   type="text"
-                  {...register('subject', {
+                  {...register('title', {
                     required: '제목을 입력하세요.',
                   })}
                 />
               </div>
-              {errors?.subject && <span className="text-danger">{errors.subject.message}</span>}
+              {errors?.title && <span className="text-danger">{errors.title.message}</span>}
               <DatePicker
                 label="시작"
                 hourName="startHour"
