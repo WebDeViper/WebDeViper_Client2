@@ -23,11 +23,12 @@ const MessageContainer = ({ chatLog, user }) => {
           overflowY: 'auto', // 세로 스크롤을 자동으로 활성화합니다.
         }}
       >
-        {chatLog.map((message, index) => {
+        {chatLog?.map((message, index) => {
           // console.log('index', index);
           return (
             <Container key={index}>
               {/* <Container key={message._id} className="message-container"> */}
+              {console.log('system 어쩌구 ', message)}
               {message.user.name === 'system' ? (
                 <div className="system-message-container">
                   <p className="system-message">{message.chat}</p>

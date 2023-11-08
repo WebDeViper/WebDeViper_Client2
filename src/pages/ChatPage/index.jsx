@@ -41,9 +41,21 @@ const ChatPage = () => {
     chatSocket.on('message', message => {
       // message 이벤트를 수신하면 이 함수가 실행됩니다.
       // 여기서 message는 서버에서 보낸 데이터입니다.
-      console.log('서버로부터 메시지 수신:', message, '라고?');
-      setChatLog(prevState => prevState.concat(message));
+      // console.log('서버로부터 메시지 수신:', message[0]._id, '라고?');
+      // setChatLog(prevState => prevState.concat(message));
+      setChatLog(prevState => {
+        // 중복 메시지를 필터링
+        const isDuplicate = prevState.some(existingMessage => existingMessage._id === message._id);
+
+        if (!isDuplicate) {
+          return [...prevState, message];
+        } else {
+          return prevState; // 중복된 메시지가 있으면 상태를 변경하지 않음
+        }
+      });
+      // setChatLog(message);
     });
+    console.log('chatLog', chatLog);
     // 서버에서 이전 채팅 로그를 받아온다
     // chatSocket.emit('getChatLog', room, res => {
     //   if (res?.isOk) {
