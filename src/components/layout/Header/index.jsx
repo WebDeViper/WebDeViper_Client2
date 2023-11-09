@@ -54,9 +54,9 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link to="/setting" onClick={() => setIsSideOpen(false)}>
+              {/* <Link to="/setting" onClick={() => setIsSideOpen(false)}>
                 설정
-              </Link>
+              </Link> */}
             </li>
           </ul>
         </div>
@@ -77,9 +77,9 @@ export default function Header() {
             <li>
               <Link to="/ranking">랭킹</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/setting">설정</Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       )}
