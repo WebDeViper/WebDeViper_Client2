@@ -5,25 +5,23 @@ import { Card } from 'flowbite-react';
 
 export default function GroupRequest({ requests, groupName, groupId }) {
   const [request, setRequest] = useState(requests);
-
-  const handleAccept = async requestName => {
+  console.log('requests는 useState -> ', request);
+  const handleAccept = async requestId => {
     console.log('수락!!!', requests);
-    console.log(requestName);
-    const res = await API.post(`/group/studyGroup/${groupId}/${requestName}/requests/accept`);
+    console.log(requestId);
+    const res = await API.post(`/group/studyGroup/${groupId}/${requestId}/requests/accept`);
     console.log(res.data, '수락 응답!!');
 
     // 요청을 수락한 후 해당 요청을 배열에서 제거
-    const updatedRequests = requests.filter(request => request.user_name !== requestName);
-    setRequest(updatedRequests);
+    setRequest(request.filter(item => item.user_id !== requestId));
   };
-  const handleReject = async requestName => {
+  const handleReject = async requestId => {
     console.log('거절!!!');
-    const res = await API.post(`/group/studyGroup/${groupId}/${requestName}/requests/reject`);
+    const res = await API.post(`/group/studyGroup/${groupId}/${requestId}/requests/reject`);
     console.log(res.data, '거절 응답!!');
 
     // 요청을 거절한 후 해당 요청을 배열에서 제거
-    const updatedRequests = requests.filter(request => request.user_name !== requestName);
-    setRequest(updatedRequests);
+    setRequest(request.filter(item => item.user_id !== requestId));
   };
   console.log(request);
   return (
@@ -41,13 +39,13 @@ export default function GroupRequest({ requests, groupName, groupId }) {
                 <div className="btnWrap flex gap-1">
                   <button
                     className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"
-                    onClick={() => handleAccept(request.user_name)}
+                    onClick={() => handleAccept(request.user_id)}
                   >
                     수락
                   </button>
                   <button
                     className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400"
-                    onClick={() => handleReject(request.user_name)}
+                    onClick={() => handleReject(request.user_id)}
                   >
                     삭제
                   </button>
