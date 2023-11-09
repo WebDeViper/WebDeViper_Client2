@@ -29,6 +29,7 @@ const customStyles = {
   },
   content: {
     maxWidth: '500px',
+    width: '80%',
     height: 'fit-content',
     zIndex: '150',
     position: 'absolute',
