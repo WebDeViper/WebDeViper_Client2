@@ -34,7 +34,6 @@ export default function GroupInfo() {
     <div>
       <h2 className="font-bold text-xl md:mb-5 mb-1">그룹 가입 요청</h2>
       {/* <Card>요청이 없습니다.</Card> */}
-      {myOwnGroup.length === 0 && <div>그룹 신청 없음</div>}
       <div className="myOwnGroupWrap flex flex-wrap md:gap-1 md:mb-5 mb-1">
         {myOwnGroup.map(
           group =>
@@ -51,7 +50,9 @@ export default function GroupInfo() {
       <h2 className="font-bold text-xl md:mb-5 mb-1">신청중인 그룹</h2>
       <div className="myPendingGroupWrap flex flex-wrap md:gap-1">
         {pendingGroups.length > 0 &&
-          pendingGroups.map((group, index) => <MyGroupRequest key={index} groupInfo={group} />)}
+          pendingGroups.map((group, index) => (
+            <MyGroupRequest key={index} groupInfo={group} setPendingGroups={setPendingGroups} />
+          ))}
       </div>
     </div>
   );

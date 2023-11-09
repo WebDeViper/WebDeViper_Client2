@@ -1,10 +1,19 @@
 import React from 'react';
+import { API } from '../../../utils/axios';
 
-export default function MyGroupRequest({ groupInfo }) {
+export default function MyGroupRequest({ groupInfo, setPendingGroups }) {
   console.log('>>>>', groupInfo);
-  const handleCancelRequest = () => {
+  const handleCancelRequest = async () => {
     console.log('내가 신청중인 그룹 취소!!');
     // TODO: 그룹 신청 취소 api 연결
+    try {
+      const res = await API.delete(`/group/studyGroup/${groupInfo._id}/joinRequests`);
+      if (res.data.isSuccess) {
+        setPendingGroups(prev => prev.filter(group => group._id !== groupInfo._id));
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
   return (
     <div className="mb-5 flex flex-col items-center w-fit h-fit gap-2 border-2 rounded-lg border-primary p-2">

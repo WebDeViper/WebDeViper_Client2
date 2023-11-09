@@ -84,7 +84,7 @@ const ChatPage = ({ setIsChatOn, groupId }) => {
           ←
         </Button>
       </nav>
-      {chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={userInfo} /> : <div className="h-1/2"></div>}
+      {chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={userInfo} /> : <div className="h-full"></div>}
       <InputField message={message} setMessage={setMessage} sendMessage={sendMessage} />
     </div>
   );
