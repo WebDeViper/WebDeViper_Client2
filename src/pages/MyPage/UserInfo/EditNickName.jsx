@@ -58,12 +58,12 @@ export default function EditNickName({ dispatch }) {
   const messageStyled = !isDuplicate ? 'text-primary' : 'text-red-600';
   const buttonStyled = isValidate ? '!bg-primary' : '!bg-gray-500';
   return (
-    <div className="flex flex-col items-end border-2 rounded-lg border-semi_primary p-2 md:mb-3 mb-1">
+    <div className="flex flex-col items-start justify-center border-2 rounded-lg border-semi_primary p-2 md:mb-3 mb-1">
       <h2 className="font-bold text-2xl mb-5 self-start">닉네임 변경</h2>
-      <div className="wrap flex">
+      <div className="flex w-full justify-between">
         <div className="nickInputWrap border-2 rounded-lg border-primary ps-5 pe-2 w-fit flex items-center me-2">
           <input
-            className="font-bold w-[10rem] h-[3rem] border-transparent focus:ring-0 focus:border-transparent"
+            className="font-bold w-[12rem] h-[3rem] border-transparent focus:ring-0 focus:border-transparent"
             type="text"
             placeholder="닉네임 입력"
             // value={nickName}
@@ -86,7 +86,7 @@ export default function EditNickName({ dispatch }) {
           완료
         </Button>
       </div>
-      {message ? <span className={`font-semibold text-sm ms-5 ${messageStyled}`}>{message}</span> : <br />}
+      {message ? <span className={`font-semibold text-sm mt-2 ms-2 ${messageStyled}`}>{message}</span> : <br />}
     </div>
   );
 }
