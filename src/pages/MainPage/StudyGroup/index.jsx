@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { API } from '../../../utils/axios';
 import Button from '../../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
-import { Navigation, Pagination, Keyboard } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard, Autoplay } from 'swiper/modules';
+import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import GroupItem from '../GroupItem';
 import { useSelector } from 'react-redux';
@@ -48,11 +49,17 @@ export default function StudyGroup() {
         )}
 
         <Swiper
+          breakpoints={{
+            768: {
+              slidesPerView: 3,
+            },
+          }}
           navigation={true}
           keyboard={true}
-          modules={[Navigation, Pagination, Keyboard]}
-          slidesPerView={3}
+          modules={[Navigation, Pagination, Keyboard, Autoplay]}
+          slidesPerView={1}
           spaceBetween={10}
+          autoplay={{ delay: 3000 }}
           className="swiper_custom p-3 h-72"
           // onSlideChange={() => console.log('slide change')}
           // onSwiper={swiper => console.log(swiper)}

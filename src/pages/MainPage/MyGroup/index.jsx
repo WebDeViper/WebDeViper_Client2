@@ -1,8 +1,7 @@
 import GroupItem from '../GroupItem';
-// import './style.css';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Keyboard } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard, Autoplay } from 'swiper/modules';
 import { API } from '../../../utils/axios';
 import { useEffect, useState } from 'react';
 import { Card } from 'flowbite-react';
@@ -34,11 +33,17 @@ export default function MyGroup() {
           </Card>
         )}
         <Swiper
+          breakpoints={{
+            768: {
+              slidesPerView: 3,
+            },
+          }}
           navigation={true}
           keyboard={true}
-          modules={[Navigation, Pagination, Keyboard]}
-          slidesPerView={3}
+          modules={[Navigation, Pagination, Keyboard, Autoplay]}
+          slidesPerView={1}
           spaceBetween={10}
+          autoplay={{ delay: 3000 }}
           className="swiper_custom p-3 h-72"
           // onSlideChange={() => console.log('slide change')}
           // onSwiper={swiper => console.log(swiper)}
