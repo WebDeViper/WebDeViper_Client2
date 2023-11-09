@@ -53,9 +53,9 @@ export default function CalendarPage() {
     const matchingEvents = filterMatchingEvents(date, todos);
 
     return (
-      <div className="w-full">
-        {matchingEvents.slice(0, 2).map(event => (
-          <p key={event._id}>{event.title}</p>
+      <div className="w-full relative flex justify-center">
+        {matchingEvents.slice(0, 1).map(event => (
+          <p key={event._id}></p>
         ))}
       </div>
     );
@@ -72,7 +72,7 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="calendar w-10/12 mx-auto">
+    <div className="calendar w-10/12 mx-auto mt-12">
       <Calendar
         onChange={handleOnChange}
         value={selectedDate}
