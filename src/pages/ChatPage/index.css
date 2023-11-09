@@ -1,6 +1,6 @@
 .chatContainer {
   margin: 0 auto;
-  max-width: 28rem;
+  /* max-width: 28rem; */
   height: 900px;
 }
 
@@ -9,7 +9,8 @@ nav {
   justify-content: flex-start;
   align-items: center;
 }
-.back-button {
+
+/* .back-button {
   height: 50px;
   width: 50px;
   background: none;
@@ -18,8 +19,9 @@ nav {
   font-weight: bolder;
   cursor: pointer;
   margin-right: 10px;
-}
-.nav-user {
+} */
+
+/* .nav-user {
   font-size: 20px;
   font-weight: 500;
-}
+} */
