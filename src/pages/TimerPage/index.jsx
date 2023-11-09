@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
-import { Button } from 'flowbite-react';
-import { API } from '../../utils/axios';
+// import { Button } from '@mui/material/Button';
+import Button from '@mui/material/Button';
 
 const formatTime = seconds => {
   const padZero = value => (value < 10 ? `0${value}` : `${value}`);
@@ -15,44 +15,23 @@ const formatTime = seconds => {
 };
 
 export default function TimerPage() {
-  const [isRunning, setIsRunning] = useState(false);
   const userId = useSelector(state => state.user?.userInfo?.id);
   const [socket, setSocket] = useState(null);
   const [totalTime, setTotalTime] = useState(0);
   const [otherUserData, setOtherUserData] = useState([]);
-  const [myData, setMyData] = useState(0);
   const [subject, setSubject] = useState('영어');
   const [isStartButtonVisible, setIsStartButtonVisible] = useState(false);
   const intervalRefs = useRef({});
   const myIntervalRef = useRef();
-
   const diffTimeRef = useRef(0);
 
   const handleChangeSubject = currentSubject => {
+    console.log('zmfflr');
     setSubject(currentSubject);
   };
 
   useEffect(() => {
     setSocket(io(import.meta.env.VITE_APP_SOCKET_STOPWATCH_SERVER_URL, { auth: { userId } }));
-    // const fetchUserTimer = async () => {
-    //   try {
-    //     const response = await API.get('/timer');
-    //     const data = response.data;
-    //     // const groupData = data.groupData.slice(1);
-    //     const groupData = data.groupData;
-    //     const myData = data.userTimerInfo;
-    //     console.log(data, 'data');
-    //     // console.log(userId, 'userId');
-    //     console.log(groupData[0], 'groupData');
-    //     // console.log(groupData[1].members, '우히이히히');
-    //     setOtherUserData(groupData[1].members); // 나중에 해당 그룹으로 정보 찾기 수정 필요
-    //     setMyData(myData);
-    //     setTotalTime(myData.total_time);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // fetchUserTimer();
   }, [userId]);
 
   useEffect(() => {
@@ -65,7 +44,8 @@ export default function TimerPage() {
     });
 
     socket.on('groupJoined', useData => {
-      setOtherUserData(useData[1].members);
+      console.log(useData);
+      setOtherUserData(useData[0].members);
       const myTotalTime = useData[1].members.find(item => item._id === userId);
       setTotalTime(myTotalTime.total_time);
     });
@@ -76,10 +56,6 @@ export default function TimerPage() {
     window.addEventListener('beforeunload', handlePause); // 새로 고침 감지 후 데이터 저장
 
     return () => {
-      // for (const userId in intervalRefs.current) {
-      //   clearInterval(intervalRefs.current[userId]);
-      // }
-
       window.removeEventListener('beforeunload', handlePause); // 새로 고침 감지 후 데이터 저장
 
       socket.disconnect();
@@ -88,10 +64,7 @@ export default function TimerPage() {
     };
   }, [socket]);
 
-  console.log(otherUserData);
-
   const handleStart = () => {
-    setIsRunning(true);
     setIsStartButtonVisible(true);
 
     myIntervalRef.current = setInterval(() => {
@@ -113,12 +86,10 @@ export default function TimerPage() {
     clearInterval(myIntervalRef.current);
 
     // Pause 이벤트를 서버로 보냄
-
     const time = diffTimeRef.current;
     socket.emit('pause_watch', {
       // 안에 정보는 건들지 말기
       userId,
-      // roomNickname,
       subject,
       time,
       stopwatch_running: false,
@@ -126,23 +97,6 @@ export default function TimerPage() {
 
     diffTimeRef.current = 0;
   };
-
-  // useEffect(() => {
-  //   //타이머를 실행중인경우 프론트에서 정각마다 소켓이벤트를 발생시킴
-  //   const updateTimerInterval = setInterval(() => {
-  //     if (isRunning) {
-  //       socket.current.emit('updateTimer', {
-  //         userId,
-  //         subject,
-  //         totalTime,
-  //         stopwatch_running: true,
-  //       });
-  //     }
-  //   }, 60 * 60 * 1000); // 1시간마다 실행
-  //   return () => clearInterval(updateTimerInterval);
-  // }, [isRunning, subject, totalTime, userId]);
-
-  // 스톱워치 시작 이벤트 핸들러
 
   const handleStartWatchEvent = receivedData => {
     if (receivedData.is_running) {
@@ -169,26 +123,54 @@ export default function TimerPage() {
 
   // Pause 이벤트 핸들러
   const handlePauseWatchEvent = async receivedData => {
-    console.log(receivedData, 'handlePauseWatchEvent');
-
     clearInterval(intervalRefs.current[receivedData._id]);
   };
 
-  // Reset 버튼 클릭 이벤트 핸들러
-  const resetTimer = () => {
-    clearInterval(intervalRefs.current['self']);
-    setTotalTime(0);
-    socket.emit('reset_watch', {
-      userId,
-      // roomNickname,
-      subject,
-    });
-  };
+  const padZero = value => (value < 10 ? `0${value}` : `${value}`);
+
+  const hours = Math.floor(totalTime / 3600);
+  const minutes = Math.floor((totalTime % 3600) / 60);
+  const seconds = totalTime % 60;
 
   return (
-    <div>
-      <h1>My stopwatch</h1>
-      <h2>내 시간 : {formatTime(totalTime)}</h2>
+    <div className="mt-10">
+      <section className="">
+        <div className="flex gap-8 items-center justify-center">
+          <div className="flex flex-col items-center">
+            <p>Hours</p>
+            <div className="shadow-xl px-4 py-6 text-9xl w-[210px] rounded-lg flex justify-center">
+              {padZero(hours)}
+            </div>
+          </div>
+          <span className="mt-10 text-4xl">:</span>
+          <div className="flex flex-col items-center">
+            <p>Minutes</p>
+            <div className="shadow-xl px-4 py-6 text-9xl w-[210px] rounded-lg flex justify-center">
+              {padZero(minutes)}
+            </div>
+          </div>
+          <span className="mt-10 text-4xl">:</span>
+          <div className="flex flex-col items-center">
+            <p>Seconds</p>
+            <div className="shadow-xl px-4 py-6 text-9xl w-[210px] rounded-lg flex justify-center">
+              {padZero(seconds)}
+            </div>
+          </div>
+        </div>
+        <div className="mt-12 flex justify-center">
+          {isStartButtonVisible ? (
+            <Button variant="outlined" size="large" onClick={handlePause}>
+              Pause
+            </Button>
+          ) : (
+            <Button variant="outlined" size="large" onClick={handleStart}>
+              Start
+            </Button>
+          )}
+        </div>
+      </section>
+
+      {/* <h2>내 시간 : {formatTime(totalTime)}</h2> */}
       <p>현재 선택 과목 : {subject}</p>
       <div className="flex gap-4">
         <Button onClick={() => handleChangeSubject('영어')}>영어</Button>
@@ -196,13 +178,15 @@ export default function TimerPage() {
         <Button onClick={() => handleChangeSubject('국어')}>국어</Button>
       </div>
       <div className="mt-5 flex gap-4">
-        {isStartButtonVisible ? (
-          <Button onClick={handlePause}>Pause</Button>
+        {/* {isStartButtonVisible ? (
+          <Button className="px-6 py-3 text-4xl" onClick={handlePause}>
+            Pause
+          </Button>
         ) : (
-          <Button onClick={handleStart}>Start</Button>
-        )}
-
-        <Button onClick={resetTimer}>Reset</Button>
+          <Button className="px-6 py-3 text-4xl" onClick={handleStart}>
+            Start
+          </Button>
+        )} */}
       </div>
       <h2>Other User's Stopwatches</h2>
       <ul>
