@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default function UserRank({ userTop3, userOther }) {
+export default function UserRank({ userRanking }) {
   return (
     <div className="userRankingWrap mb-5">
       <div className="userRanking">
         <div className="top3 flex md:flex-row flex-col md:justify-evenly md:mb-5">
-          {userTop3.map((user, index) => (
+          {userRanking?.slice(0, 3)?.map((user, index) => (
             <div
               key={index}
               className="flex justify-between md:items-center xs:w-1/4 mb-3 border-2 rounded-lg py-2 px-10"
@@ -26,7 +26,7 @@ export default function UserRank({ userTop3, userOther }) {
           ))}
         </div>
         <div className="other flex flex-col gap-2">
-          {userOther.map(user => (
+          {userRanking?.slice(3)?.map(user => (
             <div
               key={user.user_nickname}
               className="h-20 md:max-w-full flex border-2 items-center rounded-lg gap-2 p-4"
