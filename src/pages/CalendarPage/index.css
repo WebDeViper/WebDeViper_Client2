@@ -1,5 +1,5 @@
 .calendar .react-calendar {
-  @apply w-full shadow-2xl border-none;
+  @apply w-full shadow-xl border-none;
 }
 
 .react-calendar .react-calendar__navigation button {
@@ -50,7 +50,7 @@
 
 /* 할 일 달력에 표시 */
 .react-calendar .react-calendar__month-view__days__day p {
-  @apply truncate w-7 mb-1 absolute h-1 bg-red-400 rounded-sm top-1;
+  @apply truncate mb-1 absolute lg:h-1 md:h-[3px] h-[2px] bg-red-400 rounded-sm lg:top-1 lg:w-7 w-5;
 }
 
 /* 오늘 날짜 selected */

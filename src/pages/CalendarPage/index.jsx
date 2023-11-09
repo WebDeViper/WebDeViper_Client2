@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
 import { API } from '../../utils/axios';
 import { Button } from 'flowbite-react';
+import TodoList from './TodoList';
 
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -72,16 +73,24 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="calendar w-10/12 mx-auto mt-12">
-      <Calendar
-        onChange={handleOnChange}
-        value={selectedDate}
-        minDetail="year"
-        formatDay={(_, date) => moment(date).format('D')}
-        className="mx-auto"
-        tileContent={TodoCalendarTile}
-        // showNeighboringMonth={false}
-      />
+    <div className="calendar mx-auto mt-12">
+      <div className="flex shadow-2xl md:flex-row flex-col">
+        <Calendar
+          onChange={handleOnChange}
+          value={selectedDate}
+          minDetail="year"
+          formatDay={(_, date) => moment(date).format('D')}
+          className="mx-auto flex-1 relative p-3 z-10"
+          tileContent={TodoCalendarTile}
+          // showNeighboringMonth={false}
+        />
+        <TodoList
+          selectedDate={selectedDate}
+          filteredTodos={filteredTodos}
+          handleUpdateTodo={handleUpdateTodo}
+          handleAddTodo={handleAddTodo}
+        />
+      </div>
       <AddTodoModal
         openModal={openModal}
         setOpenModal={setOpenModal}
@@ -89,20 +98,6 @@ export default function CalendarPage() {
         setTodos={setTodos}
         updateTodo={updateTodo}
       />
-
-      <div>
-        <ul>
-          {filteredTodos.map(item => (
-            <li key={item._id}>
-              <div className="cursor-pointer" onClick={() => handleUpdateTodo(item)}>
-                {item.title}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <Button onClick={handleAddTodo}>추가하기</Button>
     </div>
   );
 }
