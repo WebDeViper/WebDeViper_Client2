@@ -1,5 +1,5 @@
 // 모달 개념 으로 만들기
-import { RiKakaoTalkFill } from 'react-icons/ri';
+import { RiKakaoTalkFill, RiIeFill } from 'react-icons/ri';
 import { FcGoogle } from 'react-icons/fc';
 import { SiNaver } from 'react-icons/si';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -8,9 +8,11 @@ import CustomModal from '../../components/common/CustomModal';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { redirectUrl } from '../../utils/redirectUrl';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../reducers/thunkFunctions';
 
 export default function LoginModal({ isOpen, close }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // API & Redirect URI
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
@@ -30,12 +32,25 @@ export default function LoginModal({ isOpen, close }) {
   // const kakaoColor = '#FEE500';
   // const googleColor = '#fefefe';
   // const naverColor = '#2DB400';
+  const testerStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#000000] !text-[#ffffff]`;
   const kakaoStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#FEE500] !text-[#3D1D1E]`;
   const googleStyle = `w-full mb-2 box-border flex items-center !text-black text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#fefefe]`;
   const naverStyle = `w-full mb-2 box-border flex items-center text-md leading-6 font-bold tracking-wider py-[10px] px-2.5 rounded-lg !bg-[#2DB400]`;
 
   const handleNavigate = uri => {
     window.location.href = uri;
+  };
+
+  const dispatch = useDispatch();
+  const handleTesterLogin = () => {
+    // 리덕스에서 로그인 로직 처리 후 리덕스로 상태관리
+    const profile = {
+      id: 'null',
+      provider: 'test',
+      isServiceAdmin: true,
+    };
+    dispatch(loginUser(profile));
+    navigate('/');
   };
 
   return (
@@ -48,6 +63,10 @@ export default function LoginModal({ isOpen, close }) {
         </div>
         <h1 className="text-center font-bold text-2xl col-span-3 mb-8">로그인</h1>
         <div className="col-span-3">
+          <Button handleClick={() => handleTesterLogin()} customStyle={testerStyle}>
+            <RiIeFill size={25} />
+            <span className="ms-3">테스터 로그인</span>
+          </Button>
           <Button handleClick={() => handleNavigate(`${KAKAO_LOGIN_URI}`)} customStyle={kakaoStyle}>
             <RiKakaoTalkFill size={25} />
             <span className="ms-3">카카오 로그인</span>
