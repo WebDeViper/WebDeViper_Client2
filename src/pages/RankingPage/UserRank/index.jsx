@@ -38,11 +38,13 @@ export default function UserRank({ userRanking, calculateTime }) {
               key={user.user_nickname}
               className="h-20 md:max-w-full flex shadow-lg items-center rounded-lg gap-2 p-4"
             >
-              <img
-                src={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
-                alt="유저 이미지"
-                className="h-full rounded-lg"
-              />
+              {!isTablet && (
+                <img
+                  src={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
+                  alt="유저 이미지"
+                  className="h-full rounded-lg"
+                />
+              )}
               <div className="flex flex-col">
                 <span className="font-bold">{user.user_nickname}</span>
                 <span>{user.user_total_time ? calculateTime(user.user_total_time) : '00:00:00'}</span>
