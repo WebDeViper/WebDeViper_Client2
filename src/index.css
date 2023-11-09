@@ -10,3 +10,8 @@
     resize: none;
   }
 }
+
+::-webkit-scrollbar {
+  background: transparent; /* 스크롤바의 배경을 투명으로 설정합니다. */
+  display: none;
+}

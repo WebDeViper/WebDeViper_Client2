@@ -6,6 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Button from '../../components/common/Button';
 import { Badge } from 'flowbite-react';
+import ChatPage from '../ChatPage';
+import './index.css';
 
 export default function DetailGroupPage() {
   const { groupId } = useParams();
@@ -17,6 +19,7 @@ export default function DetailGroupPage() {
   const { id: userId, nickName: userName } = useSelector(state => state.user?.userInfo);
   const [leaderName, setLeaderName] = useState('');
   const [profileImgPath, setProfileImgPath] = useState('');
+  const [isChatOn, setIsChatOn] = useState(false);
   // const { subject, imagePath, category, description, time, leader, maxMember } = groupInfo;
   // console.log('룸아이디 오는거 확인>>>', roomId);
   // console.log('그룹정보 오는거 확인>>>', groupInfo);
@@ -30,7 +33,8 @@ export default function DetailGroupPage() {
     chatSocket.emit('login', userName, res => {
       if (res && res.isOk) {
         console.log('successfully login', res);
-        navigate(`/group/chat/${groupId}`);
+        // navigate(`/group/chat/${groupId}`);
+        setIsChatOn(true);
       } else {
         console.log('fail to login', res);
         alert('로그인해주세요!');
@@ -39,9 +43,9 @@ export default function DetailGroupPage() {
   };
 
   // 뒤로가기
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+  // const handleGoBack = () => {
+  //   navigate(-1);
+  // };
 
   // 그룹 삭제
   const deleteGroup = async () => {
@@ -147,15 +151,15 @@ export default function DetailGroupPage() {
   } = groupInfo;
 
   return (
-    <>
+    <div className={`allWrap relative ${isChatOn ? 'chat-open' : ''}`}>
       {Object.keys(groupInfo).length === 0 && <div className="loading">로딩 중...</div>}
       {Object.keys(groupInfo).length > 0 && (
         <div className="studyContentWrap flex flex-col break-all">
           <section className="studyContent_postHeader mb-5">
-            <div className="btnWrap flex justify-between items-center mb-5">
-              <Button handleClick={handleGoBack} customStyle={'!bg-transparent !text-primary !text-3xl'}>
+            <div className="btnWrap flex justify-end items-center mb-5">
+              {/* <Button handleClick={handleGoBack} customStyle={'!bg-transparent !text-primary !text-3xl'}>
                 {<IoMdArrowRoundBack />}
-              </Button>
+              </Button> */}
               {!members.includes(userId) ? (
                 isPending ? (
                   <Button handleClick={handleCancelRequest} customStyle={'self-end'}>
@@ -168,7 +172,7 @@ export default function DetailGroupPage() {
                 )
               ) : (
                 <Button handleClick={handleChat} customStyle={'self-end'}>
-                  채팅창 이동하기
+                  채팅하기
                 </Button>
               )}
             </div>
@@ -216,6 +220,34 @@ export default function DetailGroupPage() {
             <h2 className="text-xl font-semibold">그룹 소개</h2>
             <div className="studyContent_postContent w-full p-5 shadow-md min-h-[200px]">
               {group_description ? group_description : ''}
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
             </div>
           </div>
 
@@ -233,6 +265,11 @@ export default function DetailGroupPage() {
           </div>
         </div>
       )}
-    </>
+      {isChatOn && (
+        <div className="chatPage">
+          <ChatPage setIsChatOn={setIsChatOn} groupId={groupId} />
+        </div>
+      )}
+    </div>
   );
 }

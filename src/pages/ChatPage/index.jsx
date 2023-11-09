@@ -7,11 +7,11 @@ import InputField from './InputField/InputField';
 import MessageContainer from './MessageContainer/MessageContainer';
 import { useSelector } from 'react-redux';
 
-const ChatPage = () => {
+const ChatPage = ({ setIsChatOn, groupId }) => {
   // console.log('유저정보는', user);
   const user = useSelector(state => state.user?.userInfo.nickName);
   const userInfo = useSelector(state => state.user?.userInfo);
-  const { groupId } = useParams(); // 유저가 조인한 방의 아이디를 url에서 가져온다
+  // const { groupId } = useParams(); // 유저가 조인한 방의 아이디를 url에서 가져온다
   const room = groupId;
   console.log('그룹 아이디>>', room);
   const [chatLog, setChatLog] = useState([]); // 배열로 변경
@@ -21,7 +21,10 @@ const ChatPage = () => {
   // 채팅창 떠날 때
   const leaveRoom = () => {
     chatSocket.emit('leaveRoom', user, res => {
-      if (res.isOk) navigate(-1); // 다시 채팅방 리스트 페이지로 돌아감
+      if (res.isOk) {
+        setIsChatOn(false);
+        // navigate(-1); // 다시 채팅방 리스트 페이지로 돌아감
+      }
     });
   };
 
@@ -73,16 +76,15 @@ const ChatPage = () => {
 
   return (
     <div
-      className="chatContainer flex flex-col"
-      style={{ backgroundImage: "url('../../../public/img/background.png')" }}
+      className="chatContainer flex flex-col h-full"
+      // style={{ backgroundImage: "url('../../../public/img/background.png')" }}
     >
       <nav>
-        <Button onClick={leaveRoom} className="back-button">
+        <Button onClick={leaveRoom} className="back-button h-12 w-12 text-lg font-bold cursor-auto mr-2">
           ←
         </Button>
-        <div className="nav-user">{user}</div>
       </nav>
-      {chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={userInfo} /> : null}
+      {chatLog.length > 0 ? <MessageContainer chatLog={chatLog} user={userInfo} /> : <div className="h-1/2"></div>}
       <InputField message={message} setMessage={setMessage} sendMessage={sendMessage} />
     </div>
   );

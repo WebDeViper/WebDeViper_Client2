@@ -1,25 +1,11 @@
-.input-area {
-  background-color: #f7e600;
+/* .input-container {
   min-height: 50px;
   display: flex;
-  width: 100%;
-}
-.plus-button {
-  background-color: lightslategray;
-  width: 50px;
-  color: white;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-}
-
-.input-container {
-  display: flex;
   justify-content: space-between;
+  border-radius: 10px;
   width: 100%;
-}
+  padding: 5px 10px;
+} */
 
 .MuiInput-root {
   height: 100%;
@@ -34,16 +20,13 @@
   height: 100%;
   padding-left: 5px;
 }
-.MuiInput-input:focus {
-  outline: none;
-}
 
 .send-button {
   min-width: 70px;
-  border-radius: 0;
-  background-color: #f7e600;
+  border-radius: 10px;
   border: none;
 }
+
 .send-button:hover {
   cursor: pointer;
 }

@@ -3,6 +3,8 @@ import './MessageContainer.css';
 import { Container } from '@mui/system';
 import { Box } from '@mui/material';
 
+const colorList = ['00FF00', '3f3fe1', '5F9EA0', 'B22222', '2E8B57', '191970', '008000', 'D2691E', 'FF0000'];
+
 const MessageContainer = ({ chatLog, user }) => {
   const messageContainerRef = useRef(null);
   console.log('user는', user);
@@ -19,7 +21,7 @@ const MessageContainer = ({ chatLog, user }) => {
         ref={messageContainerRef}
         className="message-container"
         style={{
-          maxHeight: '850px', // 컨테이너의 최대 높이를 설정합니다.
+          height: '80vh', // Adjust the percentage as needed
           overflowY: 'auto', // 세로 스크롤을 자동으로 활성화합니다.
         }}
       >
@@ -29,23 +31,14 @@ const MessageContainer = ({ chatLog, user }) => {
           return (
             <Container key={index}>
               {/* <Container key={message._id} className="message-container"> */}
-              {message.user.name === 'system' ? (
-                <div className="system-message-container">
-                  <p className="system-message">{message.chat}</p>
-                </div>
-              ) : message.user.name === user.nickName ? (
-                <div className="my-message-container">
-                  <div className="my-message">{message.chat}</div>
-                </div>
-              ) : (
-                <div className="your-message-container">
-                  <img src="/profile.jpeg" className="profile-image" />
-                  <div>{message.user.name}</div>
-                  <div className="your-message">{message.chat}</div>
-                  <br />
-                  {/* <div>{message.sendAt}</div> */}
-                </div>
-              )}
+              <div className="message-one-container flex items-center gap-2">
+                {/* <img src="/profile.jpeg" className="profile-image" /> */}
+                <span className={`user-name meta${index % colorList.length}`}>{message.user.name}</span>
+                <div className="colon">:</div>
+                <div className="message">{message.chat}</div>
+                <br />
+                {/* <div>{message.sendAt}</div> */}
+              </div>
             </Container>
           );
         })}
