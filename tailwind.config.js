@@ -13,7 +13,7 @@ export default {
         screens: {
           lg: '1024px',
           md: '768px',
-          sm: '390px',
+          sm: '640px',
         },
         padding: {
           DEFAULT: '1rem',

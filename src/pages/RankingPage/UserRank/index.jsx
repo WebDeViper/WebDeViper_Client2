@@ -1,6 +1,9 @@
 import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 export default function UserRank({ userRanking, calculateTime }) {
+  const isTablet = useMediaQuery({ maxWidth: 768 });
+
   return (
     <div className="userRankingWrap mb-5">
       <div className="userRanking">
@@ -10,16 +13,18 @@ export default function UserRank({ userRanking, calculateTime }) {
               key={index}
               className={`rank${
                 index + 1
-              } flex justify-between md:items-center sm:w-1/3 mb-3 shadow-xl rounded-lg py-2`}
+              } flex justify-between md:items-center md:w-1/3 mb-3 shadow-xl rounded-lg py-2`}
             >
-              <div className="w-1/2 flex justify-center">
-                <img
-                  className="w-3/4 h-full rounded-lg"
-                  src={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
-                  alt="유저 이미지"
-                />
-              </div>
-              <div className="userInfoWrap flex md:flex-col w-1/2 gap-5 lg:gap-0 items-center">
+              {!isTablet && (
+                <div className="w-1/2 flex justify-center">
+                  <img
+                    className="w-3/4 h-full rounded-lg"
+                    src={import.meta.env.VITE_APP_BACK_URL + user.user_profile_image_path}
+                    alt="유저 이미지"
+                  />
+                </div>
+              )}
+              <div className="userInfoWrap flex md:flex-col w-full md:w-1/2 md:gap-0 items-center justify-between gap-5 px-5 md:px-0">
                 <span className="font-extrabold text-lg">{index + 1}등</span>
                 <span className="font-bold">{user.user_nickname}</span>
                 <span>{user.user_total_time ? calculateTime(user.user_total_time) : '00:00:00'}</span>
