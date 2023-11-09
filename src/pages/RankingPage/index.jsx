@@ -14,8 +14,8 @@ export default function RankingPage() {
   const userCategory = useSelector(state => state.user?.userInfo?.category);
   // 카테고리 변경, top3, top3제외 를 관리하기 위한 state
   const [category, setCategory] = useState(null);
-  const [top3, setTop3] = useState({});
-  const [other, setOther] = useState({});
+  const [groupRanking, setGroupRanking] = useState([]);
+  const [userRanking, setUserRanking] = useState([]);
 
   // console.log('뭐지??', top3, other);
 
@@ -24,11 +24,27 @@ export default function RankingPage() {
     try {
       const res = await API.get('/ranking');
       console.log('처음 마운트 시 랭킹 데이터 >>', res.data);
-      // const { topUsers, topGroups } = res.data;
-      setTop3({ userTop3: res.data.topUsers?.slice(0, 3), groupTop3: res.data.topGroups?.slice(0, 3) });
-      setOther({ userOther: res.data.topUsers?.slice(3), groupOther: res.data.topGroups?.slice(3) });
+      setRank(res.data);
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  // 서버에서 응답받은 데이터로 랭킹 state 업데이트하는 함수
+  const setRank = data => {
+    const { topUsers, topGroups } = data;
+    if (topUsers && topGroups) {
+      setUserRanking(topUsers);
+      setGroupRanking(topGroups);
+    } else if (topUsers && !topGroups) {
+      setUserRanking(topUsers);
+      setGroupRanking([]);
+    } else if (!topUsers && topGroups) {
+      setUserRanking([]);
+      setGroupRanking(topGroups);
+    } else {
+      setUserRanking([]);
+      setGroupRanking([]);
     }
   };
 
@@ -38,11 +54,7 @@ export default function RankingPage() {
     try {
       const res = await API.get(`/ranking?category=${category}`);
       console.log('카테고리 변경 후 응답 결과 >> ', res.data);
-      // 유저와 그룹으로 구조분해
-      const { topUsers, topGroups } = res.data;
-      // 응답 결과로 top3, 나머지 state 업데이트
-      setTop3(topUsers ? { userTop3: topUsers.slice(0, 3), groupTop3: res.data.topGroups?.slice(0, 3) } : {});
-      setOther(topGroups ? { userOther: res.data.topUsers.slice(3), groupOther: res.data.topGroups?.slice(3) } : {});
+      setRank(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -61,10 +73,6 @@ export default function RankingPage() {
       console.error(err);
     }
   }, []);
-
-  useEffect(() => {
-    console.log('상태는 어떻게 됐지??', top3, other);
-  }, [top3, other]);
 
   useEffect(() => {
     try {
@@ -92,15 +100,15 @@ export default function RankingPage() {
       </div>
       <div className="rankContent">
         <h3 className="font-semibold text-xl mb-3">유저 랭킹</h3>
-        {Object.keys(top3).length > 0 ? (
-          <UserRank userTop3={top3.userTop3} userOther={other.userOther} />
+        {userRanking.length > 0 ? (
+          <UserRank userRanking={userRanking} />
         ) : (
           <Card className="font-bold mb-5">아직 랭킹이 없어요!</Card>
         )}
         <h3 className="font-semibold text-xl mb-3">그룹 랭킹</h3>
 
-        {Object.keys(other).length > 0 ? (
-          <GroupRank groupTop3={top3.groupTop3} groupOther={other.groupOther} />
+        {groupRanking.length > 0 ? (
+          <GroupRank groupRanking={groupRanking} />
         ) : (
           <Card className="font-bold">아직 랭킹이 없어요!</Card>
         )}
