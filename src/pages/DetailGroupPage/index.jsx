@@ -220,34 +220,6 @@ export default function DetailGroupPage() {
             <h2 className="text-xl font-semibold">그룹 소개</h2>
             <div className="studyContent_postContent w-full p-5 shadow-md min-h-[200px]">
               {group_description ? group_description : ''}
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
             </div>
           </div>
 

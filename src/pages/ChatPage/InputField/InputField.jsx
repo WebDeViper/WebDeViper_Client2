@@ -5,9 +5,14 @@ import './InputField.css';
 
 const InputField = ({ message, setMessage, sendMessage }) => {
   const handleKeyDown = event => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault(); // Prevents the default newline behavior
-      sendMessage(event); // Calls the sendMessage function
+    if (event.nativeEvent.isComposing) {
+      return;
+    }
+    if (message) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault(); // Prevents the default newline behavior
+        sendMessage(event); // Calls the sendMessage function
+      }
     }
   };
   return (

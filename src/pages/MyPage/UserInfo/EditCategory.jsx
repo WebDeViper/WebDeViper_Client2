@@ -3,10 +3,12 @@ import DropDown from '../../../components/common/DropDown';
 import Button from '../../../components/common/Button';
 import { profileUser } from '../../../reducers/thunkFunctions';
 import categories from '../../../data/category';
+import { useSelector } from 'react-redux';
 
 const items = [...categories.student, ...categories.worker, ...categories.etc];
 
 export default function EditCategory({ dispatch }) {
+  const currentCategory = useSelector(state => state.user?.userInfo?.category);
   const [category, setCategory] = useState(null);
   const handleClick = cate => setCategory(cate);
   const handleChangeCategory = () => {
@@ -18,9 +20,9 @@ export default function EditCategory({ dispatch }) {
   return (
     <div className="flex flex-col items-end justify-center border-2 rounded-lg border-semi_primary p-2">
       <h2 className="font-bold text-2xl mb-5 self-start">카테고리 변경</h2>
-      <div className="flex">
+      <div className="flex items-center">
         <DropDown
-          title={category ? category : '카테고리 선택'}
+          title={category ? category : currentCategory}
           items={items}
           styles={'font-bold text-xl'}
           handleClick={handleClick}
