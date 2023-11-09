@@ -16,10 +16,10 @@ export default function StudyGroup() {
   useEffect(() => {
     const getGroupData = async () => {
       try {
-        const response = await API.get('/group/studyGroups');
+        const response = await API.get('/group/all');
         console.log('카테고리 같은 스터디그룹 리스트 >>', response.data);
         const data = await response.data;
-        setStudyGroup(data.study_groups.filter(group => !group.members.includes(userId)));
+        setStudyGroup(data.data.filter(group => !group.members.includes(userId)));
       } catch (err) {
         console.error(err, '에러!!!!!!@#!@#@!#');
       }
