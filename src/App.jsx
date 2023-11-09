@@ -52,7 +52,7 @@ function App() {
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/ranking" element={<RankingPage />} />
           <Route path="/myPage" element={<MyPage />} />
-          <Route path="/setting" element={<SettingPage />} />
+          {/* <Route path="/setting" element={<SettingPage />} /> */}
           <Route path="/group/create" element={<CreateGroupPage />} />
           <Route path="/group/chat/:groupId/" element={<ChatPage />} />
           <Route path="/group/:groupId" element={<DetailGroupPage />} />
