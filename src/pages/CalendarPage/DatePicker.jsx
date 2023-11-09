@@ -15,7 +15,7 @@ export default function CustomDatePicker({
 }) {
   return (
     <div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 md:flex-row flex-col border-b-2 md:border-none md:pb-0 pb-6">
         <div className="flex items-center gap-4">
           <div className="whitespace-nowrap">{label}</div>
           <DatePicker selected={selectedDate} onChange={handleChange} dateFormat="yyyy.MM.dd" locale={ko} />

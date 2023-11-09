@@ -22,8 +22,6 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedDate, se
   const [startTimeOfDay, setStartTimeOfDay] = useState('오후');
   const [endTimeOfDay, setEndTimeOfDay] = useState('오후');
 
-  console.log(updateTodo);
-
   const {
     register,
     handleSubmit,
