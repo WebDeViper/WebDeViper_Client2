@@ -16,12 +16,12 @@ const MessageContainer = ({ chatLog, user }) => {
     }
   }, [chatLog]);
   return (
-    <div className="h-full mb-5">
+    <div className="mb-5 max-h-[80%]">
       <Box
         ref={messageContainerRef}
-        className="message-container"
+        className="message-container mt-12"
         style={{
-          height: '80vh', // Adjust the percentage as needed
+          maxHeight: '70vh', // Adjust the percentage as needed
           overflowY: 'auto', // 세로 스크롤을 자동으로 활성화합니다.
         }}
       >

@@ -18,7 +18,7 @@ const InputField = ({ message, setMessage, sendMessage }) => {
   return (
     <form
       onSubmit={sendMessage}
-      className="input-container mx-1 border-2 !border-primary mb-3 h-[60px] rounded-lg flex justify-between py-2 px-3 items-center"
+      className="absolute bottom-0 left-1/2 -translate-x-1/2 input-container border-2 !border-primary mb-3 h-[60px] rounded-lg flex justify-between py-2 px-3 items-center w-[90%]"
     >
       <input
         className="input bg-transparent focus:outline-none border-none focus:ring-0 focus:ring-offset-0 font-medium h-full flex"

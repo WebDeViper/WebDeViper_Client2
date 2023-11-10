@@ -238,7 +238,7 @@ export default function DetailGroupPage() {
         </div>
       )}
       {isChatOn && (
-        <div className="chatPage">
+        <div className="chatPage h-screen">
           <ChatPage setIsChatOn={setIsChatOn} groupId={groupId} />
         </div>
       )}
