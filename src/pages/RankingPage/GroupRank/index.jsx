@@ -27,7 +27,7 @@ export default function GroupRank({ groupRanking, calculateTime }) {
               <div className="groupInfoWrap flex md:flex-col w-full md:w-1/2 md:gap-0 items-center justify-between gap-5 px-5 md:px-0">
                 <span className="font-extrabold text-lg">{index + 1}등</span>
                 <span className="font-bold">{group.group_name}</span>
-                <span>{group.groupTotalTime ? calculateTime(group.groupTotalTime) : '00:00:00'}</span>
+                <span>{group.averageTime ? calculateTime(group.averageTime) : '00:00:00'}</span>
               </div>
             </div>
           ))}
@@ -47,7 +47,7 @@ export default function GroupRank({ groupRanking, calculateTime }) {
               )}
               <div className="flex flex-col">
                 <span className="font-bold">{group.group_name}</span>
-                <span>{group.groupTotalTime ? calculateTime(group.groupTotalTime) : '00:00:00'}</span>
+                <span>{group.averageTime ? calculateTime(group.averageTime) : '00:00:00'}</span>
               </div>
             </div>
           ))}
