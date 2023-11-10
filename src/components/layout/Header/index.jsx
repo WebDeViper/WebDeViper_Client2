@@ -33,23 +33,23 @@ export default function Header() {
   return (
     <header className="flex justify-between pt-7 pb-5 relative z-50">
       {isSideOpen && (
-        <div className={`sidebar fixed top-0 left-0 h-screen w-1/2 bg-slate-300`}>
+        <div className={`sidebar fixed top-0 left-0 h-screen w-[200px] bg-semi_primary text-slate-800`}>
           <button className="absolute top-5 right-5" onClick={handleSideClose}>
             <GrClose className="text-2xl opacity-30" />
           </button>
           <ul className="flex items-center gap-6 font-semibold flex-col mt-20">
             <li>
-              <Link to="/" onClick={() => setIsSideOpen(false)}>
+              <Link to="/" onClick={() => setIsSideOpen(false)} className="text-2xl">
                 홈
               </Link>
             </li>
             <li>
-              <Link to="/notice" onClick={() => setIsSideOpen(false)}>
+              <Link to="/notice" onClick={() => setIsSideOpen(false)} className="text-2xl">
                 공지사항
               </Link>
             </li>
             <li>
-              <Link to="/ranking" onClick={() => setIsSideOpen(false)}>
+              <Link to="/ranking" onClick={() => setIsSideOpen(false)} className="text-2xl">
                 랭킹
               </Link>
             </li>
@@ -62,7 +62,7 @@ export default function Header() {
         </div>
       )}
       {isMobile ? (
-        <button onClick={handleSideOpen}>
+        <button onClick={handleSideOpen} className={`${isSideOpen ? 'opacity-0' : ''}`}>
           <GiHamburgerMenu className="text-2xl" />
         </button>
       ) : (

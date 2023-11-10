@@ -27,7 +27,7 @@ export default function LoginPage({ isAuth }) {
   }, [isAuth, navigate]);
 
   return (
-    <div className="flex">
+    <div className="flex overflow-y-hidden h-screen md:overflow-y-auto md:h-auto">
       <div className="mainCoverImg w-full md:w-3/4">
         <Title />
       </div>
