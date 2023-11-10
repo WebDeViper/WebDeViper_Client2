@@ -1,4 +1,5 @@
 const calculateTime = seconds => {
+  seconds = Math.floor(seconds);
   const hour = Math.floor(seconds / 3600);
   seconds = seconds % 3600;
   const minute = Math.floor(seconds / 60);
