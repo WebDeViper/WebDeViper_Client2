@@ -45,7 +45,7 @@ export default function DetailNoticePage() {
       {notice && (
         <div>
           <div className="Notice_title mb-3">
-            <h1 className="font-bold text-5xl">{notice.title}</h1>
+            <h1 className="font-bold text-4xl">{notice.title}</h1>
           </div>
           <section className="NoticeInfoWrap md:w-1/2 w-full">
             <ul className="grid md:grid-cols-2 grid-cols-3 gap-2">
@@ -60,7 +60,9 @@ export default function DetailNoticePage() {
           <br />
           <div className="Notice_postContentWrap mb-5">
             <h2 className="text-xl font-semibold">공지 내용</h2>
-            <div className="Notice_postContent w-full p-5 shadow-md min-h-[200px]">{notice.content}</div>
+            <div className="Notice_postContent w-full p-5 shadow-md min-h-[200px] break-all md:break-keep">
+              {notice.content}
+            </div>
           </div>
 
           {/* 버튼을 추가합니다 */}

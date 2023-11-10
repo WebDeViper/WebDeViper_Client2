@@ -179,7 +179,7 @@ export default function DetailGroupPage() {
             <div className="studyContent_title mb-3">
               {/* <h1>{_id}에 대한 상세 페이지 레고</h1> */}
               {/* 그룹 제목 */}
-              <h1 className="font-bold text-5xl">{group_name}</h1>
+              <h1 className="font-bold text-4xl">{group_name}</h1>
             </div>
             <div className="studyContent_user flex items-center mb-3">
               {/* 그룹장 */}
@@ -218,7 +218,7 @@ export default function DetailGroupPage() {
 
           <div className="studyContent_postContentWrap mb-5">
             <h2 className="text-xl font-semibold">그룹 소개</h2>
-            <div className="studyContent_postContent w-full p-5 shadow-md min-h-[200px]">
+            <div className="studyContent_postContent w-full p-5 shadow-md min-h-[200px] break-all md:break-keep">
               {group_description ? group_description : ''}
             </div>
           </div>
