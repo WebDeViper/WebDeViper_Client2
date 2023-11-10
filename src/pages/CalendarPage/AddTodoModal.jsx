@@ -142,7 +142,7 @@ export default function AddTodoModal({ openModal, setOpenModal, selectedDate, se
         theme="light"
       />
       <Modal show={openModal} size="2xl" popup onClose={handleCloseModal} className="calendar-modal">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="overflow-scroll" onSubmit={handleSubmit(onSubmit)}>
           <Modal.Header />
           <Modal.Body>
             <div className="space-y-6">
