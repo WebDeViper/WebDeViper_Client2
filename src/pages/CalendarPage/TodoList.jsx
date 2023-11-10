@@ -15,7 +15,7 @@ export default function TodoList({ selectedDate, filteredTodos, handleUpdateTodo
     setExpanded(newExpanded ? panel : false);
   };
   return (
-    <div className="py-20 px-10 bg-white relative md:w-auto w-full">
+    <div className="py-20 px-10 bg-white relative lg:w-96 md:w-72 w-full">
       <button
         onClick={handleAddTodo}
         className="rounded-full bg-lime-400 p-2.5 text-xl absolute top-6 hover:rotate-180 transition right-7"
@@ -26,20 +26,24 @@ export default function TodoList({ selectedDate, filteredTodos, handleUpdateTodo
         <span>{moment(selectedDate).format('yyyy년 MM월 DD일')}</span>
       </div>
       <div>
-        {filteredTodos.map((item, index) => (
-          <Accordion
-            key={item._id}
-            expanded={expanded === `panel${index + 1}`}
-            onChange={handleChange(`panel${index + 1}`)}
-          >
-            <AccordionSummary aria-controls={`panel${index + 1}d-content`} id={`panel${index + 1}d-header`}>
-              <Typography>{item.title}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{item.content}</Typography>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+        {filteredTodos.length ? (
+          filteredTodos.map((item, index) => (
+            <Accordion
+              key={item._id}
+              expanded={expanded === `panel${index + 1}`}
+              onChange={handleChange(`panel${index + 1}`)}
+            >
+              <AccordionSummary aria-controls={`panel${index + 1}d-content`} id={`panel${index + 1}d-header`}>
+                <Typography>{item.title}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{item.content}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))
+        ) : (
+          <p className="text-slate-400">일정이 없습니다.</p>
+        )}
       </div>
     </div>
   );

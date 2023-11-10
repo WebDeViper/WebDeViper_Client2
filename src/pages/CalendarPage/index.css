@@ -3,8 +3,9 @@
 }
 
 .react-calendar .react-calendar__navigation button {
-  @apply text-2xl;
+  @apply sm:text-2xl text-xl;
 }
+
 .react-calendar .react-calendar__tile--active {
   @apply relative bg-transparent text-inherit;
 }
