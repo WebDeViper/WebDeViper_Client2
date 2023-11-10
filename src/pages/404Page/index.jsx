@@ -1,8 +1,24 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import { purple } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
+
+export default function PageNotFound() {
+  const navigate = useNavigate();
+  return (
+    <div className="flex justify-center items-center h-screen flex-col gap-5">
+      <div className="md:w-96 sm:w-80 w-full sm:px-0 px-8 flex justify-center items-center flex-col gap-6 ">
+        <h1 className="text-7xl md:text-9xl font-bold">404</h1>
+        <p className="md:text-2xl text-xl text-slate-300 text-center">
+          The page you are looking for doesn't exist or has been moved. Please go back to the homepage.
+        </p>
+        <BootstrapButton variant="contained" size="large" disableRipple onClick={() => navigate('/')}>
+          Go back home
+        </BootstrapButton>
+      </div>
+    </div>
+  );
+}
 
 const BootstrapButton = styled(Button)({
   boxShadow: 'none',
@@ -37,19 +53,3 @@ const BootstrapButton = styled(Button)({
     boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
   },
 });
-
-export default function PageNotFound() {
-  return (
-    <div className="flex justify-center items-center h-screen flex-col gap-5">
-      <div className="w-96 flex justify-center items-center flex-col gap-6">
-        <h1 className="text-9xl font-bold">404</h1>
-        <p className="text-2xl text-slate-300 text-center">
-          The page you are looking for doesn't exist or has been moved. Please go back to the homepage.
-        </p>
-        <BootstrapButton variant="contained" size="large" disableRipple>
-          Go back home
-        </BootstrapButton>
-      </div>
-    </div>
-  );
-}
