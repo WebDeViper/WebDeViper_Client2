@@ -53,7 +53,7 @@ export default function DetailNoticePage() {
                 <Badge color="indigo" size="lg" className="font-bold">
                   작성일
                 </Badge>
-                <span className="font-semibold">{moment(notice.createdAt).format('YYYY.MM.DD')}</span>
+                <span className="font-semibold">{moment(notice.created_at).format('YYYY.MM.DD')}</span>
               </li>
             </ul>
           </section>

@@ -67,7 +67,7 @@ export default function NoticePage() {
                 </div>
               </td>
               <td className="p-3">
-                <div>{moment(item.createdAt).format('YYYY.MM.DD')}</div>
+                <div>{moment(item.created_at).format('YYYY.MM.DD')}</div>
               </td>
             </tr>
           ))}
