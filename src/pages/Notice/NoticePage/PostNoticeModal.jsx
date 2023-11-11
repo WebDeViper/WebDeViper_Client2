@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { API } from '../../utils/axios';
+import { API } from '../../../utils/axios';
+import useInput from '../../../hooks/useInput';
 
 export default function NoticeModal({ closeModal, updateNotices }) {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, handleTitleChange] = useInput('');
+  const [content, handleContentChange] = useInput('');
 
   const isSaveButtonDisabled = !title.trim() || !content.trim();
 
@@ -16,8 +17,8 @@ export default function NoticeModal({ closeModal, updateNotices }) {
 
       await API.post('/notice', { title, content });
       closeModal();
-      setTitle('');
-      setContent('');
+      handleTitleChange('');
+      handleContentChange('');
     } catch (error) {
       console.error(error);
     }
@@ -38,7 +39,7 @@ export default function NoticeModal({ closeModal, updateNotices }) {
               id="title"
               className="w-full mt-1 p-2 rounded-md"
               value={title}
-              onChange={e => setTitle(e.target.value)}
+              onChange={handleTitleChange}
             />
           </div>
           <div className="mb-4">
@@ -50,7 +51,7 @@ export default function NoticeModal({ closeModal, updateNotices }) {
               className="w-full mt-1 p-2 rounded-md"
               rows="4"
               value={content}
-              onChange={e => setContent(e.target.value)}
+              onChange={handleContentChange}
             />
           </div>
           <button
