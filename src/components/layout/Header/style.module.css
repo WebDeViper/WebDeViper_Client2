@@ -1,14 +1,8 @@
 .panel:before {
-  width: 0px;
-  height: 0px;
   border-bottom: 13px solid;
   border-left: 30px solid transparent;
   border-right: 0px solid transparent;
   content: '';
-  display: block;
-  position: absolute;
-  bottom: 100%;
-  right: 0;
 
-  @apply border-b-semi_primary;
+  @apply border-b-semi_primary absolute block w-0 h-0 bottom-full right-0;
 }

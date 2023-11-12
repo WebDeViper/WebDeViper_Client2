@@ -10,6 +10,7 @@ export default {
         danger: '#e74c3c',
       },
       container: {
+        center: true,
         screens: {
           lg: '1024px',
           md: '768px',
