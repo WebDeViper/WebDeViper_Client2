@@ -33,11 +33,13 @@ export default function StudyGroup() {
   };
 
   return (
-    <section className="mt-11">
+    <section className="relative">
       <div className="top flex justify-between mb-5">
         <h2 className="font-bold text-2xl">이런 스터디는 어떠세요?</h2>
+      </div>
+      <div className="absolute top-1 right-0">
         <Button customStyle="rounded-lg" handleClick={handleCreateGroup}>
-          스터디 그룹 추가
+          스터디 만들기
         </Button>
       </div>
       <div>

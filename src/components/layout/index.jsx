@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 export default function Layout({ category }) {
   return (
-    <div className="container mx-auto h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       {category ? <Header /> : ''}
       <Main>
         <Outlet />

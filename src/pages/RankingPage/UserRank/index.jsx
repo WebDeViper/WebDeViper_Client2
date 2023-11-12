@@ -5,8 +5,8 @@ export default function UserRank({ userRanking, calculateTime }) {
   const isTablet = useMediaQuery({ maxWidth: 768 });
 
   return (
-    <div className="userRankingWrap mb-5">
-      <div className="userRanking">
+    <section>
+      <div>
         <div className="top3 flex gap-3 md:flex-row flex-col md:justify-evenly md:mb-5">
           {userRanking?.slice(0, 3)?.map((user, index) => (
             <div
@@ -53,6 +53,6 @@ export default function UserRank({ userRanking, calculateTime }) {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

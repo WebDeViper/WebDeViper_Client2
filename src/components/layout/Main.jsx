@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function Main({ children }) {
-  return <main className="container-lg flex-1">{children}</main>;
+  return <div className="flex-1 mt-5 mb-20">{children}</div>;
 }

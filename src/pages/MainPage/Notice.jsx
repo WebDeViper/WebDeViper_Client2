@@ -23,9 +23,9 @@ export default function Notice() {
   }, []);
 
   return (
-    <section>
-      <h2 className="font-bold text-2xl">공지사항</h2>
-      <div className="mt-5 rounded-[20px] py-[22px] px-5 bg-secondary">
+    <section className="mb-10">
+      <h2>공지사항</h2>
+      <div className="rounded-[20px] py-[22px] px-5 bg-secondary">
         <ul className="flex items-center justify-between">
           <li>
             <span className="text-xl">

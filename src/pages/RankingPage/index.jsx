@@ -25,7 +25,6 @@ export default function RankingPage() {
   const getFirstRank = async () => {
     try {
       const res = await API.get('/ranking');
-      console.log('처음 마운트 시 랭킹 데이터 >>', res.data);
       setRank(res.data);
     } catch (err) {
       console.error(err);
@@ -55,7 +54,6 @@ export default function RankingPage() {
     // 바뀐 카테고리에 해당하는 랭킹 데이터 요청
     try {
       const res = await API.get(`/ranking?category=${category}`);
-      console.log('카테고리 변경 후 응답 결과 >> ', res.data);
       setRank(res.data);
     } catch (err) {
       console.error(err);
@@ -64,7 +62,6 @@ export default function RankingPage() {
 
   // 카테고리 선택 시 category state 업데이트
   const handleChangeCategory = cate => {
-    console.log('바뀐 카테고리>>', cate);
     setCategory(cate);
   };
 
@@ -82,16 +79,15 @@ export default function RankingPage() {
     } catch (err) {
       console.error(err);
     }
-    console.log('카테고리 변경!!', category);
   }, [category]);
 
   return (
-    <div className="rankingWrap flex flex-col">
-      <div className="rankHeader flex flex-col justify-center mb-3">
-        <div className="rankCategoryWrap flex items-center">
-          <h2 className="font-bold text-2xl me-2">랭킹</h2>
-          <Badge color="pink">어제 기준 랭킹 12시마다 업데이트</Badge>
-        </div>
+    <main className="container relative">
+      <h2>랭킹</h2>
+      <div className="absolute top-2 right-0">
+        <Badge color="pink">어제 기준 랭킹 12시마다 업데이트</Badge>
+      </div>
+      <div className="mb-3">
         {/* 초단위 */}
         <DropDown
           title={category ? category : userCategory}
@@ -100,8 +96,8 @@ export default function RankingPage() {
           handleClick={handleChangeCategory}
         ></DropDown>
       </div>
-      <div className="rankContent">
-        <h3 className="font-semibold text-xl mb-3">유저 랭킹</h3>
+      <div>
+        <h3>유저 랭킹</h3>
         {userRanking.length > 0 ? (
           <UserRank userRanking={userRanking} calculateTime={calculateTime} />
         ) : (
@@ -115,6 +111,6 @@ export default function RankingPage() {
           <Card className="font-bold">아직 랭킹이 없어요!</Card>
         )}
       </div>
-    </div>
+    </main>
   );
 }

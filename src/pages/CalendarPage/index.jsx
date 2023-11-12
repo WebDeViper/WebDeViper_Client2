@@ -6,7 +6,6 @@ import AddTodoModal from './AddTodoModal';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
 import { API } from '../../utils/axios';
-import { Button } from 'flowbite-react';
 import TodoList from './TodoList';
 
 export default function CalendarPage() {
@@ -73,31 +72,34 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="calendar mx-auto mt-12">
-      <div className="flex shadow-2xl md:flex-row flex-col">
-        <Calendar
-          onChange={handleOnChange}
-          value={selectedDate}
-          minDetail="year"
-          formatDay={(_, date) => moment(date).format('D')}
-          className="mx-auto flex-1 relative p-3 z-10"
-          tileContent={TodoCalendarTile}
-          // showNeighboringMonth={false}
-        />
-        <TodoList
+    <main className="container">
+      <h2>일정</h2>
+      <div className="calendar">
+        <div className="flex shadow-2xl md:flex-row flex-col">
+          <Calendar
+            onChange={handleOnChange}
+            value={selectedDate}
+            minDetail="year"
+            formatDay={(_, date) => moment(date).format('D')}
+            className="mx-auto flex-1 relative p-3 z-10"
+            tileContent={TodoCalendarTile}
+            // showNeighboringMonth={false}
+          />
+          <TodoList
+            selectedDate={selectedDate}
+            filteredTodos={filteredTodos}
+            handleUpdateTodo={handleUpdateTodo}
+            handleAddTodo={handleAddTodo}
+          />
+        </div>
+        <AddTodoModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
           selectedDate={selectedDate}
-          filteredTodos={filteredTodos}
-          handleUpdateTodo={handleUpdateTodo}
-          handleAddTodo={handleAddTodo}
+          setTodos={setTodos}
+          updateTodo={updateTodo}
         />
       </div>
-      <AddTodoModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        selectedDate={selectedDate}
-        setTodos={setTodos}
-        updateTodo={updateTodo}
-      />
-    </div>
+    </main>
   );
 }

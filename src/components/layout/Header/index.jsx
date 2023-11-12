@@ -31,90 +31,92 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between pt-7 pb-5 relative z-50">
-      {isSideOpen && (
-        <div className={`sidebar fixed top-0 left-0 h-screen w-[200px] bg-semi_primary text-slate-800`}>
-          <button className="absolute top-5 right-5" onClick={handleSideClose}>
-            <GrClose className="text-2xl opacity-30" />
-          </button>
-          <ul className="flex items-center gap-6 font-semibold flex-col mt-20">
-            <li>
-              <Link to="/" onClick={() => setIsSideOpen(false)} className="text-2xl">
-                홈
-              </Link>
-            </li>
-            <li>
-              <Link to="/notice" onClick={() => setIsSideOpen(false)} className="text-2xl">
-                공지사항
-              </Link>
-            </li>
-            <li>
-              <Link to="/ranking" onClick={() => setIsSideOpen(false)} className="text-2xl">
-                랭킹
-              </Link>
-            </li>
-            <li>
-              {/* <Link to="/setting" onClick={() => setIsSideOpen(false)}>
+    <header className="container z-50">
+      <div className="flex justify-between pt-7 pb-5 relative">
+        {isSideOpen && (
+          <div className={`sidebar fixed top-0 left-0 h-screen w-[200px] bg-semi_primary text-slate-800`}>
+            <button className="absolute top-5 right-5" onClick={handleSideClose}>
+              <GrClose className="text-2xl opacity-30" />
+            </button>
+            <ul className="flex items-center gap-6 font-semibold flex-col mt-20">
+              <li>
+                <Link to="/" onClick={() => setIsSideOpen(false)} className="text-2xl">
+                  홈
+                </Link>
+              </li>
+              <li>
+                <Link to="/notice" onClick={() => setIsSideOpen(false)} className="text-2xl">
+                  공지사항
+                </Link>
+              </li>
+              <li>
+                <Link to="/ranking" onClick={() => setIsSideOpen(false)} className="text-2xl">
+                  랭킹
+                </Link>
+              </li>
+              <li>
+                {/* <Link to="/setting" onClick={() => setIsSideOpen(false)}>
                 설정
               </Link> */}
-            </li>
-          </ul>
-        </div>
-      )}
-      {isMobile ? (
-        <button onClick={handleSideOpen} className={`${isSideOpen ? 'opacity-0' : ''}`}>
-          <GiHamburgerMenu className="text-2xl" />
-        </button>
-      ) : (
-        <nav>
-          <ul className="flex items-center gap-6 font-semibold">
-            <li>
-              <Link to="/">홈</Link>
-            </li>
-            <li>
-              <Link to="/notice">공지사항</Link>
-            </li>
-            <li>
-              <Link to="/ranking">랭킹</Link>
-            </li>
-            {/* <li>
+              </li>
+            </ul>
+          </div>
+        )}
+        {isMobile ? (
+          <button onClick={handleSideOpen} className={`${isSideOpen ? 'opacity-0' : ''}`}>
+            <GiHamburgerMenu className="text-2xl" />
+          </button>
+        ) : (
+          <nav>
+            <ul className="flex items-center gap-6 font-semibold">
+              <li>
+                <Link to="/">홈</Link>
+              </li>
+              <li>
+                <Link to="/notice">공지사항</Link>
+              </li>
+              <li>
+                <Link to="/ranking">랭킹</Link>
+              </li>
+              {/* <li>
               <Link to="/setting">설정</Link>
             </li> */}
-          </ul>
-        </nav>
-      )}
+            </ul>
+          </nav>
+        )}
 
-      <ul className="flex items-center gap-8">
-        <li>
-          <span className="">
-            <b>{nickName}</b> 님
-          </span>
-        </li>
-        <li className="relative">
-          <Dropdown
-            theme={customTheme}
-            inline
-            renderTrigger={() => (
-              <span className="cursor-pointer text-[#A3A3A3] text-2xl">
-                <FiUser />
-              </span>
-            )}
-          >
-            <Dropdown.Item as={Link} to="myPage" className="text-black text-sm hover:!bg-transparent">
-              마이페이지
-            </Dropdown.Item>
-            <Dropdown.Item as={Link} to="timer" className="text-black text-sm hover:!bg-transparent">
-              공부하러 가기
-            </Dropdown.Item>
-            <Dropdown.Item as={Link} to="calendar" className="text-black text-sm hover:!bg-transparent">
-              TODO 캘린더
-            </Dropdown.Item>
-            <Dropdown.Item onClick={handleLogout} className="text-black text-sm hover:!bg-transparent">
-              로그아웃
-            </Dropdown.Item>
-          </Dropdown>
-        </li>
-      </ul>
+        <ul className="flex items-center gap-8">
+          <li>
+            <span className="">
+              <b>{nickName}</b> 님
+            </span>
+          </li>
+          <li className="relative">
+            <Dropdown
+              theme={customTheme}
+              inline
+              renderTrigger={() => (
+                <span className="cursor-pointer text-[#A3A3A3] text-2xl">
+                  <FiUser />
+                </span>
+              )}
+            >
+              <Dropdown.Item as={Link} to="myPage" className="text-black text-sm hover:!bg-transparent">
+                마이페이지
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to="timer" className="text-black text-sm hover:!bg-transparent">
+                공부하러 가기
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to="calendar" className="text-black text-sm hover:!bg-transparent">
+                TODO 캘린더
+              </Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout} className="text-black text-sm hover:!bg-transparent">
+                로그아웃
+              </Dropdown.Item>
+            </Dropdown>
+          </li>
+        </ul>
+      </div>
     </header>
   );
 }

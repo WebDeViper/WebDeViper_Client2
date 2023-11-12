@@ -4,10 +4,10 @@ import StudyGroup from './StudyGroup';
 
 export default function MainPage() {
   return (
-    <div className="gap-11 flex flex-col">
+    <main className="container">
       <Notice />
       <MyGroup />
       <StudyGroup />
-    </div>
+    </main>
   );
 }

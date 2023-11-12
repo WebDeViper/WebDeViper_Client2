@@ -151,15 +151,12 @@ export default function DetailGroupPage() {
   } = groupInfo;
 
   return (
-    <div className={`allWrap relative ${isChatOn ? 'chat-open' : ''}`}>
-      {Object.keys(groupInfo).length === 0 && <div className="loading">로딩 중...</div>}
-      {Object.keys(groupInfo).length > 0 && (
-        <div className="studyContentWrap flex flex-col break-all">
-          <section className="studyContent_postHeader mb-5">
+    <main className="container">
+      <div className={`allWrap relative ${isChatOn ? 'chat-open' : ''}`}>
+        {Object.keys(groupInfo).length === 0 && <div className="loading">로딩 중...</div>}
+        {Object.keys(groupInfo).length > 0 && (
+          <div className="studyContentWrap flex flex-col break-all">
             <div className="btnWrap flex justify-end items-center mb-5">
-              {/* <Button handleClick={handleGoBack} customStyle={'!bg-transparent !text-primary !text-3xl'}>
-                {<IoMdArrowRoundBack />}
-              </Button> */}
               {!members.includes(userId) ? (
                 isPending ? (
                   <Button handleClick={handleCancelRequest} customStyle={'self-end'}>
@@ -176,36 +173,33 @@ export default function DetailGroupPage() {
                 </Button>
               )}
             </div>
-            <div className="studyContent_title mb-3">
-              {/* <h1>{_id}에 대한 상세 페이지 레고</h1> */}
-              {/* 그룹 제목 */}
-              <h1 className="font-bold text-4xl">{group_name}</h1>
-            </div>
-            <div className="studyContent_user flex items-center mb-3">
+            {/* 그룹 제목 */}
+            <h2>{group_name}</h2>
+            <div className="flex items-center mb-6">
               {/* 그룹장 */}
               <img
                 className="rounded-full w-10 h-10 me-3"
                 src={profileImgPath ? import.meta.env.VITE_APP_BACK_URL + profileImgPath : ''}
                 alt="유저 프로필 이미지"
               />
-              <span className="font-bold text-lg">{leaderName}</span>
+              <span>{leaderName}</span>
             </div>
-            <section className="studyInfoWrap md:w-1/2 w-full">
-              <ul className="grid md:grid-cols-2 grid-cols-3 gap-2">
-                <li className="p-2 flex md:flex-row flex-col items-center gap-2">
-                  <Badge color="indigo" size="lg" className="font-bold">
+            <div className="mb-10">
+              <ul className="grid md:grid-cols-2 grid-cols-3 gap-y-4">
+                <li className="flex md:flex-row flex-col items-center gap-2">
+                  <Badge color="indigo" size="lg" className="font-semibold">
                     카테고리
                   </Badge>
                   <span className="font-semibold">{group_category}</span>
                 </li>
-                <li className="p-2 flex md:flex-row flex-col items-center gap-2">
-                  <Badge color="indigo" size="lg" className="font-bold">
+                <li className="flex md:flex-row flex-col items-center gap-2">
+                  <Badge color="indigo" size="lg" className="font-semibold">
                     목표시간
                   </Badge>
                   <span className="font-semibold">{daily_goal_time}</span>
                 </li>
-                <li className="p-2 flex md:flex-row flex-col items-center gap-2">
-                  <Badge color="indigo" size="lg" className="font-bold">
+                <li className="flex md:flex-row flex-col items-center gap-2">
+                  <Badge color="indigo" size="lg" className="font-semibold">
                     인원
                   </Badge>
                   <span className="font-semibold">
@@ -213,35 +207,35 @@ export default function DetailGroupPage() {
                   </span>
                 </li>
               </ul>
-            </section>
-          </section>
+            </div>
 
-          <div className="studyContent_postContentWrap mb-5">
-            <h2 className="text-xl font-semibold">그룹 소개</h2>
-            <div className="studyContent_postContent w-full p-5 shadow-md min-h-[200px] break-all md:break-keep">
-              {group_description ? group_description : ''}
+            <h3>그룹 소개</h3>
+            <div className="mb-5">
+              <div className="studyContent_postContent w-full p-5 shadow-md min-h-[200px] break-all md:break-keep">
+                {group_description ? group_description : ''}
+              </div>
+            </div>
+
+            <div className="studyContent_btnWrap self-center">
+              {members.includes(userId) &&
+                (group_leader === userId ? (
+                  <Button handleClick={deleteGroup} customStyle={'!bg-danger'}>
+                    그룹삭제
+                  </Button>
+                ) : (
+                  <Button handleClick={leaveGroup} customStyle={'!bg-danger'}>
+                    그룹탈퇴
+                  </Button>
+                ))}
             </div>
           </div>
-
-          <div className="studyContent_btnWrap self-center">
-            {members.includes(userId) &&
-              (group_leader === userId ? (
-                <Button handleClick={deleteGroup} customStyle={'!bg-danger'}>
-                  그룹삭제
-                </Button>
-              ) : (
-                <Button handleClick={leaveGroup} customStyle={'!bg-danger'}>
-                  그룹탈퇴
-                </Button>
-              ))}
+        )}
+        {isChatOn && (
+          <div className="chatPage h-screen">
+            <ChatPage setIsChatOn={setIsChatOn} groupId={groupId} />
           </div>
-        </div>
-      )}
-      {isChatOn && (
-        <div className="chatPage h-screen">
-          <ChatPage setIsChatOn={setIsChatOn} groupId={groupId} />
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </main>
   );
 }
