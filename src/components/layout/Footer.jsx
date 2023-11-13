@@ -3,7 +3,7 @@ import { BsGithub } from 'react-icons/bs';
 
 export default function Footer() {
   return (
-    <div className="bg-slate-200">
+    <footer className="bg-slate-200">
       <div className="container mx-auto">
         <div className="flex justify-between py-10">
           <div>
@@ -77,6 +77,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }

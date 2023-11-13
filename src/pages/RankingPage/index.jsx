@@ -5,7 +5,7 @@ import DropDown from '../../components/common/DropDown';
 import { useSelector } from 'react-redux';
 import UserRank from './userRank';
 import GroupRank from './groupRank';
-import { Card, Badge } from 'flowbite-react';
+import { Badge } from 'flowbite-react';
 import calculateTime from '../../utils/calculateTime';
 import './index.css';
 
@@ -82,7 +82,7 @@ export default function RankingPage() {
   }, [category]);
 
   return (
-    <main className="container relative">
+    <div className="container relative">
       <h2>랭킹</h2>
       <div className="absolute top-2 right-0">
         <Badge color="pink">어제 기준 랭킹 12시마다 업데이트</Badge>
@@ -96,21 +96,8 @@ export default function RankingPage() {
           handleClick={handleChangeCategory}
         ></DropDown>
       </div>
-      <div>
-        <h3>유저 랭킹</h3>
-        {userRanking.length > 0 ? (
-          <UserRank userRanking={userRanking} calculateTime={calculateTime} />
-        ) : (
-          <Card className="font-bold mb-5">아직 랭킹이 없어요!</Card>
-        )}
-        <h3 className="font-semibold text-xl mb-3">그룹 랭킹</h3>
-
-        {groupRanking.length > 0 ? (
-          <GroupRank groupRanking={groupRanking} calculateTime={calculateTime} />
-        ) : (
-          <Card className="font-bold">아직 랭킹이 없어요!</Card>
-        )}
-      </div>
-    </main>
+      <UserRank userRanking={userRanking} calculateTime={calculateTime} />
+      <GroupRank groupRanking={groupRanking} calculateTime={calculateTime} />
+    </div>
   );
 }

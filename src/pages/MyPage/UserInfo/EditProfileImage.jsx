@@ -13,7 +13,6 @@ export default function EditProfileImage() {
   const handleChangeProfileImg = async e => {
     e.preventDefault();
     await imgRef.current.click();
-    console.log(imgRef.current.value, '헤헤');
   };
 
   // file 타입 input에 변화가 생기면 그 이미지로 배경 이미지 설정
@@ -66,7 +65,9 @@ export default function EditProfileImage() {
 
   return (
     <div className="border-2 rounded-lg border-semi_primary p-2 flex flex-col w-full md:mb-0">
-      <h2 className="font-bold text-2xl mb-5">프로필 이미지</h2>
+      <div className="mb-5">
+        <span className="text-lg font-semibold">프로필 이미지</span>
+      </div>
       <div className="flex h-full items-center">
         <img
           className="rounded-full w-32 h-32 me-3"

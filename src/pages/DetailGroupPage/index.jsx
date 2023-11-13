@@ -151,7 +151,7 @@ export default function DetailGroupPage() {
   } = groupInfo;
 
   return (
-    <main className="container">
+    <div className="container">
       <div className={`allWrap relative ${isChatOn ? 'chat-open' : ''}`}>
         {Object.keys(groupInfo).length === 0 && <div className="loading">로딩 중...</div>}
         {Object.keys(groupInfo).length > 0 && (
@@ -236,6 +236,6 @@ export default function DetailGroupPage() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }
