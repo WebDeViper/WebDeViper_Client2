@@ -12,7 +12,7 @@ export default function GroupImage({ groupInfo, setGroupInfo, images, setImages 
   };
 
   return (
-    <div className="groupImg w-full h-72 flex flex-col justify-center items-center bg-semi_primary rounded-lg me-2">
+    <div className="groupImg w-full h-72 flex flex-col justify-center items-center bg-semi_primary rounded-lg md:me-2 mb-2">
       <ImageUploading value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
         {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
           // write your building UI

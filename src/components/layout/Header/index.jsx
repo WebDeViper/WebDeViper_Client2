@@ -6,22 +6,42 @@ import { Dropdown } from 'flowbite-react';
 import { logout } from '../../../reducers/userSlice';
 import styles from './style.module.css';
 import { useMediaQuery } from 'react-responsive';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GrClose } from 'react-icons/gr';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { LuLogIn } from 'react-icons/lu';
+import Button from '../../common/Button';
+import LoginModal from '../../common/LoginModal';
 
 export default function Header() {
-  const nickName = useSelector(state => state.user?.userInfo.nickName);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const nickName = useSelector(state => state.user?.userInfo?.nickName);
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [isSideOpen, setIsSideOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/login');
+  useEffect(() => {
+    nickName ? setIsLogin(true) : setIsLogin(false);
+  }, [nickName]);
+
+  // 로그인 모달창 관련 함수
+  const handleOpenModal = () => {
+    setIsOpen(true);
   };
 
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  // 로그아웃
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
+  };
+
+  // 반응형 시 사이드 메뉴바
   const handleSideOpen = () => {
     setIsSideOpen(true);
   };
@@ -55,6 +75,11 @@ export default function Header() {
                 </Link>
               </li>
               <li>
+                <Link to="/study" onClick={() => setIsSideOpen(false)} className="text-2xl">
+                  스터디
+                </Link>
+              </li>
+              <li>
                 {/* <Link to="/setting" onClick={() => setIsSideOpen(false)}>
                 설정
               </Link> */}
@@ -78,6 +103,9 @@ export default function Header() {
               <li>
                 <Link to="/ranking">랭킹</Link>
               </li>
+              <li>
+                <Link to="/study">스터디</Link>
+              </li>
               {/* <li>
               <Link to="/setting">설정</Link>
             </li> */}
@@ -86,37 +114,52 @@ export default function Header() {
         )}
 
         <ul className="flex items-center gap-8">
-          <li>
-            <span className="">
-              <b>{nickName}</b> 님
-            </span>
-          </li>
-          <li className="relative">
-            <Dropdown
-              theme={customTheme}
-              inline
-              renderTrigger={() => (
-                <span className="cursor-pointer text-[#A3A3A3] text-2xl">
-                  <FiUser />
+          {isLogin ? (
+            <>
+              <li>
+                <span className="">
+                  <b>{nickName}</b> 님
                 </span>
-              )}
-            >
-              <Dropdown.Item as={Link} to="myPage" className="text-black text-sm hover:!bg-transparent">
-                마이페이지
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="timer" className="text-black text-sm hover:!bg-transparent">
-                공부하러 가기
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="calendar" className="text-black text-sm hover:!bg-transparent">
-                TODO 캘린더
-              </Dropdown.Item>
-              <Dropdown.Item onClick={handleLogout} className="text-black text-sm hover:!bg-transparent">
-                로그아웃
-              </Dropdown.Item>
-            </Dropdown>
-          </li>
+              </li>
+              <li className="relative">
+                <Dropdown
+                  theme={customTheme}
+                  inline
+                  renderTrigger={() => (
+                    <span className="cursor-pointer text-[#A3A3A3] text-2xl">
+                      <FiUser />
+                    </span>
+                  )}
+                >
+                  <Dropdown.Item as={Link} to="myPage" className="text-black text-sm hover:!bg-transparent">
+                    마이페이지
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="timer" className="text-black text-sm hover:!bg-transparent">
+                    공부하러 가기
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="calendar" className="text-black text-sm hover:!bg-transparent">
+                    TODO 캘린더
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout} className="text-black text-sm hover:!bg-transparent">
+                    로그아웃
+                  </Dropdown.Item>
+                </Dropdown>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Button
+                customStyle="bg-transparent border-2 border-primary !text-primary flex justify-center items-center gap-4"
+                handleClick={handleOpenModal}
+              >
+                <LuLogIn />
+                LOGIN
+              </Button>
+            </li>
+          )}
         </ul>
       </div>
+      <LoginModal isOpen={modalIsOpen} close={handleCloseModal} />
     </header>
   );
 }
