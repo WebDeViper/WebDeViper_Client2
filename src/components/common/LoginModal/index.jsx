@@ -3,13 +3,13 @@ import { RiKakaoTalkFill, RiIeFill } from 'react-icons/ri';
 import { FcGoogle } from 'react-icons/fc';
 import { SiNaver } from 'react-icons/si';
 import { AiOutlineClose } from 'react-icons/ai';
-import Button from '../../components/common/Button';
-import CustomModal from '../../components/common/CustomModal';
+import Button from '../Button';
+import CustomModal from '../CustomModal';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { redirectUrl } from '../../utils/redirectUrl';
+import { redirectUrl } from '../../../utils/redirectUrl';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../reducers/thunkFunctions';
+import { loginUser } from '../../../reducers/thunkFunctions';
 
 export default function LoginModal({ isOpen, close }) {
   const navigate = useNavigate();

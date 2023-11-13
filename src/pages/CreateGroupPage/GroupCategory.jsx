@@ -7,7 +7,7 @@ export default function GroupCategory({ groupInfo, setGroupInfo }) {
 
   const handleClick = selectedCategory => setGroupInfo({ ...groupInfo, category: selectedCategory });
   return (
-    <div className="groupCategory flex flex-col justify-between border-2 rounded-lg !border-semi_primary p-2">
+    <div className="groupCategory flex flex-col justify-between border-2 rounded-lg !border-semi_primary p-2 mb-2">
       <DropDown
         items={items}
         title="카테고리 선택"

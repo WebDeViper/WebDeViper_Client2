@@ -77,7 +77,7 @@ export default function CreateGroupPage() {
   };
 
   return (
-    <div className="createGroupWrap flex flex-col justify-center">
+    <div className="createGroupWrap container flex flex-col justify-center">
       <div className="groupHeader mb-5 flex justify-between items-center">
         <h2 className="font-bold text-2xl">스터디 그룹 생성</h2>
         <div className="buttonWrap self-end">
