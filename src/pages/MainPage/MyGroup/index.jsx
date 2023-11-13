@@ -25,13 +25,13 @@ export default function MyGroup() {
   return (
     <section>
       <h2 className="font-bold text-2xl mb-5">내가 속한 그룹</h2>
-      <div>
-        {!myGroups.length && (
-          <Card className="h-20 w-full">
-            <h1 className="font-bold text-lg">아직 생성된 스터디그룹이 없어요!</h1>
-            <p className="font-semibold">그룹을 생성해보세요!</p>
-          </Card>
-        )}
+      {!myGroups.length && (
+        <Card className="h-20 w-full">
+          <h1 className="font-bold text-lg">아직 생성된 스터디그룹이 없어요!</h1>
+          <p className="font-semibold">그룹을 생성해보세요!</p>
+        </Card>
+      )}
+      {myGroups.length > 0 && (
         <Swiper
           breakpoints={{
             768: {
@@ -71,7 +71,7 @@ export default function MyGroup() {
             );
           })}
         </Swiper>
-      </div>
+      )}
     </section>
   );
 }

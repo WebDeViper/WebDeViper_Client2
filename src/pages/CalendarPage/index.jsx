@@ -72,7 +72,7 @@ export default function CalendarPage() {
   };
 
   return (
-    <main className="container">
+    <div className="container">
       <h2>일정</h2>
       <div className="calendar">
         <div className="flex shadow-2xl md:flex-row flex-col">
@@ -100,6 +100,6 @@ export default function CalendarPage() {
           updateTodo={updateTodo}
         />
       </div>
-    </main>
+    </div>
   );
 }

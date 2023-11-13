@@ -18,13 +18,15 @@ export default function EditCategory({ dispatch }) {
   };
 
   return (
-    <div className="flex flex-col items-end justify-center border-2 rounded-lg border-semi_primary p-2">
-      <h2 className="font-bold text-2xl mb-5 self-start">카테고리 변경</h2>
-      <div className="flex items-center">
+    <div className="border-2 rounded-lg border-semi_primary p-2">
+      <div className="mb-5">
+        <span className="text-lg font-semibold">카테고리 변경</span>
+      </div>
+      <div className="flex items-center justify-end">
         <DropDown
           title={category ? category : currentCategory}
           items={items}
-          styles={'font-bold text-xl'}
+          styles={'font-normal'}
           handleClick={handleClick}
         ></DropDown>
         <Button

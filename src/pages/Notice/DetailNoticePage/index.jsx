@@ -29,7 +29,7 @@ export default function DetailNoticePage() {
   const handleDelete = async () => {};
 
   return (
-    <main className="container">
+    <div className="container">
       <h2>공지사항</h2>
       <div>
         {notice && (
@@ -64,6 +64,6 @@ export default function DetailNoticePage() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

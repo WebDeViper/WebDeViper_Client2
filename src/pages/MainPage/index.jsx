@@ -4,10 +4,10 @@ import StudyGroup from './StudyGroup';
 
 export default function MainPage() {
   return (
-    <main className="container">
+    <div className="container">
       <Notice />
       <MyGroup />
       <StudyGroup />
-    </main>
+    </div>
   );
 }

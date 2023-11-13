@@ -59,7 +59,9 @@ export default function EditNickName({ dispatch }) {
   const buttonStyled = isValidate ? '!bg-primary' : '!bg-gray-500';
   return (
     <div className="flex flex-col items-start justify-center border-2 rounded-lg border-semi_primary p-2 md:mb-3 mb-1">
-      <h2 className="font-bold text-2xl mb-5 self-start">닉네임 변경</h2>
+      <div className="mb-5">
+        <span className="text-lg font-semibold">닉네임 변경</span>
+      </div>
       <div className="flex w-full justify-between">
         <div className="nickInputWrap border-2 rounded-lg border-primary ps-5 pe-2 w-fit flex items-center me-2">
           <input
